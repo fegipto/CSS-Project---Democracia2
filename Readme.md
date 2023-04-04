@@ -1,3 +1,9 @@
+Equipa a Desenvolver
+
+David Dantas 56331
+Filipe Egipto 56272
+Rafael Nisa 56329
+
 # Projecto de Referência de SpringBoot
 
 ## O que fazer
