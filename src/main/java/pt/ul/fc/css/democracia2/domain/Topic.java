@@ -5,22 +5,22 @@ import java.util.Objects;
 import org.springframework.lang.NonNull;
 
 public class Topic {
-	
-	
+
+
 	private Topic parent;
 	public Topic getParent() {
 		return parent;
 	}
 
 	private String name;
-	
+
 	public String getName() {
 		return name;
 	}
 
 	public Topic(@NonNull String name, Topic parent) {
 		this.name = name;
-		this.parent = parent
+		this.parent = parent;
 	}
 
 	@Override
@@ -44,6 +44,6 @@ public class Topic {
 		Topic other = (Topic) obj;
 		return Objects.equals(name, other.name) && Objects.equals(parent, other.parent);
 	}
-	
-	
+
+
 }
