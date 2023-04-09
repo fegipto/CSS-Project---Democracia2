@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Bill {
 
-  private String title;
+  private String title; 
   private BillStatus status;
   private String description;
   private byte[] file;
   private LocalDateTime validaty;
   private Topic topic;
 
-  private VoteBox votes;
+  private VoteBox voteBox;
   private List<Citizen> supporters;
 
   public Bill(String title, String description, byte[] file, LocalDateTime validaty, Topic topic) {
@@ -51,11 +51,48 @@ public class Bill {
     return topic;
   }
 
-  public VoteBox getVotes() {
-    return votes;
+  public VoteBox getVoteBox() {
+    return voteBox;
   }
 
   public List<Citizen> getSupporters() {
     return supporters;
   }
+  public void beginVote() {
+	    if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
+	      voteBox = new VoteBox();
+	      status = BillStatus.VOTING;
+	    }
+	  }
+
+  public boolean isExpired() {
+	    if (status == BillStatus.EXPIRED) {
+	        return true;
+	    } else if (LocalDateTime.now().isAfter(validaty)) {
+	        expire();
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+
+public boolean isOpenToSupport() {
+    return status == BillStatus.CREATED;
+}
+	  public void expire() {
+	    status = BillStatus.EXPIRED;
+	  }
+	  
+	  
+	  public boolean supportBill(Citizen supporter) {
+		  	if (!isOpenToSupport())
+		  		return false;
+		  
+		    supporters.add(supporter);
+		    if (supporters.size() == 10000) {
+		        beginVote();
+		    }
+		    return true;
+		} 
+  
 }
