@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bill {
 
-  private String title; 
+  private String title;
   private BillStatus status;
   private String description;
   private byte[] file;
@@ -58,41 +58,40 @@ public class Bill {
   public List<Citizen> getSupporters() {
     return supporters;
   }
+
   public void beginVote() {
-	    if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
-	      voteBox = new VoteBox();
-	      status = BillStatus.VOTING;
-	    }
-	  }
+    if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
+      voteBox = new VoteBox();
+      status = BillStatus.VOTING;
+    }
+  }
 
   public boolean isExpired() {
-	    if (status == BillStatus.EXPIRED) {
-	        return true;
-	    } else if (LocalDateTime.now().isAfter(validaty)) {
-	        expire();
-	        return true;
-	    } else {
-	        return false;
-	    }
-	}
+    if (status == BillStatus.EXPIRED) {
+      return true;
+    } else if (LocalDateTime.now().isAfter(validaty)) {
+      expire();
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-public boolean isOpenToSupport() {
+  public boolean isOpenToSupport() {
     return status == BillStatus.CREATED;
-}
-	  public void expire() {
-	    status = BillStatus.EXPIRED;
-	  }
-	  
-	  
-	  public boolean supportBill(Citizen supporter) {
-		  	if (!isOpenToSupport())
-		  		return false;
-		  
-		    supporters.add(supporter);
-		    if (supporters.size() == 10000) {
-		        beginVote();
-		    }
-		    return true;
-		} 
-  
+  }
+
+  public void expire() {
+    status = BillStatus.EXPIRED;
+  }
+
+  public boolean supportBill(Citizen supporter) {
+    if (!isOpenToSupport()) return false;
+
+    supporters.add(supporter);
+    if (supporters.size() == 10000) {
+      beginVote();
+    }
+    return true;
+  }
 }
