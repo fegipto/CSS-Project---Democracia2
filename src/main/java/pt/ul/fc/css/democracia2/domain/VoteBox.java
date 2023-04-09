@@ -14,6 +14,11 @@ public class VoteBox {
   private long prInFavor; // number of citizens in favor
   private long prAgainst;
 
+  /**
+   * Constructs a new VoteBox object for the given bill.
+   *
+   * @param correspondingBill the corresponding bill for which votes are being cast
+   */
   public VoteBox(Bill correspondingBill) {
     super();
     this.correspondingBill = correspondingBill;
@@ -25,21 +30,44 @@ public class VoteBox {
     this.prAgainst = 0;
   }
 
+  /**
+   * Returns the corresponding bill for which votes are being cast.
+   *
+   * @return the corresponding bill
+   */
   public Bill getCorrespondingBill() {
     return correspondingBill;
   }
 
+  /**
+   * Adds a public vote for the given delegate and choice.
+   *
+   * @param delegate the delegate who cast the vote
+   * @param choice the choice for which the delegate voted
+   */
   public void addPublicVote(Delegate delegate, boolean choice) {
     ((choice) ? inFavor : against).add(delegate);
     voted.add(delegate);
   }
 
+  /**
+   * Adds a private vote for the given citizen and choice.
+   *
+   * @param citizen the citizen who cast the vote
+   * @param choice the choice for which the citizen voted
+   */
   public void addPrivateVote(Citizen citizen, boolean choice) {
     voted.add(citizen);
     if (choice) prInFavor++;
     else prAgainst++;
   }
 
+  /**
+   * Returns an optional verdict based on the total number of citizens who voted in favor or against
+   * the bill. If the verdict cannot be determined, returns an empty optional.
+   *
+   * @return an optional verdict
+   */
   public Optional<Boolean> getVerdict() {
     long yesVotes = inFavor.size() + prInFavor;
     long noVotes = against.size() + prAgainst;
@@ -53,6 +81,13 @@ public class VoteBox {
     }
   }
 
+  /**
+   * Returns an optional boolean based on the cast vote of a given delegate on the bill. If he
+   * hasn't voted return an empty
+   *
+   * @param delegate the delegate who cast the vote
+   * @return an optional vote
+   */
   public Optional<Boolean> getPublicCastVote(Delegate delegate) {
     if (inFavor.contains(delegate)) {
       return Optional.of(true);
@@ -63,6 +98,10 @@ public class VoteBox {
     }
   }
 
+  /**
+   * @param cit the citizen to check
+   * @return if the citizen has voted
+   */
   public Boolean hasVoted(Citizen cit) {
     return voted.contains(cit);
   }
