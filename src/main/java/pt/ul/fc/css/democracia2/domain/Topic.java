@@ -2,6 +2,8 @@ package pt.ul.fc.css.democracia2.domain;
 
 import java.util.Objects;
 
+import org.springframework.lang.NonNull;
+
 public class Topic {
 	
 	
@@ -16,9 +18,9 @@ public class Topic {
 		return name;
 	}
 
-	public Topic(String name, Topic parent) {
+	public Topic(@NonNull String name, Topic parent) {
 		this.name = name;
-		this.parent = parent;
+		this.parent = parent
 	}
 
 	@Override
