@@ -61,7 +61,7 @@ public class Bill {
 
   public void beginVote() {
     if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
-      voteBox = new VoteBox();
+      voteBox = new VoteBox(this);
       status = BillStatus.VOTING;
     }
   }
