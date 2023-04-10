@@ -1,7 +1,7 @@
 package pt.ul.fc.css.democracia2.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Class that represents a Citizen */
 public class Citizen {
@@ -9,7 +9,7 @@ public class Citizen {
   private long cc;
   private long token;
 
-  private Set<ChosenDelegate> delegates;
+  private Map<Topic, Delegate> chosenDelegates;
 
   /**
    * Constructs a new Citizen object using a name,cc,token.
@@ -23,7 +23,7 @@ public class Citizen {
     this.name = name;
     this.cc = cc;
     this.token = token;
-    this.delegates = new HashSet<ChosenDelegate>();
+    this.chosenDelegates = new HashMap<>();
   }
 
   /**
@@ -62,40 +62,18 @@ public class Citizen {
    * @requires delegate != null && topic != null
    */
   public void chooseDelegate(Delegate delegate, Topic topic) {
-    if (topicExists(topic)) {
-      delegates.remove(getByTopic(topic));
-    }
-    delegates.add(new ChosenDelegate(delegate, topic));
-  }
-
-  /**
-   * Method that given a Delagate and a Topic, creates a new {@link ChosenDelegate} and checks if it
-   * exist on the delegates of the Citizen.
-   *
-   * @param delegate the Delegate to check
-   * @param topic the Topic to check
-   * @return true, if the chosenDelegate exists in delegates. false, otherwise.
-   * @requires delegate != null && topic != null
-   */
-  public boolean checksExistsChosen(Delegate delegate, Topic topic) {
-    return delegates.contains(new ChosenDelegate(delegate, topic));
+    chosenDelegates.put(topic, delegate);
   }
 
   /**
    * Method that given a Topic return the delegate chosen for that topic
    *
    * @param topic the Topic to search
-   * @return the delegate related to that topic || a error message saying that the delegate to that
-   *     topic doesn't exist.
+   * @return the delegate related to that topic || null if doent exist
    * @requires topic != null
    */
   public Delegate getChosenDelegate(Topic topic) {
-    for (ChosenDelegate chosenDelegate : delegates) {
-      if (chosenDelegate.getTopic().equals(topic)) {
-        return chosenDelegate.getDelegate();
-      }
-    }
-    throw new RuntimeException("No delegate found for topic: " + topic);
+    return chosenDelegates.get(topic);
   }
 
   /**
@@ -104,28 +82,7 @@ public class Citizen {
    * @param topic the Topic to check
    * @return true, if exists a chosenDelegate with that topic. false, otherwise.
    */
-  private boolean topicExists(Topic topic) {
-    for (ChosenDelegate chosenDelegate : delegates) {
-      if (chosenDelegate.getTopic().equals(topic)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Method that given a Topic, return the chosenDelegate associated with that Topic.
-   *
-   * @param topic the Topic search.
-   * @return the ChosenDelegate associated with that topic || null if ChosenDelegate with that topic
-   *     does exist
-   */
-  private ChosenDelegate getByTopic(Topic topic) {
-    for (ChosenDelegate chosenDelegate : delegates) {
-      if (chosenDelegate.getTopic().equals(topic)) {
-        return chosenDelegate;
-      }
-    }
-    return null;
+  public boolean delegateExists(Topic topic) {
+    return chosenDelegates.containsKey(topic);
   }
 }
