@@ -1,18 +1,19 @@
 package pt.ul.fc.css.democracia2.domain;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 /** This class represents a voting box for a given Bill */
 public class VoteBox {
-  private Set<Delegate> inFavor;
-  private Set<Delegate> against;
+  private Map<Delegate, Boolean> publicVotes;
   private Set<Citizen> voted;
   private Bill correspondingBill;
 
-  private long prInFavor; // number of citizens in favor
-  private long prAgainst;
+  private long totalInFavor; // number of citizens in favor
+  private long totalAgainst;
 
   /**
    * Constructs a new VoteBox object for the given bill.
@@ -22,12 +23,11 @@ public class VoteBox {
   public VoteBox(Bill correspondingBill) {
     super();
     this.correspondingBill = correspondingBill;
-    this.inFavor = new HashSet<Delegate>(); // need fast contains
-    this.against = new HashSet<Delegate>();
+    this.publicVotes = new HashMap<>();
 
     this.voted = new HashSet<Citizen>();
-    this.prInFavor = 0;
-    this.prAgainst = 0;
+    this.totalInFavor = 0;
+    this.totalAgainst = 0;
   }
 
   /**
@@ -46,8 +46,10 @@ public class VoteBox {
    * @param choice the choice for which the delegate voted
    */
   public void addPublicVote(Delegate delegate, boolean choice) {
-    ((choice) ? inFavor : against).add(delegate);
+    publicVotes.put(delegate, choice);
     voted.add(delegate);
+    if (choice) totalInFavor++;
+    else totalAgainst++;
   }
 
   /**
@@ -58,8 +60,8 @@ public class VoteBox {
    */
   public void addPrivateVote(Citizen citizen, boolean choice) {
     voted.add(citizen);
-    if (choice) prInFavor++;
-    else prAgainst++;
+    if (choice) totalInFavor++;
+    else totalAgainst++;
   }
 
   /**
@@ -69,12 +71,10 @@ public class VoteBox {
    * @return an optional verdict
    */
   public Optional<Boolean> getVerdict() {
-    long yesVotes = inFavor.size() + prInFavor;
-    long noVotes = against.size() + prAgainst;
 
-    if (yesVotes > noVotes) {
+    if (totalInFavor > totalAgainst) {
       return Optional.of(true);
-    } else if (noVotes > yesVotes) {
+    } else if (totalAgainst > totalInFavor) {
       return Optional.of(false);
     } else {
       return Optional.empty(); // Tie, verdict cannot be determined
@@ -89,13 +89,9 @@ public class VoteBox {
    * @return an optional vote
    */
   public Optional<Boolean> getPublicCastVote(Delegate delegate) {
-    if (inFavor.contains(delegate)) {
-      return Optional.of(true);
-    } else if (against.contains(delegate)) {
-      return Optional.of(false);
-    } else {
-      return Optional.empty(); // didn't vote
-    }
+    return (publicVotes.containsKey(delegate))
+        ? Optional.of(publicVotes.get(delegate))
+        : Optional.empty();
   }
 
   /**

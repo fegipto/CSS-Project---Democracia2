@@ -2,10 +2,12 @@ package pt.ul.fc.css.democracia2.domain;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /** Class that represents a Citizen */
 public class Citizen {
   private String name;
+
   private long cc;
   private long token;
 
@@ -84,5 +86,19 @@ public class Citizen {
    */
   public boolean delegateExists(Topic topic) {
     return chosenDelegates.containsKey(topic);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(cc, name);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    Citizen other = (Citizen) obj;
+    return cc == other.cc && Objects.equals(name, other.name);
   }
 }
