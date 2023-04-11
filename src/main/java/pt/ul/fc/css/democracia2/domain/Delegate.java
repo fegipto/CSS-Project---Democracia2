@@ -1,12 +1,20 @@
 package pt.ul.fc.css.democracia2.domain;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Delegate extends Citizen {
 
-  private final List<Bill> bills;
+  public Delegate() {
+    // No-argument constructor
+  }
+
+  @OneToMany(mappedBy = "proponent")
+  private List<Bill> bills;
 
   /**
    * Constructs a new Delegate object using a name,cc,token.
@@ -90,7 +98,7 @@ public class Delegate extends Citizen {
    * @param topic the Bill's topic
    */
   public void proposeBill(
-      String title, String description, byte[] file, LocalDateTime validaty, Topic topic) {
-    bills.add(new Bill(title, description, file, validaty, topic));
+      String title, String description, byte[] file, Date validaty, Topic topic) {
+    bills.add(new Bill(title, description, file, validaty, topic, this));
   }
 }

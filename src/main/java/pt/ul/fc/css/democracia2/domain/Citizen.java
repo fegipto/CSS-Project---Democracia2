@@ -1,6 +1,7 @@
 package pt.ul.fc.css.democracia2.domain;
 
 import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyJoinColumn;
@@ -16,6 +18,7 @@ import javax.persistence.OneToMany;
 
 /** Class that represents a Citizen */
 @Entity
+@Inheritance(strategy = SINGLE_TABLE)
 public class Citizen {
 
   public Citizen() {

@@ -4,6 +4,7 @@
 	  <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	  <class>pt.ul.fc.css.democracia2.domain.Citizen</class>
 	  <class>pt.ul.fc.css.democracia2.domain.Bill</class>
+	  <class>pt.ul.fc.css.democracia2.domain.Delegate</class>
 	  <properties>
 	    <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/testdb"/>
 	    <property name="javax.persistence.jdbc.user" value="postgres"/>
