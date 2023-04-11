@@ -7,6 +7,6 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-  @Query("SELECT t.name FROM Topic t")
+  @Query("SELECT t FROM Topic t")
   List<Topic> getTopics();
 }
