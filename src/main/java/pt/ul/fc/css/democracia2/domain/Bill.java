@@ -4,7 +4,6 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Column;
@@ -17,8 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class Bill {
@@ -42,9 +39,8 @@ public class Bill {
   @Column(name = "BILL_DESC")
   private String description;
 
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "BILL_VALIDITY")
-  private Date validity;
+  private LocalDateTime validity;
 
   @ManyToOne
   @JoinColumn(name = "TOPIC_ID")
@@ -64,7 +60,7 @@ public class Bill {
       String title,
       String description,
       byte[] file,
-      Date validity,
+      LocalDateTime validity,
       Topic topic,
       Delegate proponent) {
     super();
@@ -95,7 +91,7 @@ public class Bill {
   }
 
   public LocalDateTime getValidaty() {
-    return validaty;
+    return validity;
   }
 
   public Topic getTopic() {
@@ -120,7 +116,7 @@ public class Bill {
   public boolean isExpired() {
     if (status == BillStatus.EXPIRED) {
       return true;
-    } else if (LocalDateTime.now().isAfter(validaty)) {
+    } else if (LocalDateTime.now().isAfter(validity)) {
       expire();
       return true;
     } else {
