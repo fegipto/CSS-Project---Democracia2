@@ -24,4 +24,8 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
       @Param("status") BillStatus status,
       @Param("description") String description,
       @Param("validity") LocalDateTime validity);
+
+  @Query(
+      "SELECT b FROM Bill WHERE b.status IN ('CREATED', 'VOTING', 'ACCEPTED', 'FAILED', 'CLOSED')")
+  List<Bill> getNonExpiredBills();
 }
