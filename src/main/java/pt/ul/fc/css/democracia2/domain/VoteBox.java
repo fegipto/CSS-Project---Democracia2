@@ -64,11 +64,27 @@ public class VoteBox {
    *
    * @return an optional verdict
    */
-  public Optional<Boolean> getVerdict() {
+  public Optional<Boolean> getVerdict(CitizenRepository rep, Bill correspondingBill) {
+    long yesVotes = totalInFavor;
+    long noVotes = totalAgainst;
 
-    if (totalInFavor > totalAgainst) {
+    // iterate over the citizens who didn't vote
+    for (Citizen citizen : rep.findAll()) {
+      if (!hasVoted(citizen)) {
+        // find the delegate associated with the most specific topic for the bill
+        Delegate del = citizen.getChosenDelegate(correspondingBill.getTopic());
+
+        // update the total number of citizens who voted in favor or against
+        if (del != null) {
+          if (publicVotes.get(del)) yesVotes++;
+          else noVotes++;
+        }
+      }
+    }
+
+    if (yesVotes > noVotes) {
       return Optional.of(true);
-    } else if (totalAgainst > totalInFavor) {
+    } else if (noVotes > yesVotes) {
       return Optional.of(false);
     } else {
       return Optional.empty(); // Tie, verdict cannot be determined

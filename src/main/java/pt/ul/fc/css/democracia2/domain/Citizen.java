@@ -110,7 +110,10 @@ public class Citizen {
    * @requires topic != null
    */
   public Delegate getChosenDelegate(Topic topic) {
-    return chosenDelegates.get(topic);
+    if (topic == null) return null;
+    return (chosenDelegates.containsKey(topic))
+        ? chosenDelegates.get(topic)
+        : getChosenDelegate(topic.getParent());
   }
 
   /**

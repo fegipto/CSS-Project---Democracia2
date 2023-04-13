@@ -119,7 +119,6 @@ public class Bill {
     if (status == BillStatus.EXPIRED) {
       return true;
     } else if (LocalDateTime.now().isAfter(validity)) {
-      expire();
       return true;
     } else {
       return false;
@@ -130,11 +129,11 @@ public class Bill {
     return status == BillStatus.CREATED;
   }
 
-  public void expire() {
+  public void expire(CitizenRepository citRepo) {
     if (status == BillStatus.CREATED) {
       status = BillStatus.EXPIRED;
     } else if (status == BillStatus.VOTING) {
-      Optional<Boolean> verdict = voteBox.getVerdict();
+      Optional<Boolean> verdict = voteBox.getVerdict(citRepo, this);
       if (verdict.isEmpty()) status = BillStatus.CLOSED;
       else status = (verdict.get()) ? BillStatus.ACCEPTED : BillStatus.FAILED;
     }
