@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
+import org.springframework.lang.NonNull;
 
 /** Class that represents a Citizen */
 @Entity
@@ -54,7 +55,7 @@ public class Citizen {
    * @param cc the cc of the citizen
    * @param token authentication token
    */
-  public Citizen(String name, long cc, long token) {
+  public Citizen(@NonNull String name, @NonNull long cc, long token) {
     super();
     this.name = name;
     this.cc = cc;

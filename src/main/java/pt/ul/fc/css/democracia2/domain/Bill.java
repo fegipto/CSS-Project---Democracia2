@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class Bill {
@@ -58,12 +59,12 @@ public class Bill {
   private byte[] file;
 
   public Bill(
-      String title,
-      String description,
-      byte[] file,
-      LocalDateTime validity,
-      Topic topic,
-      Delegate proponent) {
+      @NonNull String title,
+      @NonNull String description,
+      @NonNull byte[] file,
+      @NonNull LocalDateTime validity,
+      @NonNull Topic topic,
+      @NonNull Delegate proponent) {
     super();
     this.title = title;
     this.description = description;
