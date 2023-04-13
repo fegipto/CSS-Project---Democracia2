@@ -99,6 +99,6 @@ public class Delegate extends Citizen {
    */
   public void proposeBill(
       String title, String description, byte[] file, Date validaty, Topic topic) {
-    bills.add(new Bill(title, description, file, validaty, topic, this));
+    bills.add(new Bill(title, description, file, validaty, topic));
   }
 }
