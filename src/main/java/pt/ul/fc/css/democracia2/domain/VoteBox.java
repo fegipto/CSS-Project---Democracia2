@@ -9,13 +9,14 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
+import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 /** This class represents a voting box for a given Bill */
 @Embeddable
 public class VoteBox {
 
   @ElementCollection
-  @MapKeyJoinColumn(name = "citizen_id")
+  @MapKeyJoinColumn(name = "delegate_cc")
   private Map<Delegate, Boolean> publicVotes;
 
   @OneToMany private Set<Citizen> voted;

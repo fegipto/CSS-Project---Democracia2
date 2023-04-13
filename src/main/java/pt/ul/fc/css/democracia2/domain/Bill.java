@@ -18,6 +18,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import org.springframework.lang.NonNull;
+import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 @Entity
 public class Bill {
@@ -45,12 +46,14 @@ public class Bill {
   private LocalDateTime validity;
 
   @ManyToOne
-  @JoinColumn(name = "TOPIC_ID")
+  @JoinColumn(name = "TOPIC_ID", nullable = false)
   private Topic topic;
 
   @Embedded private VoteBox voteBox;
 
-  @ManyToOne private Delegate proponent;
+  @ManyToOne
+  @JoinColumn(name = "delegate_cc", nullable = false)
+  private Delegate proponent;
 
   @OneToMany private List<Citizen> supporters;
 

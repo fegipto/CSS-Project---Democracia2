@@ -1,6 +1,5 @@
 package pt.ul.fc.css.democracia2.domain;
 
-import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 import java.util.HashMap;
@@ -8,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
@@ -26,14 +24,10 @@ public class Citizen {
     // No-argument constructor
   }
 
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  @Column(name = "CIT_ID")
-  private Long id;
-
   @Column(name = "CIT_NAME")
   private String name;
 
+  @Id
   @Column(name = "CIT_CC")
   private long cc;
 
@@ -43,8 +37,8 @@ public class Citizen {
   @OneToMany
   @JoinTable(
       name = "citizen_delegate_topic",
-      joinColumns = {@JoinColumn(name = "citizen_id", referencedColumnName = "CIT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "delegate_id", referencedColumnName = "CIT_ID")})
+      joinColumns = {@JoinColumn(name = "citizen_cc", referencedColumnName = "CIT_CC")},
+      inverseJoinColumns = {@JoinColumn(name = "delegate_cc", referencedColumnName = "CIT_CC")})
   @MapKeyJoinColumn(name = "topic_id")
   private Map<Topic, Delegate> chosenDelegates;
 
