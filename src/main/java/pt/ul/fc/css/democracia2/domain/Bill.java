@@ -6,6 +6,7 @@ import static javax.persistence.GenerationType.AUTO;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -108,7 +109,7 @@ public class Bill {
 
   public void beginVote() {
     if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
-      voteBox = new VoteBox(this);
+      voteBox = new VoteBox();
       status = BillStatus.VOTING;
     }
   }
@@ -129,7 +130,13 @@ public class Bill {
   }
 
   public void expire() {
-    status = BillStatus.EXPIRED;
+    if (status == BillStatus.CREATED) {
+      status = BillStatus.EXPIRED;
+    } else if (status == BillStatus.VOTING) {
+      Optional<Boolean> verdict = voteBox.getVerdict();
+      if (verdict.isEmpty()) status = BillStatus.CLOSED;
+      else status = (verdict.get()) ? BillStatus.ACCEPTED : BillStatus.FAILED;
+    }
   }
 
   public boolean supportBill(Citizen supporter) {

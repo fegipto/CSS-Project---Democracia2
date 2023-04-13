@@ -5,38 +5,32 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToMany;
 
 /** This class represents a voting box for a given Bill */
+@Embeddable
 public class VoteBox {
+
+  @ElementCollection
+  @MapKeyJoinColumn(name = "citizen_id")
   private Map<Delegate, Boolean> publicVotes;
-  private Set<Citizen> voted;
-  private Bill correspondingBill;
+
+  @OneToMany private Set<Citizen> voted;
 
   private long totalInFavor; // number of citizens in favor
   private long totalAgainst;
 
-  /**
-   * Constructs a new VoteBox object for the given bill.
-   *
-   * @param correspondingBill the corresponding bill for which votes are being cast
-   */
-  public VoteBox(Bill correspondingBill) {
+  /** Constructs a new VoteBox object for the given bill. */
+  public VoteBox() {
     super();
-    this.correspondingBill = correspondingBill;
     this.publicVotes = new HashMap<>();
 
     this.voted = new HashSet<Citizen>();
     this.totalInFavor = 0;
     this.totalAgainst = 0;
-  }
-
-  /**
-   * Returns the corresponding bill for which votes are being cast.
-   *
-   * @return the corresponding bill
-   */
-  public Bill getCorrespondingBill() {
-    return correspondingBill;
   }
 
   /**
