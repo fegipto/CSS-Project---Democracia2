@@ -11,7 +11,7 @@ import org.springframework.lang.NonNull;
 @Entity
 public class Topic {
 
-  @Id @GeneratedValue private Long id;
+  @Id @GeneratedValue() private Long id;
 
   @ManyToOne
   @JoinColumn(name = "parent_id")
@@ -27,6 +27,10 @@ public class Topic {
 
   public String getName() {
     return name;
+  }
+
+  public Topic(@NonNull String name) {
+    this.name = name;
   }
 
   public Topic(@NonNull String name, Topic parent) {

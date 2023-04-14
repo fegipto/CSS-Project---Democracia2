@@ -23,8 +23,8 @@ public class Delegate extends Citizen {
    * @param cc the cc of the delegate
    * @param token authentication token
    */
-  public Delegate(String name, long cc, long token) {
-    super(name, cc, token);
+  public Delegate(String name, long cc) {
+    super(name, cc);
     bills = new LinkedList<>();
   }
 
@@ -97,8 +97,10 @@ public class Delegate extends Citizen {
    * @param validaty the Bill's validaty
    * @param topic the Bill's topic
    */
-  public void proposeBill(
+  public Bill proposeBill(
       String title, String description, byte[] file, LocalDateTime validaty, Topic topic) {
-    bills.add(new Bill(title, description, file, validaty, topic, this));
+    Bill adding = new Bill(title, description, file, validaty, topic, this);
+    bills.add(adding);
+    return adding;
   }
 }

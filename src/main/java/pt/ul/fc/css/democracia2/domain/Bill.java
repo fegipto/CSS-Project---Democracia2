@@ -1,18 +1,19 @@
 package pt.ul.fc.css.democracia2.domain;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.AUTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,8 +29,7 @@ public class Bill {
   }
 
   @Id
-  @GeneratedValue(strategy = AUTO)
-  @Column(name = "BILL_ID")
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @Column(name = "BILL_TITLE")
@@ -55,7 +55,8 @@ public class Bill {
   @JoinColumn(name = "delegate_cc", nullable = false)
   private Delegate proponent;
 
-  @OneToMany private List<Citizen> supporters;
+  @ManyToMany(cascade = CascadeType.ALL)
+  private List<Citizen> supporters;
 
   @Column(name = "BILL_FILE")
   @Lob
@@ -75,7 +76,8 @@ public class Bill {
     this.validity = validity;
     this.topic = topic;
     this.proponent = proponent;
-
+    this.status = BillStatus.CREATED;
+    this.voteBox = new VoteBox();
     this.supporters = new LinkedList<Citizen>();
   }
 
@@ -104,7 +106,7 @@ public class Bill {
   }
 
   public VoteBox getVoteBox() {
-    return voteBox;
+    return (status == BillStatus.VOTING) ? voteBox : null;
   }
 
   public List<Citizen> getSupporters() {
@@ -112,8 +114,8 @@ public class Bill {
   }
 
   public void beginVote() {
-    if (!isExpired() && supporters.size() >= 10000 && voteBox == null) {
-      voteBox = new VoteBox();
+    if (!isExpired() && supporters.size() >= 10000) {
+
       status = BillStatus.VOTING;
     }
   }
@@ -143,10 +145,10 @@ public class Bill {
   }
 
   public boolean supportBill(Citizen supporter) {
-    if (!isOpenToSupport()) return false;
+    if (!isOpenToSupport() || supporters.contains(supporter)) return false;
 
     supporters.add(supporter);
-    if (supporters.size() == 10000) {
+    if (supporters.size() >= 10000) {
       beginVote();
     }
     return true;

@@ -47,14 +47,17 @@ public class Citizen {
    *
    * @param name the name of the citizen
    * @param cc the cc of the citizen
-   * @param token authentication token
    */
-  public Citizen(@NonNull String name, @NonNull long cc, long token) {
+  public Citizen(@NonNull String name, @NonNull long cc) {
     super();
     this.name = name;
     this.cc = cc;
-    this.token = token;
+
     this.chosenDelegates = new HashMap<>();
+  }
+
+  public void setToken(long token) {
+    this.token = token;
   }
 
   /**
