@@ -1,18 +1,18 @@
 package pt.ul.fc.css.democracia2.domain;
 
-import static javax.persistence.InheritanceType.SINGLE_TABLE;
+import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.MapKeyJoinColumn;
+import jakarta.persistence.OneToMany;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToMany;
 import org.springframework.lang.NonNull;
 
 /** Class that represents a Citizen */

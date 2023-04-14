@@ -1,10 +1,10 @@
 package pt.ul.fc.css.democracia2.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Delegate extends Citizen {

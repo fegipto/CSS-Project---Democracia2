@@ -1,22 +1,22 @@
 package pt.ul.fc.css.democracia2.domain;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.AUTO;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.AUTO;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import org.springframework.lang.NonNull;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 

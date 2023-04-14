@@ -1,14 +1,14 @@
 package pt.ul.fc.css.democracia2.domain;
 
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.MapKeyJoinColumn;
+import jakarta.persistence.OneToMany;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToMany;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 /** This class represents a voting box for a given Bill */
