@@ -33,12 +33,12 @@ public class SupportBillService {
   }
 
   public boolean supportBill(long citizen_token, long bill_id) {
-    Citizen cit = citizenRepository.findByToken(citizen_token);
+    Optional<Citizen> cit = citizenRepository.findByToken(citizen_token);
     Optional<Bill> bill = billRepository.findById(bill_id);
 
-    if (bill.isEmpty()) return false;
+    if (bill.isEmpty() || cit.isEmpty()) return false;
 
-    boolean sucess = bill.get().supportBill(cit);
+    boolean sucess = bill.get().supportBill(cit.get());
     billRepository.save(bill.get());
 
     return sucess;
