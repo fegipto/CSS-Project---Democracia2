@@ -5,4 +5,6 @@ import pt.ul.fc.css.democracia2.domain.Delegate;
 
 public interface DelegateRepository extends JpaRepository<Delegate, Long> {
   public Delegate findByName(String name);
+
+  public Delegate findByToken(long token);
 }

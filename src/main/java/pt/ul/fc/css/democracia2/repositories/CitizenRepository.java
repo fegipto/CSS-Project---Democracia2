@@ -7,4 +7,6 @@ public interface CitizenRepository extends JpaRepository<Citizen, Long> {
   public Citizen findByName(String name);
 
   public Citizen findByCc(long cc);
+
+  public Citizen findByToken(long token);
 }
