@@ -47,13 +47,13 @@ public class DelegateSelectionService {
   }
 
   public void chooseDelegate(Long citizen_token, Long delegateCC, String topic_id) {
-    Citizen citizen = citizenRepository.findByToken(citizen_token);
+    Optional<Citizen> citizen = citizenRepository.findByToken(citizen_token);
     Optional<Delegate> delegate = delegateRepository.findById(delegateCC);
-    Topic topic = topicRepository.findByName(topic_id);
+    Optional<Topic> topic = topicRepository.findByName(topic_id);
 
-    if (citizen != null && !delegate.isEmpty() && topic != null) {
-      citizen.chooseDelegate(delegate.get(), topic);
-      citizenRepository.save(citizen);
+    if (!citizen.isEmpty() && !delegate.isEmpty() && !topic.isEmpty()) {
+      citizen.get().chooseDelegate(delegate.get(), topic.get());
+      citizenRepository.save(citizen.get());
     }
   }
 }

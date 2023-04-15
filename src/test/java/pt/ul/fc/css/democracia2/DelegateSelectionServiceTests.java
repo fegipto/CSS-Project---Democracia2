@@ -3,9 +3,11 @@ package pt.ul.fc.css.democracia2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,20 +34,36 @@ public class DelegateSelectionServiceTests extends MockDatabaseTests {
 
   @Test
   public void testChooseDelegate() {
-    Citizen citizen1 = citizenRepository.findByName("Citizen 1");
-    Topic topic = topicRepository.findByName("Education");
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Citizen> citizen1 = citizenRepository.findByName("Citizen 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    assertTrue(citizen1.isPresent());
+    assertTrue(topic.isPresent());
+    assertTrue(delegate1.isPresent());
 
     delegateSelectionService.chooseDelegate(
-        citizen1.getToken(), delegate1.getCC(), topic.getName());
+        citizen1.get().getToken(), delegate1.get().getCC(), topic.get().getName());
 
-    Citizen updatedCitizen = citizenRepository.findByToken(citizen1.getToken());
-    assertNotNull(updatedCitizen.getChosenDelegate(topic));
-    assertEquals(delegate1, updatedCitizen.getChosenDelegate(topic));
+    assertEquals(delegate1.get(), citizen1.get().getChosenDelegate(topic.get()));
   }
 
   @Test
-  public void testGetDelegate() {
+  public void testChooseDelegateSpecificTopic() {
+    Optional<Citizen> citizen1 = citizenRepository.findByName("Citizen 1");
+    Optional<Topic> topic = topicRepository.findByName("Education - Subtopic 0");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    assertTrue(citizen1.isPresent());
+    assertTrue(topic.isPresent());
+    assertTrue(delegate1.isPresent());
+
+    delegateSelectionService.chooseDelegate(
+        citizen1.get().getToken(), delegate1.get().getCC(), topic.get().getName());
+
+    assertEquals(delegate1.get(), citizen1.get().getChosenDelegate(topic.get()));
+  }
+
+  @Test
+  public void testGetDelegates() {
     List<DelegateDTO> delegates = delegateSelectionService.getDelegate();
     assertNotNull(delegates);
     assertFalse(delegates.isEmpty());
@@ -53,7 +71,7 @@ public class DelegateSelectionServiceTests extends MockDatabaseTests {
   }
 
   @Test
-  public void testGetTopic() {
+  public void testGetTopics() {
     List<TopicDTO> topics = delegateSelectionService.getTopic();
     assertNotNull(topics);
     assertFalse(topics.isEmpty());
