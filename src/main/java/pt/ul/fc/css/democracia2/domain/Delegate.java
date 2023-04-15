@@ -94,12 +94,14 @@ public class Delegate extends Citizen {
    * @param title the Bill's title
    * @param description the Bill's description
    * @param file the Bill's file
-   * @param validaty the Bill's validaty
+   * @param validity the Bill's validaty
    * @param topic the Bill's topic
    */
   public Bill proposeBill(
-      String title, String description, byte[] file, LocalDateTime validaty, Topic topic) {
-    Bill adding = new Bill(title, description, file, validaty, topic, this);
+      String title, String description, byte[] file, LocalDateTime validity, Topic topic) {
+    LocalDateTime now = LocalDateTime.now();
+    if (!validity.isAfter(now)) return null;
+    Bill adding = new Bill(title, description, file, validity, topic, this);
     bills.add(adding);
     return adding;
   }

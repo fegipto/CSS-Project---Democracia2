@@ -114,9 +114,24 @@ public class Bill {
   }
 
   public void beginVote() {
-    if (!isExpired() && supporters.size() >= 10000) {
-
+    if (supporters.size() >= 10000) {
+      if (isExpired()) status = BillStatus.EXPIRED;
+      LocalDateTime now = LocalDateTime.now();
+      boolean isValidityMoreThan15Days =
+          validity.isAfter(now) && validity.isAfter(now.plusDays(15));
       status = BillStatus.VOTING;
+
+      // 15 dias minimo
+      if (isValidityMoreThan15Days) {
+
+        // clamp the validity to 2 months
+        boolean isValidityMoreThan2Months = validity.isAfter(now.plusMonths(2));
+
+        if (isValidityMoreThan2Months) validity = now.plusMonths(2);
+      } else {
+        validity = now.plusDays(15);
+      }
+      voteBox.addPublicVote(proponent, true);
     }
   }
 

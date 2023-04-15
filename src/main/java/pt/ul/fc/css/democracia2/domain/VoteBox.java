@@ -1,9 +1,10 @@
 package pt.ul.fc.css.democracia2.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MapKeyJoinColumn;
-import jakarta.persistence.OneToMany;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,7 +20,8 @@ public class VoteBox {
   @MapKeyJoinColumn(name = "delegate_cc")
   private Map<Delegate, Boolean> publicVotes;
 
-  @OneToMany private Set<Citizen> voted;
+  @ManyToMany(cascade = CascadeType.ALL)
+  private Set<Citizen> voted;
 
   private long totalInFavor; // number of citizens in favor
   private long totalAgainst;
