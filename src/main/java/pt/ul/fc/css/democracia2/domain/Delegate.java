@@ -16,6 +16,10 @@ public class Delegate extends Citizen {
   @OneToMany(mappedBy = "proponent")
   private List<Bill> bills;
 
+  public List<Bill> getBills() {
+    return bills;
+  }
+
   /**
    * Constructs a new Delegate object using a name,cc,token.
    *

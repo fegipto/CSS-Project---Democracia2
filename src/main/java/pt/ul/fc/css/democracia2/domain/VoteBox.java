@@ -42,11 +42,13 @@ public class VoteBox {
    * @param delegate the delegate who cast the vote
    * @param choice the choice for which the delegate voted
    */
-  public void addPublicVote(Delegate delegate, boolean choice) {
+  public boolean addPublicVote(Delegate delegate, boolean choice) {
+    if (publicVotes.containsKey(delegate) || voted.contains(delegate)) return false;
     publicVotes.put(delegate, choice);
     voted.add(delegate);
     if (choice) totalInFavor++;
     else totalAgainst++;
+    return true;
   }
 
   /**
@@ -55,10 +57,12 @@ public class VoteBox {
    * @param citizen the citizen who cast the vote
    * @param choice the choice for which the citizen voted
    */
-  public void addPrivateVote(Citizen citizen, boolean choice) {
+  public boolean addPrivateVote(Citizen citizen, boolean choice) {
+    if (voted.contains(citizen)) return false;
     voted.add(citizen);
     if (choice) totalInFavor++;
     else totalAgainst++;
+    return true;
   }
 
   /**
