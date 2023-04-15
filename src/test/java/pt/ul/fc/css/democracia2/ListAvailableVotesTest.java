@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,14 +37,28 @@ public class ListAvailableVotesTest extends MockDatabaseTests {
   @Test
   public void shouldReturnOnlyVotableBills() {
 
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
     Bill added1 =
-        delegate1.proposeBill(
-            "Bill 1", "null", new byte[] {}, LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
+                topic.get());
     Bill added2 =
-        delegate1.proposeBill(
-            "Bill 2", "null", new byte[] {}, LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 2",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();

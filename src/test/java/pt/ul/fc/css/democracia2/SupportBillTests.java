@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,14 +38,29 @@ class SupportBillTests extends MockDatabaseTests {
   @Test
   void testGetOpenToSupportBills() {
 
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
     Bill added1 =
-        delegate1.proposeBill(
-            "Bill 1", "null", new byte[] {}, LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
+                topic.get());
     Bill added2 =
-        delegate1.proposeBill(
-            "Bill 2", "null", new byte[] {}, LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 2",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -71,14 +87,29 @@ class SupportBillTests extends MockDatabaseTests {
 
   @Test
   void testSupportBillStatus() {
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
     Bill added1 =
-        delegate1.proposeBill(
-            "Bill 1", "null", new byte[] {}, LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
+                topic.get());
     Bill added2 =
-        delegate1.proposeBill(
-            "Bill 2", "null", new byte[] {}, LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 2",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -107,11 +138,20 @@ class SupportBillTests extends MockDatabaseTests {
 
   @Test
   void testSupportBillProponentVote() {
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
     Bill added1 =
-        delegate1.proposeBill(
-            "Bill 1", "null", new byte[] {}, LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
@@ -131,7 +171,7 @@ class SupportBillTests extends MockDatabaseTests {
     assertEquals(10000, added1.getSupporters().size());
     assertTrue(added1.getStatus() == BillStatus.VOTING);
 
-    assertTrue(added1.getVoteBox().getPublicCastVote(delegate1).get());
+    assertTrue(added1.getVoteBox().getPublicCastVote(delegate1.get()).get());
   }
 
   @Test
@@ -139,9 +179,15 @@ class SupportBillTests extends MockDatabaseTests {
     LocalDateTime now = LocalDateTime.now();
 
     // Given
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
-    Bill added1 = delegate1.proposeBill("Bills 1", "null", new byte[] {}, now.plusMonths(5), topic);
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
+    Bill added1 =
+        delegate1
+            .get()
+            .proposeBill("Bills 1", "null", new byte[] {}, now.plusMonths(5), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
@@ -170,9 +216,13 @@ class SupportBillTests extends MockDatabaseTests {
     LocalDateTime now = LocalDateTime.now();
 
     // Given
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
-    Bill added1 = delegate1.proposeBill("Bill 1", "null", new byte[] {}, now.plusDays(10), topic);
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
+    Bill added1 =
+        delegate1.get().proposeBill("Bill 1", "null", new byte[] {}, now.plusDays(10), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
@@ -201,9 +251,15 @@ class SupportBillTests extends MockDatabaseTests {
     LocalDateTime now = LocalDateTime.now();
 
     // Given
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
-    Bill added1 = delegate1.proposeBill("Bill 1", "null", new byte[] {}, now.minusDays(10), topic);
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
+    Bill added1 =
+        delegate1
+            .get()
+            .proposeBill("Bill 1", "null", new byte[] {}, now.minusDays(10), topic.get());
     assertTrue(added1 == null);
   }
 }

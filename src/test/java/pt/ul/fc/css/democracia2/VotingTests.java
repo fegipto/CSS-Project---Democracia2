@@ -32,11 +32,20 @@ public class VotingTests extends MockDatabaseTests {
 
   @BeforeEach
   void initVotableBill() {
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
+
     Bill added1 =
-        delegate1.proposeBill(
-            "Bill Votable", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill Votable",
+                "null",
+                new byte[] {},
+                LocalDateTime.now().plusMonths(4),
+                topic.get());
     List<Citizen> citizens = citizenRepository.findAll();
     int count = 0;
     for (Citizen cit : citizens) {
@@ -54,13 +63,15 @@ public class VotingTests extends MockDatabaseTests {
   void testGetOmittedVote() {
 
     Citizen cit = citizenRepository.findAll().get(0);
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Bill bill = delegate1.getBills().get(0);
-    Topic topic = topicRepository.findByName("Education");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
 
+    Bill bill = delegate1.get().getBills().get(0);
     assertTrue(votingService.getOmmitedVote(cit.getToken(), bill.getId()).isEmpty());
 
-    cit.chooseDelegate(delegate1, topic);
+    cit.chooseDelegate(delegate1.get(), topic.get());
 
     // call the service method and verify the result
     Optional<Boolean> result = votingService.getOmmitedVote(cit.getToken(), bill.getId());
@@ -79,13 +90,15 @@ public class VotingTests extends MockDatabaseTests {
   void testGetOmittedVoteOnSubTopic() {
 
     Citizen cit = citizenRepository.findAll().get(0);
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Bill bill = delegate1.getBills().get(0);
-    Topic topic = topicRepository.findByName("Education - Subtopic 0");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education - Subtopic 0");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
 
+    Bill bill = delegate1.get().getBills().get(0);
     assertTrue(votingService.getOmmitedVote(cit.getToken(), bill.getId()).isEmpty());
 
-    cit.chooseDelegate(delegate1, topic);
+    cit.chooseDelegate(delegate1.get(), topic.get());
 
     // call the service method and verify the result
     Optional<Boolean> result = votingService.getOmmitedVote(cit.getToken(), bill.getId());
@@ -94,11 +107,19 @@ public class VotingTests extends MockDatabaseTests {
 
   @Test
   void testGetOmittedVoteOnBillSubTopic() {
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education - Subtopic 0");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education - Subtopic 0");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
     Bill specificBill =
-        delegate1.proposeBill(
-            "Bill Votable", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill Votable",
+                "null",
+                new byte[] {},
+                LocalDateTime.now().plusMonths(4),
+                topic.get());
     List<Citizen> citizens = citizenRepository.findAll();
     int count = 0;
     for (Citizen cit : citizens) {
@@ -113,11 +134,12 @@ public class VotingTests extends MockDatabaseTests {
 
     Citizen cit = citizenRepository.findAll().get(0);
 
-    Topic topicGeneral = topicRepository.findByName("Education");
+    Optional<Topic> topicGeneral = topicRepository.findByName("Education");
+    assertTrue(topicGeneral.isPresent());
 
     assertTrue(votingService.getOmmitedVote(cit.getToken(), specificBill.getId()).isEmpty());
 
-    cit.chooseDelegate(delegate1, topicGeneral);
+    cit.chooseDelegate(delegate1.get(), topicGeneral.get());
 
     // call the service method and verify the result
     Optional<Boolean> result = votingService.getOmmitedVote(cit.getToken(), specificBill.getId());
@@ -128,14 +150,22 @@ public class VotingTests extends MockDatabaseTests {
   @Test
   void testVoteCitizen() {
 
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education - Subtopic 0");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education - Subtopic 0");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
     Optional<Bill> votable = billRepository.findByTitle("Bill Votable");
     assertTrue(votable.isPresent());
     Citizen cit = citizenRepository.findAll().get(0);
     Bill nonVotable =
-        delegate1.proposeBill(
-            "Bill Non Votable", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill Non Votable",
+                "null",
+                new byte[] {},
+                LocalDateTime.now().plusMonths(4),
+                topic.get());
 
     assertFalse(votingService.vote(cit.getToken(), nonVotable.getId(), false));
     assertTrue(votingService.vote(cit.getToken(), votable.get().getId(), false));
@@ -145,22 +175,30 @@ public class VotingTests extends MockDatabaseTests {
 
   @Test
   void testVoteDelegate() {
-
-    Delegate delegate1 = delegateRepository.findByName("Delegate 1");
-    Topic topic = topicRepository.findByName("Education - Subtopic 0");
+    Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
+    Optional<Topic> topic = topicRepository.findByName("Education - Subtopic 0");
     Optional<Bill> votable = billRepository.findByTitle("Bill Votable");
+    assertTrue(delegate1.isPresent());
+    assertTrue(topic.isPresent());
     assertTrue(votable.isPresent());
     Bill nonVotable =
-        delegate1.proposeBill(
-            "Bill Non Votable", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic);
+        delegate1
+            .get()
+            .proposeBill(
+                "Bill Non Votable",
+                "null",
+                new byte[] {},
+                LocalDateTime.now().plusMonths(4),
+                topic.get());
 
-    Delegate delegate2 = delegateRepository.findByName("Delegate 2");
+    Optional<Delegate> delegate2 = delegateRepository.findByName("Delegate 2");
 
-    assertFalse(votingService.vote(delegate2.getToken(), nonVotable.getId(), false));
-    assertTrue(votingService.vote(delegate2.getToken(), votable.get().getId(), false));
+    assertTrue(delegate2.isPresent());
+    assertFalse(votingService.vote(delegate2.get().getToken(), nonVotable.getId(), false));
+    assertTrue(votingService.vote(delegate2.get().getToken(), votable.get().getId(), false));
 
-    assertTrue(votable.get().getVoteBox().hasVoted(delegate2));
-    Optional<Boolean> vote = votable.get().getVoteBox().getPublicCastVote(delegate2);
+    assertTrue(votable.get().getVoteBox().hasVoted(delegate2.get()));
+    Optional<Boolean> vote = votable.get().getVoteBox().getPublicCastVote(delegate2.get());
     assertTrue(vote.isPresent());
     assertFalse(vote.get());
   }
