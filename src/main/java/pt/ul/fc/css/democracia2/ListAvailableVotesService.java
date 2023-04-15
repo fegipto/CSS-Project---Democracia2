@@ -2,9 +2,10 @@ package pt.ul.fc.css.democracia2;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pt.ul.fc.css.democracia2.domain.Bill;
+import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.BillStatus;
 import pt.ul.fc.css.democracia2.repositories.BillRepository;
 
@@ -19,7 +20,9 @@ public class ListAvailableVotesService {
   }
 
   @Autowired
-  public List<Bill> listAvailableVotes() {
-    return billRepository.getBillsByStatus(BillStatus.VOTING);
+  public List<BillDTO> listAvailableVotes() {
+    return billRepository.getBillsByStatus(BillStatus.VOTING).stream()
+        .map(bill -> new BillDTO(bill))
+        .collect(Collectors.toList());
   }
 }

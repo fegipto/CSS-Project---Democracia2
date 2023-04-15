@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.BillStatus;
 import pt.ul.fc.css.democracia2.domain.Citizen;
@@ -64,9 +65,9 @@ public class ListAvailableVotesTest extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.VOTING);
 
     // ensure that only votable bills are returned
-    List<Bill> availableVotes = listAvailableVotesService.listAvailableVotes();
+    List<BillDTO> availableVotes = listAvailableVotesService.listAvailableVotes();
     assertEquals(2, availableVotes.size());
-    for (Bill bill : availableVotes) {
+    for (BillDTO bill : availableVotes) {
       assertTrue(bill.getStatus() == BillStatus.VOTING);
     }
   }

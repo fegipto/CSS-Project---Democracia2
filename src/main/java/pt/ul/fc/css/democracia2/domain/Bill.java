@@ -97,7 +97,7 @@ public class Bill {
     return file;
   }
 
-  public LocalDateTime getValidaty() {
+  public LocalDateTime getValidity() {
     return validity;
   }
 
@@ -152,5 +152,9 @@ public class Bill {
       beginVote();
     }
     return true;
+  }
+
+  public long getId() {
+    return this.id;
   }
 }
