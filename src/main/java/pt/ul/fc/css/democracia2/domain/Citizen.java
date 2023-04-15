@@ -52,7 +52,7 @@ public class Citizen {
     super();
     this.name = name;
     this.cc = cc;
-
+    this.token = cc; // TODO this fase only while there is no authentication service
     this.chosenDelegates = new HashMap<>();
   }
 
