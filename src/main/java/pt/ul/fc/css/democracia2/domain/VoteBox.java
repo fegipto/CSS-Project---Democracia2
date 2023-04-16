@@ -24,6 +24,16 @@ public class VoteBox {
   private Set<Citizen> voted;
 
   private long totalInFavor; // number of citizens in favor
+
+  /** Does not count ommited votes */
+  public long getTotalInFavor() {
+    return totalInFavor;
+  }
+  /** Does not count ommited votes */
+  public long getTotalAgainst() {
+    return totalAgainst;
+  }
+
   private long totalAgainst;
 
   /** Constructs a new VoteBox object for the given bill. */

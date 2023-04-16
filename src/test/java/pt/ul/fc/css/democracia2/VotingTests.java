@@ -1,5 +1,6 @@
 package pt.ul.fc.css.democracia2;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -172,6 +173,8 @@ public class VotingTests extends MockDatabaseTests {
     assertTrue(votingService.vote(cit.getToken(), votable.get().getId(), false));
 
     assertTrue(votable.get().getVoteBox().hasVoted(cit));
+    assertEquals(1, votable.get().getVoteBox().getTotalInFavor());
+    assertEquals(1, votable.get().getVoteBox().getTotalAgainst());
   }
 
   @Test
@@ -198,8 +201,15 @@ public class VotingTests extends MockDatabaseTests {
     assertFalse(votingService.vote(delegate2.get().getToken(), nonVotable.getId(), false));
     assertTrue(votingService.vote(delegate2.get().getToken(), votable.get().getId(), false));
 
+    // Auto proponent vote
+    assertTrue(votable.get().getVoteBox().hasVoted(delegate1.get()));
+    Optional<Boolean> vote = votable.get().getVoteBox().getPublicCastVote(delegate1.get());
+    assertTrue(vote.isPresent());
+    assertTrue(vote.get());
+
+    // Manual vote
     assertTrue(votable.get().getVoteBox().hasVoted(delegate2.get()));
-    Optional<Boolean> vote = votable.get().getVoteBox().getPublicCastVote(delegate2.get());
+    vote = votable.get().getVoteBox().getPublicCastVote(delegate2.get());
     assertTrue(vote.isPresent());
     assertFalse(vote.get());
   }

@@ -11,13 +11,13 @@ import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 @Service
 @Transactional
-public class ClosingExpiredBillsService {
+/** Responsible for updating the status of bills, either in voting or created bills */
+public class UpdateBillsService {
   private BillRepository billRepository;
   private CitizenRepository citizenRepository;
 
   @Autowired
-  public ClosingExpiredBillsService(
-      BillRepository billRepository, CitizenRepository citizenRepository) {
+  public UpdateBillsService(BillRepository billRepository, CitizenRepository citizenRepository) {
     this.billRepository = billRepository;
     this.citizenRepository = citizenRepository;
   }

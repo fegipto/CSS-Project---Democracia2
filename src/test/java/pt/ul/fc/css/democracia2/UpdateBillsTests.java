@@ -1,7 +1,6 @@
 package pt.ul.fc.css.democracia2;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -20,64 +19,72 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
-import pt.ul.fc.css.democracia2.services.ClosingExpiredBillsService;
+import pt.ul.fc.css.democracia2.services.UpdateBillsService;
 
 @SpringBootTest
-@Transactional
-class ClosingExpiredBillsServiceTests extends MockDatabaseTests {
+class UpdateBillsTests extends MockDatabaseTests {
 
-  @Autowired private ClosingExpiredBillsService closingExpiredBillsService;
-  // @Autowired private VotingService votingService;
+  @Autowired private UpdateBillsService updateBillsService;
 
   @Autowired private DelegateRepository delegateRepository;
+
   @Autowired private TopicRepository topicRepository;
+
   @Autowired private BillRepository billRepository;
+
   @Autowired private CitizenRepository citizenRepository;
 
   @BeforeEach
   void initVotableBill() {
     Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
     Optional<Topic> topic = topicRepository.findByName("Education");
-    assertTrue(delegate1.isPresent());
-    assertTrue(topic.isPresent());
 
-    Bill added1 =
-        delegate1
-            .get()
-            .proposeBill(
-                "Bill Votable",
-                "null",
-                new byte[] {},
-                LocalDateTime.now().plusSeconds(1),
-                topic.get());
-    List<Citizen> citizens = citizenRepository.findAll();
-    int count = 0;
-    for (Citizen cit : citizens) {
-      added1.supportBill(cit);
-      if (count == 10000) {
+    if (delegate1.isPresent() && topic.isPresent()) {
+      Bill added1 =
+          delegate1
+              .get()
+              .proposeBill(
+                  "Bill Votable",
+                  "null",
+                  new byte[] {},
+                  LocalDateTime.now().plusSeconds(2),
+                  topic.get());
 
-        break;
+      List<Citizen> citizens = citizenRepository.findAll();
+      for (Citizen c : citizens) {
+        added1.supportBill(c);
       }
-      count++;
+
+      billRepository.save(added1);
     }
-    billRepository.save(added1);
   }
 
   @Test
+  @Transactional
   public void testScheduledExpiredBills() throws InterruptedException {
     Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
     Optional<Topic> topic = topicRepository.findByName("Education");
-    assertTrue(delegate1.isPresent());
-    assertTrue(topic.isPresent());
-    Bill added2 =
-        delegate1
-            .get()
-            .proposeBill(
-                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusSeconds(2), topic.get());
-    billRepository.save(added2);
-    assertEquals(BillStatus.CREATED, added2.getStatus());
-    Thread.sleep(2000);
-    closingExpiredBillsService.scheduledExpiredBills();
-    assertEquals(BillStatus.EXPIRED, added2.getStatus());
+
+    if (delegate1.isPresent() && topic.isPresent()) {
+      Bill added2 =
+          delegate1
+              .get()
+              .proposeBill(
+                  "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusSeconds(2), topic.get());
+
+      billRepository.save(added2);
+      assertEquals(BillStatus.CREATED, added2.getStatus());
+      Thread.sleep(2000);
+      updateBillsService.scheduledExpiredBills();
+      assertEquals(BillStatus.EXPIRED, added2.getStatus());
+      Bill votable = delegate1.get().getBills().get(0);
+      assertEquals(BillStatus.VOTING, votable.getStatus()); // validity extended to 15 days
+
+      // To test if it expires properly without waiting 15 days calling the domain manually
+      votable.expire(citizenRepository);
+      assertEquals(
+          BillStatus.ACCEPTED,
+          votable.getStatus()); // no one voted, but the proponent automattically did
+    }
   }
 }

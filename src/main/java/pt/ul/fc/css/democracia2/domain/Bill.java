@@ -154,8 +154,7 @@ public class Bill {
       status = BillStatus.EXPIRED;
     } else if (status == BillStatus.VOTING) {
       Optional<Boolean> verdict = voteBox.getVerdict(citRepo, this);
-      if (verdict.isEmpty()) status = BillStatus.CLOSED;
-      else status = (verdict.get()) ? BillStatus.ACCEPTED : BillStatus.FAILED;
+      status = (verdict.isPresent() && verdict.get()) ? BillStatus.ACCEPTED : BillStatus.FAILED;
     }
   }
 
