@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pt.ul.fc.css.democracia2.DTO.DelegateDTO;
-import pt.ul.fc.css.democracia2.DTO.TopicDTO;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -33,14 +32,7 @@ public class DelegateSelectionService {
   }
 
   @Autowired
-  public List<TopicDTO> getTopic() {
-    return topicRepository.findAll().stream()
-        .map(topic -> new TopicDTO(topic))
-        .collect(Collectors.toList());
-  }
-
-  @Autowired
-  public List<DelegateDTO> getDelegate() {
+  public List<DelegateDTO> getDelegates() {
     return delegateRepository.findAll().stream()
         .map(delegate -> new DelegateDTO(delegate))
         .collect(Collectors.toList());
