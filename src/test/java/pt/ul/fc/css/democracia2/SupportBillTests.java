@@ -22,6 +22,7 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
+import pt.ul.fc.css.democracia2.services.SupportBillService;
 
 @SpringBootTest
 @Transactional
@@ -47,20 +48,12 @@ class SupportBillTests extends MockDatabaseTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
     Bill added2 =
         delegate1
             .get()
             .proposeBill(
-                "Bill 2",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -96,20 +89,12 @@ class SupportBillTests extends MockDatabaseTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
     Bill added2 =
         delegate1
             .get()
             .proposeBill(
-                "Bill 2",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -147,11 +132,7 @@ class SupportBillTests extends MockDatabaseTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 

@@ -20,6 +20,7 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
+import pt.ul.fc.css.democracia2.services.ClosingExpiredBillsService;
 
 @SpringBootTest
 @Transactional

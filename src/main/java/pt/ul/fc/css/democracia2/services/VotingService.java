@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import jakarta.transaction.Transactional;
 import java.util.Optional;
@@ -14,8 +14,8 @@ import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 @Service
 @Transactional
 public class VotingService {
-  @Autowired private BillRepository billRepository;
-  @Autowired private CitizenRepository citizenRepository;
+  private BillRepository billRepository;
+  private CitizenRepository citizenRepository;
 
   @Autowired
   public VotingService(BillRepository billRepository, CitizenRepository citizenRepository) {

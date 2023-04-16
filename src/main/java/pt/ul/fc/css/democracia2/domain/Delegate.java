@@ -104,8 +104,9 @@ public class Delegate extends Citizen {
   public Bill proposeBill(
       String title, String description, byte[] file, LocalDateTime validity, Topic topic) {
     LocalDateTime now = LocalDateTime.now();
-    if (!validity.isAfter(now)) return null;
+    if (!validity.isAfter(now) || validity.isAfter(now.plusYears(1))) return null;
     Bill adding = new Bill(title, description, file, validity, topic, this);
+
     bills.add(adding);
     return adding;
   }

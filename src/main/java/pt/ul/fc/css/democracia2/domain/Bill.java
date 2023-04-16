@@ -129,7 +129,7 @@ public class Bill {
 
         if (isValidityMoreThan2Months) validity = now.plusMonths(2);
       } else {
-        validity = now.plusDays(15);
+        validity = now.plusDays(15); // extender
       }
       voteBox.addPublicVote(proponent, true);
     }

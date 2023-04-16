@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
+import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
@@ -18,6 +19,7 @@ import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 public class MockDatabaseTests {
   @Autowired private CitizenRepository citizenRepository;
   @Autowired private DelegateRepository delegateRepository;
+  @Autowired private BillRepository billRepository;
   @Autowired private TopicRepository topicRepository;
 
   @BeforeAll
@@ -88,5 +90,6 @@ public class MockDatabaseTests {
   void clearDatabase() {
     citizenRepository.deleteAll();
     topicRepository.deleteAll();
+    billRepository.deleteAll();
   }
 }

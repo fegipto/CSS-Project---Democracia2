@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -18,9 +18,9 @@ import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 @Service
 @Transactional
 public class DelegateSelectionService {
-  @Autowired private DelegateRepository delegateRepository;
-  @Autowired private TopicRepository topicRepository;
-  @Autowired private CitizenRepository citizenRepository;
+  private DelegateRepository delegateRepository;
+  private TopicRepository topicRepository;
+  private CitizenRepository citizenRepository;
 
   @Autowired
   public DelegateSelectionService(

@@ -56,4 +56,8 @@ public class Topic {
     Topic other = (Topic) obj;
     return Objects.equals(name, other.name) && Objects.equals(parent, other.parent);
   }
+
+  public long getId() {
+    return id;
+  }
 }
