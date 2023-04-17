@@ -32,7 +32,7 @@ import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 public class Bill {
 
   /**
-   * Constructs a Bill
+   * Constructs a new Bill object
    */
   public Bill() {
     // No-argument constructor
@@ -73,13 +73,13 @@ public class Bill {
   private byte[] file;
 
   /**
-   * Constructs a Bill with the given title, description, file, validity, topic and proponent
+   * Constructs a new Bill object using a title, description, file, validity, topic and proponent
    *
-   * @param title title of the bill
-   * @param description description of the bill
-   * @param file file with the main information about the project
-   * @param validity validity of the project
-   * @param topic topic to which the bill is associated
+   * @param title the title of the bill
+   * @param description the description of the bill
+   * @param file the file with the main information about the project
+   * @param validity the validity of the project
+   * @param topic the topic to which the bill is associated
    * @param proponent the delegate that proposes the bill
    */
   public Bill(
@@ -102,72 +102,72 @@ public class Bill {
   }
 
   /**
-   * Method that returns the Bill's title
+   * Method that gets the title of the Bill
    *
-   * @return the Bill's title
+   * @return the title of the corresponding Bill
    */
   public String getTitle() {
     return title;
   }
 
   /**
-   * Method that returns the Bill's status
+   * Method that gets the status of the Bill
    *
-   * @return the Bill's status
+   * @return the status of the corresponding Bill
    */
   public BillStatus getStatus() {
     return status;
   }
 
   /**
-   * Method that returns the Bill's description
+   * Method that gets the description of the Bill
    *
-   * @return the Bill's description
+   * @return the description of the corresponding Bill
    */
   public String getDescription() {
     return description;
   }
 
   /**
-   * Method that returns the Bill's file
+   * Method that gets the file of the Bill
    *
-   * @return the Bill's file
+   * @return the file of the corresponding Bill
    */
   public byte[] getFile() {
     return file;
   }
 
   /**
-   * Method that returns the Bill's validity
+   * Method that gets the validity of the Bill
    *
-   * @return the Bill's validity
+   * @return the validity of the corresponding Bill
    */
   public LocalDateTime getValidity() {
     return validity;
   }
 
   /**
-   * Method that returns the Bill's topic
+   * Method that gets the topic of the Bill
    *
-   * @return the Bill's topic
+   * @return the topic of the corresponding Bill
    */
   public Topic getTopic() {
     return topic;
   }
 
   /**
-   * Method that returns the Bill's votebox
+   * Method that gets the votebox of the Bill
    *
-   * @return the Bill's votebox
+   * @return the votebox of the corresponding Bill
    */
   public VoteBox getVoteBox() {
     return (status == BillStatus.VOTING) ? voteBox : null;
   }
 
   /**
-   * Method that returns the Bill's supporters
+   * Method that gets the supporters of the bill
    *
-   * @return the Bill's supporters
+   * @return the supporters of the corresponding Bill
    */
   public List<Citizen> getSupporters() {
     return supporters;
@@ -201,7 +201,7 @@ public class Bill {
   /**
    * Method that checks if a Bill is expired or not
    *
-   * @return if the bill is expired
+   * @return if the corresponding Bill is expired
    */
   public boolean isExpired() {
     if (status == BillStatus.EXPIRED) {
@@ -216,7 +216,7 @@ public class Bill {
   /**
    * Method that checks if a Bill is open to support or not
    *
-   * @return if the bill is open to support
+   * @return if the corresponding Bill is open to support
    */
   public boolean isOpenToSupport() {
     return status == BillStatus.CREATED;
@@ -253,9 +253,9 @@ public class Bill {
   }
 
   /**
-   * Method that returns the Bill's id
+   * Method that gets the id of the Bill
    *
-   * @return the Bill's id
+   * @return the id of the corresponding Bill
    */
   public long getId() {
     return this.id;

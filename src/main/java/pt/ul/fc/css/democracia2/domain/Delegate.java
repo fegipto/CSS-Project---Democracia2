@@ -6,6 +6,13 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class that represents a Delegate
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Entity
 public class Delegate extends Citizen {
 
@@ -25,7 +32,6 @@ public class Delegate extends Citizen {
    *
    * @param name the name of the delegate
    * @param cc the cc of the delegate
-   * @param token authentication token
    */
   public Delegate(String name, long cc) {
     super(name, cc);
