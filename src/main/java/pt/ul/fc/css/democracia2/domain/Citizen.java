@@ -15,11 +15,20 @@ import java.util.Map;
 import java.util.Objects;
 import org.springframework.lang.NonNull;
 
-/** Class that represents a Citizen */
+/**
+ * Class that represents a Citizen
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
 public class Citizen {
 
+  /**
+   * Constructs a new Citizen object
+   */
   public Citizen() {
     // No-argument constructor
   }
@@ -56,12 +65,13 @@ public class Citizen {
     this.chosenDelegates = new HashMap<>();
   }
 
+
   public void setToken(long token) {
     this.token = token;
   }
 
   /**
-   * Method that get the name of the Citizen
+   * Method that gets the name of the Citizen
    *
    * @return the name of the corresponding Citizen
    */
