@@ -21,9 +21,18 @@ import java.util.Optional;
 import org.springframework.lang.NonNull;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
+/**
+ * Realizado por:
+ *  David Dantas, 56331
+ *  Filipe Egipto, 56272
+ *  Rafael Nisa, 56329
+ */
 @Entity
 public class Bill {
 
+  /**
+   * Constructs a Bill
+   */
   public Bill() {
     // No-argument constructor
   }
@@ -62,6 +71,16 @@ public class Bill {
   @Lob
   private byte[] file;
 
+  /**
+   * Constructs a Bill with the given title, description, file, validity, topic and proponent
+   *
+   * @param title title of the bill
+   * @param description description of the bill
+   * @param file file with the main information about the project
+   * @param validity validity of the project
+   * @param topic topic to which the bill is associated
+   * @param proponent the delegate that proposes the bill
+   */
   public Bill(
       @NonNull String title,
       @NonNull String description,
@@ -81,38 +100,81 @@ public class Bill {
     this.supporters = new LinkedList<Citizen>();
   }
 
+  /**
+   * Method that returns the Bill's title
+   *
+   * @return the Bill's title
+   */
   public String getTitle() {
     return title;
   }
 
+  /**
+   * Method that returns the Bill's status
+   *
+   * @return the Bill's status
+   */
   public BillStatus getStatus() {
     return status;
   }
 
+  /**
+   * Method that returns the Bill's description
+   *
+   * @return the Bill's description
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Method that returns the Bill's file
+   *
+   * @return the Bill's file
+   */
   public byte[] getFile() {
     return file;
   }
 
+  /**
+   * Method that returns the Bill's validity
+   *
+   * @return the Bill's validity
+   */
   public LocalDateTime getValidity() {
     return validity;
   }
 
+  /**
+   * Method that returns the Bill's topic
+   *
+   * @return the Bill's topic
+   */
   public Topic getTopic() {
     return topic;
   }
 
+  /**
+   * Method that returns the Bill's votebox
+   *
+   * @return the Bill's votebox
+   */
   public VoteBox getVoteBox() {
     return (status == BillStatus.VOTING) ? voteBox : null;
   }
 
+  /**
+   * Method that returns the Bill's supporters
+   *
+   * @return the Bill's supporters
+   */
   public List<Citizen> getSupporters() {
     return supporters;
   }
 
+  /**
+   * Method that begins the voting process of a Bill
+   */
   public void beginVote() {
     if (supporters.size() >= 10000) {
       if (isExpired()) status = BillStatus.EXPIRED;
@@ -135,6 +197,11 @@ public class Bill {
     }
   }
 
+  /**
+   * Method that checks if a Bill is expired or not
+   *
+   * @return if the bill is expired
+   */
   public boolean isExpired() {
     if (status == BillStatus.EXPIRED) {
       return true;
@@ -145,10 +212,20 @@ public class Bill {
     }
   }
 
+  /**
+   * Method that checks if a Bill is open to support or not
+   *
+   * @return if the bill is open to support
+   */
   public boolean isOpenToSupport() {
     return status == BillStatus.CREATED;
   }
 
+  /**
+   * Method that expires a Bill
+   *
+   * @param citRepo the CitizenRepository used to check the verdict of the citizens
+   */
   public void expire(CitizenRepository citRepo) {
     if (status == BillStatus.CREATED) {
       status = BillStatus.EXPIRED;
@@ -158,6 +235,12 @@ public class Bill {
     }
   }
 
+  /**
+   * Method that adds the given supporter to the supporters list
+   *
+   * @param supporter the supporter to add
+   * @return if the supporter was successfully addded
+   */
   public boolean supportBill(Citizen supporter) {
     if (!isOpenToSupport() || supporters.contains(supporter)) return false;
 
@@ -168,6 +251,11 @@ public class Bill {
     return true;
   }
 
+  /**
+   * Method that returns the Bill's id
+   *
+   * @return the Bill's id
+   */
   public long getId() {
     return this.id;
   }
