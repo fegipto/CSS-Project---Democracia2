@@ -70,10 +70,8 @@ class SupportBillTests extends MockDatabaseTests {
     }
     billRepository.save(added1);
     billRepository.save(added2);
-    // When
     List<BillDTO> openToSupportBills = supportBillService.getOpenToSupportBills();
 
-    // Then
     assertEquals(1, openToSupportBills.size());
     assertEquals("Bill 2", openToSupportBills.get(0).getTitle());
   }
@@ -108,6 +106,7 @@ class SupportBillTests extends MockDatabaseTests {
         break;
       } else {
         assertTrue(added1.supportBill(cit));
+        assertFalse(added1.supportBill(cit));
       }
       count++;
     }
@@ -144,6 +143,7 @@ class SupportBillTests extends MockDatabaseTests {
         break;
       } else {
         assertTrue(added1.supportBill(cit));
+        assertFalse(added1.supportBill(cit));
       }
       count++;
     }
