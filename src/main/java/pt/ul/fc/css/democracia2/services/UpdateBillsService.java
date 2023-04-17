@@ -9,19 +9,34 @@ import pt.ul.fc.css.democracia2.domain.BillStatus;
 import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
+/**
+ * Class responsible for updating the status of bills, either in voting or created bills
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Service
 @Transactional
-/** Responsible for updating the status of bills, either in voting or created bills */
 public class UpdateBillsService {
   private BillRepository billRepository;
   private CitizenRepository citizenRepository;
 
+  /**
+   * Contructs a new UpdateBillsService object using a bill repository, citizen repository
+   *
+   * @param billRepository the bill repository necessary for this service
+   * @param citizenRepository the citizen repository necessary for this service
+   */
   @Autowired
   public UpdateBillsService(BillRepository billRepository, CitizenRepository citizenRepository) {
     this.billRepository = billRepository;
     this.citizenRepository = citizenRepository;
   }
 
+  /**
+   * Method that expires all the bills with expired validity
+   */
   public void scheduledExpiredBills() {
     List<Bill> listBills = billRepository.getBillsNotInStatus(BillStatus.EXPIRED);
     for (Bill bill : listBills) {
