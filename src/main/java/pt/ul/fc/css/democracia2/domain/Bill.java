@@ -31,9 +31,7 @@ import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 @Entity
 public class Bill {
 
-  /**
-   * Constructs a new Bill object
-   */
+  /** Constructs a new Bill object */
   public Bill() {
     // No-argument constructor
   }

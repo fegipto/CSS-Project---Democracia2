@@ -12,7 +12,13 @@ import java.util.Optional;
 import java.util.Set;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
-/** This class represents a voting box for a given Bill */
+/**
+ * Class that represents a VoteBox for a given Bill
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Embeddable
 public class VoteBox {
 
@@ -122,6 +128,8 @@ public class VoteBox {
   }
 
   /**
+   * Method that check if a citizen has voted
+   *
    * @param cit the citizen to check
    * @return if the citizen has voted
    */
