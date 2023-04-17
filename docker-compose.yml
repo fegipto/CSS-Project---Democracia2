@@ -40,6 +40,16 @@ services:
     networks:
       - dbnet
     command: /bin/bash
-
+    profiles:
+      - test
+  test:
+    build:
+      context: .
+      dockerfile: springboot-test.dockerfile
+    container_name: springbootapptest
+    depends_on:
+      - springbootapp
+    networks:
+      - dbnet
 volumes:
   postgres-data:
