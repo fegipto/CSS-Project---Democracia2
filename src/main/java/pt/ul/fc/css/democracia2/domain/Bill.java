@@ -22,10 +22,11 @@ import org.springframework.lang.NonNull;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 /**
- * Realizado por:
- *  David Dantas, 56331
- *  Filipe Egipto, 56272
- *  Rafael Nisa, 56329
+ * Class that represents a Bill
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
  */
 @Entity
 public class Bill {
