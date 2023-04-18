@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pt.ul.fc.css.democracia2.DTO.TopicDTO;
+import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.repositories.BillRepository;
@@ -31,7 +32,8 @@ public class ProposeBillService {
   private BillRepository billRepository;
 
   /**
-   * Contructs a new ProposeBillService object using a topic repository, delegate repository, bill repository
+   * Contructs a new ProposeBillService object using a topic repository, delegate repository, bill
+   * repository
    *
    * @param topicRepository the topic repository necessary for this service
    * @param delegateRepository the delegate repository necessary for this service
@@ -78,14 +80,11 @@ public class ProposeBillService {
       throw new IllegalArgumentException("Topic with id " + topic_id + " is not found.");
     }
 
-    LocalDateTime oneYearLater = LocalDateTime.now().plusYears(1);
-    if (validity.isAfter(oneYearLater)) {
-      throw new IllegalArgumentException("Validity cannot be more than one year in the future.");
-    }
+    Bill added = delegate.get().proposeBill(title, desc, file.getBytes(), validity, topic.get());
 
-    // save in bill table since it owns the fk
-    billRepository.save(
-        delegate.get().proposeBill(title, desc, file.getBytes(), validity, topic.get()));
+    if (added != null)
+      // save in bill table since it owns the fk
+      billRepository.save(added);
   }
 
   /**
