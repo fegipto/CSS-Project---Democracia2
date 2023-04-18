@@ -1,2 +1,1 @@
-docker build -t springboot-test -f ./springboot-test.dockerfile .
-docker run --rm springboot-test
+sudo docker-compose -f docker-test-compose.yml run --rm --remove-orphans test 
