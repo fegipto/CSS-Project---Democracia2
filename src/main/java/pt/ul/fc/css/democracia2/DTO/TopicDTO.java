@@ -58,7 +58,7 @@ public class TopicDTO {
   /**
    * Method that gets the name of the TopicDTO
    *
-   * @returnthe the name of the corresponding TopicDTO
+   * @return the name of the corresponding TopicDTO
    */
   public String getName() {
     return name;

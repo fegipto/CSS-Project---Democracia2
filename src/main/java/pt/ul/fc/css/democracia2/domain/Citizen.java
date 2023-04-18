@@ -26,9 +26,7 @@ import org.springframework.lang.NonNull;
 @Inheritance(strategy = SINGLE_TABLE)
 public class Citizen {
 
-  /**
-   * Constructs a new Citizen object
-   */
+  /** Constructs a new Citizen object */
   public Citizen() {
     // No-argument constructor
   }

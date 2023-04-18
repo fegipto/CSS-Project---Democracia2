@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 public class Delegate extends Citizen {
 
+  /** Contructs a new Delegate object */
   public Delegate() {
     // No-argument constructor
   }
@@ -39,7 +40,7 @@ public class Delegate extends Citizen {
   }
 
   /**
-   * Method that get the name of the Delegate
+   * Method that gets the name of the Delegate
    *
    * @return the name of the corresponding Delegate
    */
@@ -48,7 +49,7 @@ public class Delegate extends Citizen {
   }
 
   /**
-   * Method that get the cc of the Delegate
+   * Method that gets the cc of the Delegate
    *
    * @return the cc of the corresponding Delegate
    */
@@ -57,7 +58,7 @@ public class Delegate extends Citizen {
   }
 
   /**
-   * Method that get the token of the Delegate
+   * Method that gets the token of the Delegate
    *
    * @return the token of the corresponding Delegate
    */
@@ -66,7 +67,7 @@ public class Delegate extends Citizen {
   }
 
   /**
-   * Method that given a Delegate and a Topic, creates a new ChosenDelegate and add it to the
+   * Method that given a Delegate and a Topic, creates a new ChosenDelegate and adds it to the
    * delegates of the delegate
    *
    * @param delegate the Delegate to add
@@ -78,7 +79,7 @@ public class Delegate extends Citizen {
   }
 
   /**
-   * Method that given a Topic return the delegate chosen for that topic
+   * Method that given a Topic returns the delegate chosen for that topic
    *
    * @param topic the Topic to search
    * @return the delegate related to that topic || null if doent exist
