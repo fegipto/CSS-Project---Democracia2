@@ -1,1 +1,1 @@
-sudo docker-compose -f docker-test-compose.yml run --rm --remove-orphans test 
+docker-compose -f docker-test-compose.yml run --rm test
