@@ -2,18 +2,8 @@ package pt.ul.fc.css.democracia2.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,6 +41,7 @@ public class Bill {
   private String description;
 
   @Column(name = "BILL_VALIDITY")
+  @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime validity;
 
   @ManyToOne
