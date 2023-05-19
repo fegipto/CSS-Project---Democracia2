@@ -47,4 +47,6 @@ public class DelegateDTO {
   public long getCC() {
     return cc;
   }
+
+
 }

@@ -54,6 +54,10 @@ public class Bill {
   @JoinColumn(name = "delegate_cc", nullable = false)
   private Delegate proponent;
 
+  public Delegate getProponent() {
+    return proponent;
+  }
+
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Citizen> supporters;
 
@@ -74,7 +78,7 @@ public class Bill {
   public Bill(
       @NonNull String title,
       @NonNull String description,
-      @NonNull byte[] file,
+      byte[] file,
       @NonNull LocalDateTime validity,
       @NonNull Topic topic,
       @NonNull Delegate proponent) {

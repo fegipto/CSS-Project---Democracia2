@@ -15,11 +15,12 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 public class BillDTO {
 
   private long id;
+  private long proponentId;
   private String title;
   private BillStatus status;
   private String description;
   private LocalDateTime validity;
-  private Topic topic;
+  private long topicId;
   private byte[] file;
 
   /**
@@ -36,11 +37,12 @@ public class BillDTO {
    */
   public BillDTO(Bill bill) {
     this.id = bill.getId();
+    this.proponentId = bill.getProponent().getCC();
     this.title = bill.getTitle();
     this.status = bill.getStatus();
     this.description = bill.getDescription();
     this.validity = bill.getValidity();
-    this.topic = bill.getTopic();
+    this.topicId = bill.getTopic().getId();
     this.file = bill.getFile();
   }
 
@@ -94,8 +96,8 @@ public class BillDTO {
    *
    * @return the topic of the corresponding BillDTO
    */
-  public Topic getTopic() {
-    return topic;
+  public long getTopicId() {
+    return topicId;
   }
 
   /**
@@ -105,5 +107,41 @@ public class BillDTO {
    */
   public byte[] getFile() {
     return file;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setStatus(BillStatus status) {
+    this.status = status;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setValidity(LocalDateTime validity) {
+    this.validity = validity;
+  }
+
+  public void setTopic(long topicId) {
+    this.topicId = topicId;
+  }
+
+  public void setFile(byte[] file) {
+    this.file = file;
+  }
+
+  public long getProponentId() {
+    return proponentId;
+  }
+
+  public void setProponentId(long proponentId) {
+    this.proponentId = proponentId;
   }
 }
