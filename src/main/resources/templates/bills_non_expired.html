@@ -8,8 +8,10 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Vat</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Supporters</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +21,6 @@
                 <tr th:each="c : ${bills}">
                     <td th:text="${c.id}">...</td>
                     <td><a th:href="@{/bills/} + ${c.id}" th:text="${c.title}">...</a></td>
-                    <td th:text="${c.description}">...</td>
                     <td th:text="${c.status}">...</td>
                     <td th:text="${c.supportersCount}">...</td>
                     <td>
@@ -27,10 +28,10 @@
                             <input type="hidden" name="billId" id="billId" th:value="${c.id}" required/>
                             <input th:if="${citizen}" type="hidden" name="citizenId" id="citizenId" th:value="${citizen.cc}" required />
                             <input th:disabled="${(c.status.name() != 'CREATED') || (citizen == null)}" value="support" type="submit">
-                        </form> 
+                        </form>
                     </td>
-                    
-                    
+                    <td th:text="${c.description}">...</td>
+
                 </tr>
             </tbody>
         </table>

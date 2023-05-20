@@ -73,4 +73,12 @@ public class VotingService {
       return bill.get().getVoteBox().addPublicVote((Delegate) cit.get(), vote);
     else return bill.get().getVoteBox().addPrivateVote(cit.get(), vote);
   }
+
+  public boolean hasVoted(long citizenId, long billId) {
+    Optional<Bill> bill = billRepository.findById(billId);
+    Optional<Citizen> cit = citizenRepository.findByToken(citizenId);
+    if (bill.isEmpty() || cit.isEmpty()) return false;
+
+    return bill.get().getVoteBox().hasVoted(cit.get());
+  }
 }
