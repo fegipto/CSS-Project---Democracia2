@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,10 +70,10 @@ class RestCustomerController {
         }
     }
 
-    @PutMapping("/bill/support")
-    ResponseEntity<?> supportBill(@RequestBody long billId, long citizenToken) {
+    @PostMapping("/bill/support")
+    ResponseEntity<?> supportBill(@RequestBody Pair<Long,Long> pair) {
         try {
-            supportBillService.supportBill(citizenToken, billId);
+            supportBillService.supportBill(pair.getFirst(), pair.getSecond());
             return ResponseEntity.ok().body(null);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

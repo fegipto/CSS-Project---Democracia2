@@ -1,18 +1,17 @@
 package pt.ul.fc.css.democracia2.controllers.web;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.util.Pair;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
@@ -133,21 +131,19 @@ public class WebBillController {
         return null;
     }
 
-    @PutMapping("/bill/support")
+    @PostMapping("/bill/support")
     public String supportBill(Model model, @RequestParam("billId") Long billId, @RequestParam("citizenId") Long citizenId) {
             // Call the REST endpoint
-        String endpointUrl = "https://example.com/api/bill/support";
+        String endpointUrl = "http://localhost:8080/api/bill/support";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        Map<String, Long> requestBody = new HashMap<>();
-        requestBody.put("billId", billId);
-        requestBody.put("citizenToken", citizenId);
+        Pair<Long,Long> requestBody = Pair.of(citizenId, billId);
 
-        HttpEntity<Map<String, Long>> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Pair<Long,Long>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Void> responseEntity = restTemplate.exchange(endpointUrl, HttpMethod.PUT, requestEntity, Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.exchange(endpointUrl, HttpMethod.POST, requestEntity, Void.class);
 
         return "redirect:/bill/"+billId;
     }

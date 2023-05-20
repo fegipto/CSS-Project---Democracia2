@@ -63,7 +63,7 @@ public class ListAvailableVotesTest extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {

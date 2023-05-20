@@ -142,7 +142,7 @@ public class ConsultNonExpiredBillServiceTests extends MockDatabaseTests {
     Thread.sleep(1000);
     List<Citizen> citizens = citizenRepository.findAll();
 
-    int count = 0;
+    int count = added.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {

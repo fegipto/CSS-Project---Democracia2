@@ -108,6 +108,7 @@ public class Bill {
     this.status = BillStatus.CREATED;
     this.voteBox = new VoteBox();
     this.supporters = new LinkedList<Citizen>();
+    supporters.add(proponent);
   }
 
   /**

@@ -21,7 +21,7 @@ public class BillDTO {
   private String title;
   private BillStatus status;
   private String description;
-  
+  private int supportersCount;
   private LocalDateTime validity;
 
   private long topicId;
@@ -48,6 +48,7 @@ public class BillDTO {
     this.validity = bill.getValidity();
     this.topicId = bill.getTopic().getId();
     this.file = bill.getFile();
+    this.supportersCount = bill.getSupporters().size();
   }
 
   /**
@@ -147,5 +148,13 @@ public class BillDTO {
 
   public void setProponentId(long proponentId) {
     this.proponentId = proponentId;
+  }
+
+  public int getSupportersCount() {
+    return supportersCount;
+  }
+
+  public void setSupportersCount(int supportersCount) {
+    this.supportersCount = supportersCount;
   }
 }
