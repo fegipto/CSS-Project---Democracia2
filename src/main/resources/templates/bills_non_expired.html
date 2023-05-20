@@ -14,12 +14,22 @@
             </thead>
             <tbody>
                 <tr th:if="${bills.empty}">
-                    <td colspan="3">All non expired bills</td>
+                    <td colspan="5">All non expired bills</td>
                 </tr>
                 <tr th:each="c : ${bills}">
                     <td th:text="${c.id}">...</td>
                     <td><a th:href="@{/bills/} + ${c.id}" th:text="${c.title}">...</a></td>
                     <td th:text="${c.description}">...</td>
+                    <td th:text="${c.status}">...</td>
+                    <td>
+                        <form th:if="${c.status.name() == 'CREATED'}" method="PUT" th:action="@{/bill/support}">
+                            <input type="hidden" name="billId" id="billId" th:value="${c.id}" />
+                            <input th:if="${citizen}" type="hidden" name="citizenId" id="citizenId" th:value="${citizen.cc}" />
+                            <button type="submit" name="submit" value="value">support</button>
+                        </form> 
+                    </td>
+                    
+                    
                 </tr>
             </tbody>
         </table>

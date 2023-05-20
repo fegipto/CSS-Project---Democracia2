@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pt.ul.fc.css.democracia2.DTO.DelegateDTO;
+import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -64,7 +64,7 @@ public class DelegateSelectionServiceTests extends MockDatabaseTests {
 
   @Test
   public void testGetDelegates() {
-    List<DelegateDTO> delegates = delegateSelectionService.getDelegates();
+    List<CitizenDTO> delegates = delegateSelectionService.getDelegates();
     assertNotNull(delegates);
     assertFalse(delegates.isEmpty());
     assertEquals(100, delegates.size());

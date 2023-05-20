@@ -2,13 +2,28 @@ package pt.ul.fc.css.democracia2.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 /**
@@ -42,6 +57,7 @@ public class Bill {
 
   @Column(name = "BILL_VALIDITY")
   @Temporal(TemporalType.TIMESTAMP)
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private LocalDateTime validity;
 
   @ManyToOne
@@ -79,7 +95,7 @@ public class Bill {
       @NonNull String title,
       @NonNull String description,
       byte[] file,
-      @NonNull LocalDateTime validity,
+      @NonNull @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime validity,
       @NonNull Topic topic,
       @NonNull Delegate proponent) {
     super();

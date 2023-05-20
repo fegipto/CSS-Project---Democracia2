@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
 import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 import pt.ul.fc.css.democracia2.services.ProposeBillService;
+import pt.ul.fc.css.democracia2.services.SupportBillService;
 
 
 @RestController()
@@ -33,6 +35,8 @@ class RestCustomerController {
     private ConsultNonExpiredBillService consultBillService;
     @Autowired
     private ProposeBillService proposeBillService;
+    @Autowired
+    private SupportBillService supportBillService;
     
     @GetMapping("/bills/votable")
     List<BillDTO> all() {
@@ -60,9 +64,19 @@ class RestCustomerController {
             BillDTO c = proposeBillService.presentBill(bill);
             return ResponseEntity.ok().body(c);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+        }
+    }
+
+    @PutMapping("/bill/support")
+    ResponseEntity<?> supportBill(@RequestBody long billId, long citizenToken) {
+        try {
+            supportBillService.supportBill(citizenToken, billId);
+            return ResponseEntity.ok().body(null);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

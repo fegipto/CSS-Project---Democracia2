@@ -29,7 +29,16 @@
                 <li><a th:href="@{/bill/new}">Add New Bill</a></li>
             </ol>
         </div>
-
+        <div>
+            <form th:unless="${citizen}" th:action="@{'/citizen'}" method="get">
+                <div>
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <button type="submit">login</button>
+            </form>
+            <p th:if="${citizen}" th:text="'Hello '+${citizen.name}+ ' '+ ${citizen.cc}"></p>
+        </div>
         <div th:replace="${content}">
             <!-- ============================================================================ -->
             <!-- This content is only used for static prototyping purposes (natural templates)-->

@@ -1,9 +1,11 @@
 package pt.ul.fc.css.democracia2.DTO;
 
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.BillStatus;
-import pt.ul.fc.css.democracia2.domain.Topic;
 
 /**
  * Class that represents a BillDTO
@@ -19,7 +21,9 @@ public class BillDTO {
   private String title;
   private BillStatus status;
   private String description;
+  
   private LocalDateTime validity;
+
   private long topicId;
   private byte[] file;
 
@@ -129,7 +133,7 @@ public class BillDTO {
     this.validity = validity;
   }
 
-  public void setTopic(long topicId) {
+  public void setTopicId(long topicId) {
     this.topicId = topicId;
   }
 

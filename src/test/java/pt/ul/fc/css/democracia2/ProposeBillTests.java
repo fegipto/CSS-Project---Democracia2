@@ -39,7 +39,7 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopic(topic.getId());
+    bill.setTopicId(topic.getId());
     proposeBillService.presentBill(bill);
 
     Delegate updatedDelegate = delegateRepository.findById(delegate.getCC()).orElse(null);
@@ -59,7 +59,7 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopic(topic.getId());
+    bill.setTopicId(topic.getId());
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -76,7 +76,7 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopic(-1);
+    bill.setTopicId(-1);
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -95,7 +95,7 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopic(topic.getId());
+    bill.setTopicId(topic.getId());
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -113,7 +113,7 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopic(topic.getId());
+    bill.setTopicId(topic.getId());
     assertThrows(
         IllegalArgumentException.class,
         () -> {

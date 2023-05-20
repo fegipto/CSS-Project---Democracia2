@@ -1,6 +1,6 @@
 package pt.ul.fc.css.democracia2.DTO;
 
-import pt.ul.fc.css.democracia2.domain.Delegate;
+import pt.ul.fc.css.democracia2.domain.Citizen;
 
 /**
  * Class that represents a DelegateDTO
@@ -9,14 +9,14 @@ import pt.ul.fc.css.democracia2.domain.Delegate;
  * @author Filipe Egipto, 56272
  * @author Rafael Nisa, 56329
  */
-public class DelegateDTO {
+public class CitizenDTO {
   private String name;
   private long cc;
 
   /**
    * Constructs a new DelegateDTO object
    */
-  public DelegateDTO() {
+  public CitizenDTO() {
     // No-argument constructor
   }
 
@@ -25,7 +25,7 @@ public class DelegateDTO {
    *
    * @param delegate the delegate to use to create the DTO
    */
-  public DelegateDTO(Delegate delegate) {
+  public CitizenDTO(Citizen delegate) {
     this.name = delegate.getName();
     this.cc = delegate.getCC();
   }
@@ -44,8 +44,17 @@ public class DelegateDTO {
    *
    * @return the cc of the corresponding DelegateDTO
    */
-  public long getCC() {
+  public long getCc() {
     return cc;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  public void setCc(long cc) {
+    this.cc = cc;
   }
 
 

@@ -9,22 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.ul.fc.css.democracia2.DTO.DelegateDTO;
+import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
+import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
-import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
+import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
+import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 @RestController()
 @RequestMapping("api")
 public class RestUserController {
     @Autowired
-    private DelegateRepository delegateRepository;
+    private CitizenRepository citizenRepository;
     
 
-    @GetMapping("/delegate/name/{name}")
-    ResponseEntity<DelegateDTO> getDelegateByName(@PathVariable String name) {
-        Optional<Delegate> delegateOptional = delegateRepository.findByName(name);
-        if (delegateOptional.isPresent()) {
-            DelegateDTO delegateDTO = new DelegateDTO(delegateOptional.get());
-            return ResponseEntity.ok(delegateDTO);
+    @GetMapping("/citizen/name/{name}")
+    ResponseEntity<CitizenDTO> getDelegateByName(@PathVariable String name) {
+        Optional<Citizen> citizenOptional = citizenRepository.findByName(name);
+        if (citizenOptional.isPresent()) {
+            CitizenDTO citizenDTO = new CitizenDTO(citizenOptional.get());
+            return ResponseEntity.ok(citizenDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
