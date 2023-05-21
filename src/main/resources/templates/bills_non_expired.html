@@ -20,7 +20,7 @@
                 </tr>
                 <tr th:each="c : ${bills}">
                     <td th:text="${c.id}">...</td>
-                    <td><a th:href="@{/bills/} + ${c.id}" th:text="${c.title}">...</a></td>
+                    <td><a th:href="@{/bill/} + ${c.id}" th:text="${c.title}">...</a></td>
                     <td th:text="${c.status}">...</td>
                     <td th:text="${c.supportersCount}">...</td>
                     <td>

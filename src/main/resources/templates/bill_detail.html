@@ -15,6 +15,16 @@
                 <td th:text="${bill.id}"></td>
             </tr>
             <tr>
+                <th>Status:</th>
+                <td th:text="${bill.status.name()}"></td>
+            </tr>
+            <tr>
+                <th>Validity:</th>
+                <td>
+                    <span th:text="${#temporals.format(bill.validity, 'dd-MM-yyyy HH:mm')}"></span>
+                </td>
+            </tr>
+            <tr>
                 <th colspan="2">Description:</th>
             </tr>
             <tr>
@@ -22,8 +32,6 @@
             </tr>
 
         </table>
-
-
     </section>
 </body>
 

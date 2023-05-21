@@ -18,7 +18,7 @@
 
 <body>
 
-    <div class="container">
+    <div class="container" th:with="citizen=${session.citizen}">
         <!--/* Standard layout can be mixed with Layout Dialect */-->
         <div layout:fragment="header">
             <h1>Democracia2</h1>
@@ -38,7 +38,15 @@
                 </div>
                 <button type="submit">login</button>
             </form>
-            <p th:if="${citizen}" th:text="'Hello '+${citizen.name}+ ' '+ ${citizen.cc}"></p>
+            <div th:if="${citizen}">
+                <p th:text="'Hello ' + ${citizen.name}"></p>
+                <a href="/citizen" th:href="@{/citizen/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" th:action="@{/citizen/logout}" method="post" style="display: none;">
+                    <input type="hidden" name="_method" value="delete" />
+                </form>
+
+            </div>
+
         </div>
         <div th:replace="${content}">
             <!-- ============================================================================ -->

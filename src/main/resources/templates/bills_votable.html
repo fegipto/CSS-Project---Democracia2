@@ -4,6 +4,7 @@
 <body>
     <section>
         <h2>Votable Bills:</h2>
+        <p th:if="${success != null}" th:text="${success} ? 'Successfully voted on bill' : 'Failed to vote on bill'"></p>
         <table>
             <thead>
                 <tr>
@@ -17,18 +18,18 @@
                 <tr th:if="${bills.empty}">
                     <td colspan="3">No votable bills</td>
                 </tr>
-                <tr th:each="c,iterStat : ${bills}">
+                <tr th:each="c : ${bills}">
                     <td th:text="${c.id}">...</td>
-                    <td><a th:href="@{/bills/} + ${c.id}" th:text="${c.title}">...</a></td>
+                    <td><a th:href="@{/bill/} + ${c.id}" th:text="${c.title}">...</a></td>
                     <td th:text="${c.status}">...</td>
-                    <td th:with="userVote=${billsVotes[iterStat.index]}">
+                    <td th:with="userVote=${billsVotes[cStat.index]}">
                       <div th:if="${userVote != null && userVote != 'voted'}" th:text="'Ommited vote ' + ${userVote}"></div>
                       <div th:if="${userVote != null && userVote == 'voted'}">Already voted</div>
                       <div th:if="${userVote == null || userVote != 'voted'}">
                         <!-- Display the form -->
-                        <form method="POST" th:action="@{/bill/support}">
+                        <form method="POST" th:action="@{/bill/vote}">
                           <input type="hidden" name="billId" id="billId" th:value="${c.id}" required/>
-                          <input th:if="${citizen}" type="hidden" name="citizenId" id="citizenId" th:value="${citizen.cc}" required/>
+                          <input th:if="${citizen}" type="hidden" name="citizenToken" id="citizenToken" th:value="${citizen.token}" required/>
                           <button th:disabled="${(citizen == null)}" type="submit" name="vote" value="yes">Yes</button>
                           <button th:disabled="${(citizen == null)}" type="submit" name="vote" value="no">No</button>
                         </form>

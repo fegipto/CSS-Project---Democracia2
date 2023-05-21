@@ -84,8 +84,10 @@ class RestCustomerController {
   @PostMapping("/bill/vote")
   ResponseEntity<?> voteBill(@RequestBody Pair<Pair<Long, Long>, Boolean> info) {
     try {
-      votingService.vote(info.getFirst().getFirst(), info.getFirst().getSecond(), info.getSecond());
-      return ResponseEntity.ok().body(null);
+      boolean sucess =
+          votingService.vote(
+              info.getFirst().getFirst(), info.getFirst().getSecond(), info.getSecond());
+      return ResponseEntity.ok().body(sucess);
     } catch (IllegalArgumentException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
