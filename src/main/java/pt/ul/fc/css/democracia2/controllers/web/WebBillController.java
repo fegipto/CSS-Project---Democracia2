@@ -1,5 +1,6 @@
 package pt.ul.fc.css.democracia2.controllers.web;
 
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -42,16 +44,18 @@ public class WebBillController {
   }
 
   @GetMapping({"/", "/bills/votable"})
-  public String index(Model model, @ModelAttribute CitizenDTO citizen) {
-    if (citizen == null) return "bills_votable";
-
+  public String index(Model model, HttpSession session) {
+    CitizenDTO citizen = (CitizenDTO) session.getAttribute("citizen");
     List<BillDTO> bills = billsService.listAvailableVotes();
     model.addAttribute("bills", bills);
+
     String[] votes = new String[bills.size()];
-    int i = 0;
-    for (BillDTO bill : bills) {
-      votes[i] = getUserVote(citizen.getCc(), bill.getId());
-      i++;
+    if (citizen != null) {
+      int i = 0;
+      for (BillDTO bill : bills) {
+        votes[i] = getUserVote(citizen.getCc(), bill.getId());
+        i++;
+      }
     }
     model.addAttribute("billsVotes", votes);
 
@@ -78,7 +82,7 @@ public class WebBillController {
   }
 
   @GetMapping("/bills/open")
-  public String getOpenBills(Model model, @ModelAttribute CitizenDTO citizen) {
+  public String getOpenBills(Model model) {
 
     List<BillDTO> bills = consultBillService.listNonExpired();
 
@@ -122,13 +126,15 @@ public class WebBillController {
   public String voteBill(
       Model model,
       @RequestParam("billId") Long billId,
-      @RequestParam("citizenId") Long citizenId,
-      @RequestParam("vote") String vote) {
+      @RequestParam("citizenToken") Long citizenToken,
+      @RequestParam("vote") String vote,
+      RedirectAttributes redirectAttributes) {
     // Process the vote based on the "vote" parameter value ("yes" or "no")
     boolean voteB = vote.equals("yes");
+    boolean success = votingService.vote(citizenToken, billId, voteB);
+    redirectAttributes.addFlashAttribute("success", "" + success);
 
-    votingService.vote(citizenId, billId, voteB);
-    return "redirect:/bill/" + billId;
+    return "redirect:/bills/votable";
   }
 
   public String getUserVote(Long citizenId, Long billId) {

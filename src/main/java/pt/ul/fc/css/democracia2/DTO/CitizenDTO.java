@@ -3,7 +3,7 @@ package pt.ul.fc.css.democracia2.DTO;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 
 /**
- * Class that represents a DelegateDTO
+ * Class that represents a citizenDTO
  *
  * @author David Dantas, 56331
  * @author Filipe Egipto, 56272
@@ -12,37 +12,45 @@ import pt.ul.fc.css.democracia2.domain.Citizen;
 public class CitizenDTO {
   private String name;
   private long cc;
+  private long token;
 
-  /**
-   * Constructs a new DelegateDTO object
-   */
+  public long getToken() {
+    return token;
+  }
+
+  public void setToken(long token) {
+    this.token = token;
+  }
+
+  /** Constructs a new citizenDTO object */
   public CitizenDTO() {
     // No-argument constructor
   }
 
   /**
-   * Constructs a new DelegateDTO object using a delegate
+   * Constructs a new citizenDTO object using a citizen
    *
-   * @param delegate the delegate to use to create the DTO
+   * @param citizen the citizen to use to create the DTO
    */
-  public CitizenDTO(Citizen delegate) {
-    this.name = delegate.getName();
-    this.cc = delegate.getCC();
+  public CitizenDTO(Citizen citizen) {
+    this.name = citizen.getName();
+    this.cc = citizen.getCC();
+    this.token = citizen.getToken();
   }
 
   /**
-   * Method that get the name of the DelegateDTO
+   * Method that get the name of the citizenDTO
    *
-   * @return the name of the corresponding DelegateDTO
+   * @return the name of the corresponding citizenDTO
    */
   public String getName() {
     return name;
   }
 
   /**
-   * Method that get the cc of the DelegateDTO
+   * Method that get the cc of the citizenDTO
    *
-   * @return the cc of the corresponding DelegateDTO
+   * @return the cc of the corresponding citizenDTO
    */
   public long getCc() {
     return cc;
@@ -52,10 +60,7 @@ public class CitizenDTO {
     this.name = name;
   }
 
-
   public void setCc(long cc) {
     this.cc = cc;
   }
-
-
 }

@@ -22,7 +22,7 @@ import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 import pt.ul.fc.css.democracia2.services.UpdateBillsService;
 
 @SpringBootTest
-class UpdateBillsTests extends MockDatabaseTests {
+class UpdateBillsTests {
 
   @Autowired private UpdateBillsService updateBillsService;
 

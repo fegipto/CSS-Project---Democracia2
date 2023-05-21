@@ -24,7 +24,7 @@ import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
 
 @SpringBootTest
 @Transactional
-public class ConsultNonExpiredBillServiceTests extends MockDatabaseTests {
+public class ConsultNonExpiredBillServiceTests {
 
   @Autowired private ConsultNonExpiredBillService consultNonExpiredBillService;
 

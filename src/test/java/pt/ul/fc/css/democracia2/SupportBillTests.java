@@ -26,7 +26,7 @@ import pt.ul.fc.css.democracia2.services.SupportBillService;
 
 @SpringBootTest
 @Transactional
-class SupportBillTests extends MockDatabaseTests {
+class SupportBillTests {
 
   @Autowired private SupportBillService supportBillService;
 

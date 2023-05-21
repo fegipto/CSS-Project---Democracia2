@@ -3,15 +3,13 @@ package pt.ul.fc.css.democracia2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import jakarta.transaction.Transactional;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -21,7 +19,7 @@ import pt.ul.fc.css.democracia2.services.ProposeBillService;
 
 @SpringBootTest
 @Transactional
-class ProposeBillServiceTests extends MockDatabaseTests {
+class ProposeBillServiceTests {
   @Autowired private ProposeBillService proposeBillService;
 
   @Autowired private TopicRepository topicRepository;
@@ -63,7 +61,8 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     assertThrows(
         IllegalArgumentException.class,
         () -> {
-          proposeBillService.presentBill(bill);});
+          proposeBillService.presentBill(bill);
+        });
   }
 
   @Test
@@ -99,7 +98,8 @@ class ProposeBillServiceTests extends MockDatabaseTests {
     assertThrows(
         IllegalArgumentException.class,
         () -> {
-          proposeBillService.presentBill(bill);});
+          proposeBillService.presentBill(bill);
+        });
   }
 
   @Test

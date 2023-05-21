@@ -25,7 +25,7 @@ import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 
 @SpringBootTest
 @Transactional
-public class ListAvailableVotesTest extends MockDatabaseTests {
+public class ListAvailableVotesTest {
 
   @Autowired private ListAvailableVotesService listAvailableVotesService;
 

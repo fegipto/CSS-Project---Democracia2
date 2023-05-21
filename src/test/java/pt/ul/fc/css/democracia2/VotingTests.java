@@ -24,7 +24,7 @@ import pt.ul.fc.css.democracia2.services.VotingService;
 
 @SpringBootTest
 @Transactional
-public class VotingTests extends MockDatabaseTests {
+public class VotingTests {
   @Autowired private VotingService votingService;
 
   @Autowired private CitizenRepository citizenRepository;

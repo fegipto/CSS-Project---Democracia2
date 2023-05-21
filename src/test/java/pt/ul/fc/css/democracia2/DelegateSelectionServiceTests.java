@@ -22,7 +22,7 @@ import pt.ul.fc.css.democracia2.services.DelegateSelectionService;
 
 @SpringBootTest
 @Transactional
-public class DelegateSelectionServiceTests extends MockDatabaseTests {
+public class DelegateSelectionServiceTests {
 
   @Autowired private DelegateSelectionService delegateSelectionService;
 
