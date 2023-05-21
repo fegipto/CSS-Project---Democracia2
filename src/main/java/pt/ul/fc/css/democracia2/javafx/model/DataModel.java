@@ -6,26 +6,29 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
+import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
 import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 
 public class DataModel {
 
     private final ListAvailableVotesService listAvailableVotesService;
+    private final ConsultNonExpiredBillService consultNonExpiredBillService;
 
-    /* in this way personList also reports
-     * mutations of the elements in it by using the given extractor.
-     * Observable objects returned by extractor (applied to each list element) are listened
-     * for changes and transformed into "update" change of ListChangeListener.
-     * since the phone is not visible, changes in the phone do not need to be propagated
-     */
     private final ObservableList<BillDTO> availableVotesList =
             FXCollections.observableArrayList(bill ->
                     new Observable[] {(Observable) bill});
 
-    public DataModel(ListAvailableVotesService listAvailableVotesService) {
+    private final ObservableList<BillDTO> nonExpiredBillList =
+            FXCollections.observableArrayList(bill ->
+                    new Observable[] {(Observable) bill});
+
+    public DataModel(ListAvailableVotesService listAvailableVotesService,
+                     ConsultNonExpiredBillService consultNonExpiredBillService) {
         this.listAvailableVotesService = listAvailableVotesService;
+        this.consultNonExpiredBillService = consultNonExpiredBillService;
     }
 
+    //DATA FOR AVAILABLE VOTINGS
     public ObservableList<BillDTO> getAvailableVotesList() {
         return availableVotesList;
     }
@@ -44,6 +47,25 @@ public class DataModel {
         currentBillProperty().set(bill);
     }
 
+    public ObservableList<BillDTO> getNonExpiredBillList() {
+        return availableVotesList;
+    }
+
+    //DATA FOR NON-EXPIRED-BILLS
+    private final ObjectProperty<BillDTO> currentNonExpiredBill = new SimpleObjectProperty<>(null);
+
+    public ObjectProperty<BillDTO> currentNonExpiredBillProperty() {
+        return currentBill;
+    }
+
+    public final BillDTO getCurrentNonExpiredBill() {
+        return currentNonExpiredBillProperty().get();
+    }
+
+    public final void setCurrentNonExpiredBill(BillDTO bill) {
+        currentNonExpiredBillProperty().set(bill);
+    }
+
     public void loadData() {
         // mock...
         //personList.setAll(
@@ -54,6 +76,7 @@ public class DataModel {
         //        new Person("Paulo", "Guerra", 217500504)
         //);
         availableVotesList.setAll(listAvailableVotesService.listAvailableVotes());
+        nonExpiredBillList.setAll(consultNonExpiredBillService.listNonExpired());
     }
 
     public void saveData() { }
