@@ -9,6 +9,8 @@ import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
 import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 
+import java.io.File;
+
 public class DataModel {
 
     private final ListAvailableVotesService listAvailableVotesService;
@@ -81,7 +83,7 @@ public class DataModel {
     }
 
     // LOAD AND SAVE DATA
-    public void loadData() {
+    public void loadData(File file) {
         // mock...
         //personList.setAll(
         //        new Person("Jose", "Silva", 934445678 ),
