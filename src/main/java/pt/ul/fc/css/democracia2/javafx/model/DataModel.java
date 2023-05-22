@@ -84,4 +84,7 @@ public class DataModel {
     }
 
     public void saveData() { }
+
+    public void setSupportBill(Bill selectedItem) {
+    }
 }
