@@ -4,10 +4,19 @@
 <head>
     <title>Democracia2</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
     <style>
+        :root {
+            --primary: beige;
+            --secondary: lightbrown;
+            --bg: lightgray;
+        }
+
         #container {
             margin: auto;
             max-width: 500px;
+            background-color: beige;
         }
 
         th {
@@ -16,19 +25,33 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: transparent;">
+    <nav aria-label="breadcrumb">
+        <div class="container-fluid">
+            <a href="#">Democracia2</a>
 
-    <div class="container" th:with="citizen=${session.citizen}">
+            <div>
+                <ul>
+                    <li>
+                        <a aria-current="page" th:href="@{/bills/votable}">Home</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/bill/new}">New bill</a>
+                    </li>
+
+                    <li><a th:href="@{/bills/votable}">Votable bills</a></li>
+                    <li><a th:href="@{/bills/open}">Open bills</a></li>
+                    <li>
+                        <a th:href="@{/test/votable/bills}">Generate Votable bills</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" th:with="citizen=${session.citizen}" style="margin-top: 100px;">
         <!--/* Standard layout can be mixed with Layout Dialect */-->
         <div layout:fragment="header">
-            <h1>Democracia2</h1>
 
-            <ol>
-                <li><a th:href="@{/bills/votable}">List votable Bills</a></li>
-                <li><a th:href="@{/bills/open}">List open Bills</a></li>
-                <li><a th:href="@{/bill/new}">Add New Bill</a></li>
-                <li><a th:href="@{/test/votable/bills}">Generate Votable bills</a></li>
-            </ol>
         </div>
         <div>
             <form th:unless="${citizen}" th:action="@{'/citizen'}" method="get">
@@ -40,7 +63,8 @@
             </form>
             <div th:if="${citizen}">
                 <p th:text="'Hello ' + ${citizen.name}"></p>
-                <a href="/citizen" th:href="@{/citizen/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <a href="/citizen" th:href="@{/citizen/logout}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" th:action="@{/citizen/logout}" method="post" style="display: none;">
                     <input type="hidden" name="_method" value="delete" />
                 </form>
@@ -64,6 +88,10 @@
             </p>
         </div>
     </div>
+    <!-- ✅ load Bootstrap bundle ✅ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
