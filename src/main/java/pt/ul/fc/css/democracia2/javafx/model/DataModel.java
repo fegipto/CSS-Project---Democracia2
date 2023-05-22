@@ -14,14 +14,6 @@ public class DataModel {
     private final ListAvailableVotesService listAvailableVotesService;
     private ConsultNonExpiredBillService consultNonExpiredBillService;
 
-    private final ObservableList<Bill> availableVotesList =
-            FXCollections.observableArrayList(bill ->
-                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
-
-    private final ObservableList<Bill> nonExpiredBillList =
-            FXCollections.observableArrayList(bill ->
-                    new Observable[] {(Observable) bill});
-
     public DataModel(ListAvailableVotesService listAvailableVotesService,
                      ConsultNonExpiredBillService consultNonExpiredBillService) {
         this.listAvailableVotesService = listAvailableVotesService;
@@ -29,6 +21,10 @@ public class DataModel {
     }
 
     // DATA FOR AVAILABLE VOTINGS
+    private final ObservableList<Bill> availableVotesList =
+            FXCollections.observableArrayList(bill ->
+                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
+
     public ObservableList<Bill> getAvailableVotesList() {
         return availableVotesList;
     }
@@ -51,11 +47,18 @@ public class DataModel {
         return availableVotesList;
     }
 
+    public final void setVoteBill(Bill bill) {
+    }
+
     // DATA FOR NON-EXPIRED-BILLS
+    private final ObservableList<Bill> nonExpiredBillList =
+            FXCollections.observableArrayList(bill ->
+                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
+
     private final ObjectProperty<Bill> currentNonExpiredBill = new SimpleObjectProperty<>(null);
 
     public ObjectProperty<Bill> currentNonExpiredBillProperty() {
-        return currentBill;
+        return currentNonExpiredBill;
     }
 
     public final Bill getCurrentNonExpiredBill() {
@@ -66,6 +69,10 @@ public class DataModel {
         currentNonExpiredBillProperty().set(bill);
     }
 
+    public void setSupportBill(Bill selectedItem) {
+    }
+
+    // LOAD AND SAVE DATA
     public void loadData() {
         // mock...
         //personList.setAll(
@@ -84,7 +91,4 @@ public class DataModel {
     }
 
     public void saveData() { }
-
-    public void setSupportBill(Bill selectedItem) {
-    }
 }
