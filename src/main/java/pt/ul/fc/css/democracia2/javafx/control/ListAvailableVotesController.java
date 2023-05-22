@@ -7,7 +7,7 @@ import pt.ul.fc.css.democracia2.javafx.model.DataModel;
 
 public class ListAvailableVotesController {
     @FXML
-    private ListView<Bill> listView ;
+    private ListView<Bill> listView;
     private DataModel model;
 
     public void initModel(DataModel model) {
