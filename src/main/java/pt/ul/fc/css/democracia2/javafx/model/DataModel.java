@@ -57,9 +57,7 @@ public class DataModel {
 
     private final ObjectProperty<Bill> currentNonExpiredBill = new SimpleObjectProperty<>(null);
 
-    public ObjectProperty<Bill> currentNonExpiredBillProperty() {
-        return currentNonExpiredBill;
-    }
+    public ObjectProperty<Bill> currentNonExpiredBillProperty() { return currentNonExpiredBill; }
 
     public final Bill getCurrentNonExpiredBill() {
         return currentNonExpiredBillProperty().get();
