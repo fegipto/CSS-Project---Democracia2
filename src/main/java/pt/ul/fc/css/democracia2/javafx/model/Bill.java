@@ -113,6 +113,7 @@ public class Bill {
 
     @Override
     public String toString() {
-        return "Title: " + title.getValue()+"\nTopic: " + topic.getValue().getName() + "\nDescription: " + description.getValue();
+        return "Title: " + title.getValue()+"\nTopic: " + topic.getValue().getName()
+                + "\nDescription: " + description.getValue();
     }
 }
