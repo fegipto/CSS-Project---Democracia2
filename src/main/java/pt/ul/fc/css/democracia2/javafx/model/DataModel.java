@@ -12,13 +12,13 @@ import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 public class DataModel {
 
     private final ListAvailableVotesService listAvailableVotesService;
-    private final ConsultNonExpiredBillService consultNonExpiredBillService;
+    private ConsultNonExpiredBillService consultNonExpiredBillService;
 
-    private final ObservableList<BillDTO> availableVotesList =
+    private final ObservableList<Bill> availableVotesList =
             FXCollections.observableArrayList(bill ->
-                    new Observable[] {(Observable) bill});
+                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
 
-    private final ObservableList<BillDTO> nonExpiredBillList =
+    private final ObservableList<Bill> nonExpiredBillList =
             FXCollections.observableArrayList(bill ->
                     new Observable[] {(Observable) bill});
 
@@ -28,41 +28,41 @@ public class DataModel {
         this.consultNonExpiredBillService = consultNonExpiredBillService;
     }
 
-    //DATA FOR AVAILABLE VOTINGS
-    public ObservableList<BillDTO> getAvailableVotesList() {
+    // DATA FOR AVAILABLE VOTINGS
+    public ObservableList<Bill> getAvailableVotesList() {
         return availableVotesList;
     }
 
-    private final ObjectProperty<BillDTO> currentBill = new SimpleObjectProperty<>(null);
+    private final ObjectProperty<Bill> currentBill = new SimpleObjectProperty<>(null);
 
-    public ObjectProperty<BillDTO> currentBillProperty() {
+    public ObjectProperty<Bill> currentBillProperty() {
         return currentBill;
     }
 
-    public final BillDTO getCurrentBill() {
+    public final Bill getCurrentBill() {
         return currentBillProperty().get();
     }
 
-    public final void setCurrentBill(BillDTO bill) {
+    public final void setCurrentBill(Bill bill) {
         currentBillProperty().set(bill);
     }
 
-    public ObservableList<BillDTO> getNonExpiredBillList() {
+    public ObservableList<Bill> getNonExpiredBillList() {
         return availableVotesList;
     }
 
-    //DATA FOR NON-EXPIRED-BILLS
-    private final ObjectProperty<BillDTO> currentNonExpiredBill = new SimpleObjectProperty<>(null);
+    // DATA FOR NON-EXPIRED-BILLS
+    private final ObjectProperty<Bill> currentNonExpiredBill = new SimpleObjectProperty<>(null);
 
-    public ObjectProperty<BillDTO> currentNonExpiredBillProperty() {
+    public ObjectProperty<Bill> currentNonExpiredBillProperty() {
         return currentBill;
     }
 
-    public final BillDTO getCurrentNonExpiredBill() {
+    public final Bill getCurrentNonExpiredBill() {
         return currentNonExpiredBillProperty().get();
     }
 
-    public final void setCurrentNonExpiredBill(BillDTO bill) {
+    public final void setCurrentNonExpiredBill(Bill bill) {
         currentNonExpiredBillProperty().set(bill);
     }
 
@@ -75,8 +75,12 @@ public class DataModel {
         //        new Person("Ema", "Antunes", 217122121),
         //        new Person("Paulo", "Guerra", 217500504)
         //);
-        availableVotesList.setAll(listAvailableVotesService.listAvailableVotes());
-        nonExpiredBillList.setAll(consultNonExpiredBillService.listNonExpired());
+        for (BillDTO b: listAvailableVotesService.listAvailableVotes()) {
+            availableVotesList.add(new Bill(b));
+        }
+        for (BillDTO b: consultNonExpiredBillService.listNonExpired()) {
+            nonExpiredBillList.add(new Bill(b));
+        }
     }
 
     public void saveData() { }

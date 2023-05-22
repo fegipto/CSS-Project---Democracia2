@@ -2,12 +2,12 @@ package pt.ul.fc.css.democracia2.javafx.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import pt.ul.fc.css.democracia2.DTO.BillDTO;
+import pt.ul.fc.css.democracia2.javafx.model.Bill;
 import pt.ul.fc.css.democracia2.javafx.model.DataModel;
 
 public class ListAvailableVotesController {
     @FXML
-    private ListView<BillDTO> listView ;
+    private ListView<Bill> listView ;
     private DataModel model;
 
     public void initModel(DataModel model) {
