@@ -62,6 +62,12 @@ public class SupportBillService {
     Optional<Bill> bill = billRepository.findById(bill_id);
 
     if (bill.isEmpty() || cit.isEmpty()) return false;
+    if (bill.get().isExpired()) {
+      bill.get().expire(citizenRepository);
+      billRepository.save(bill.get());
+
+      return false;
+    }
 
     boolean sucess = bill.get().supportBill(cit.get());
     billRepository.save(bill.get());

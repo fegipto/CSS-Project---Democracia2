@@ -2,14 +2,6 @@ package pt.ul.fc.css.democracia2.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 
-import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -24,6 +16,13 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 /**
@@ -183,9 +182,7 @@ public class Bill {
     return supporters;
   }
 
-  /**
-   * Method that begins the voting process of a Bill
-   */
+  /** Method that begins the voting process of a Bill */
   public void beginVote() {
     if (supporters.size() >= 10000) {
       if (isExpired()) status = BillStatus.EXPIRED;
@@ -216,7 +213,7 @@ public class Bill {
   public boolean isExpired() {
     if (status == BillStatus.EXPIRED) {
       return true;
-    } else if (LocalDateTime.now().isAfter(validity)) {
+    } else if (LocalDateTime.now(ZoneId.of("Europe/Lisbon")).isAfter(validity)) {
       return true;
     } else {
       return false;

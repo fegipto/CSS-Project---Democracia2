@@ -2,6 +2,7 @@ package pt.ul.fc.css.democracia2.services;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,11 @@ public class DemoService {
 
       Bill bill =
           delegate.proposeBill(
-              title, description, new byte[] {}, LocalDateTime.now().plusMonths(4), topic);
+              title,
+              description,
+              new byte[] {},
+              LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
+              topic);
 
       List<Citizen> citizens = citizenRepository.findAll();
 

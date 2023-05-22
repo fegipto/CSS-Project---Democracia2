@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ public class VotingTests {
                 "Bill Votable",
                 "null",
                 new byte[] {},
-                LocalDateTime.now().plusMonths(4),
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
                 topic.get());
     List<Citizen> citizens = citizenRepository.findAll();
     int count = 0;
@@ -120,7 +121,7 @@ public class VotingTests {
                 "Bill Votable",
                 "null",
                 new byte[] {},
-                LocalDateTime.now().plusMonths(4),
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
                 topic.get());
     List<Citizen> citizens = citizenRepository.findAll();
     int count = 0;
@@ -166,7 +167,7 @@ public class VotingTests {
                 "Bill Non Votable",
                 "null",
                 new byte[] {},
-                LocalDateTime.now().plusMonths(4),
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
                 topic.get());
 
     assertFalse(votingService.vote(cit.getToken(), nonVotable.getId(), false));
@@ -192,7 +193,7 @@ public class VotingTests {
                 "Bill Non Votable",
                 "null",
                 new byte[] {},
-                LocalDateTime.now().plusMonths(4),
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
                 topic.get());
 
     Optional<Delegate> delegate2 = delegateRepository.findByName("Delegate 2");

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import jakarta.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -48,12 +49,20 @@ class SupportBillTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(3),
+                topic.get());
     Bill added2 =
         delegate1
             .get()
             .proposeBill(
-                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
+                "Bill 2",
+                "null",
+                new byte[] {},
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -87,12 +96,20 @@ class SupportBillTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(3),
+                topic.get());
     Bill added2 =
         delegate1
             .get()
             .proposeBill(
-                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
+                "Bill 2",
+                "null",
+                new byte[] {},
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(4),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
@@ -131,7 +148,11 @@ class SupportBillTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
+                "Bill 1",
+                "null",
+                new byte[] {},
+                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(3),
+                topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
@@ -157,7 +178,7 @@ class SupportBillTests {
 
   @Test
   void testSupportBillClampValidity() {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Lisbon"));
 
     // Given
     Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
@@ -194,7 +215,7 @@ class SupportBillTests {
 
   @Test
   void testSupportBillExtendValidity() {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Lisbon"));
 
     // Given
     Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
@@ -229,7 +250,7 @@ class SupportBillTests {
 
   @Test
   void testSupportExpiredBill() {
-    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Lisbon"));
 
     // Given
     Optional<Delegate> delegate1 = delegateRepository.findByName("Delegate 1");
