@@ -10,10 +10,8 @@ public class SupportBillController {
 
     @FXML
     private SingleSelectionModel<Bill> singleSelectionModel;
-
     @FXML
     private Button button;
-
     private DataModel model;
 
     public void initModel(DataModel model) {

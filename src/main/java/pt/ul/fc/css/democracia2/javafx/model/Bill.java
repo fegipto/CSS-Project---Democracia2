@@ -71,9 +71,7 @@ public class Bill {
         return this.validity;
     }
 
-    public final LocalDateTime getValidity() {
-        return this.validityProperty().get();
-    }
+    public final LocalDateTime getValidity() { return this.validityProperty().get(); }
 
     public final void setValidity(final LocalDateTime validity) {
         this.validityProperty().set(validity);
@@ -89,15 +87,11 @@ public class Bill {
         return this.topicProperty().get();
     }
 
-    public final void setTopic(final Topic topic) {
-        this.topicProperty().set(topic);
-    }
+    public final void setTopic(final Topic topic) { this.topicProperty().set(topic); }
 
     private final ObjectProperty<byte[]> file = new SimpleObjectProperty<>();
 
-    public final ObjectProperty<byte[]> fileProperty() {
-        return this.file;
-    }
+    public final ObjectProperty<byte[]> fileProperty() { return this.file; }
 
     public final byte[] getFile() {
         return this.fileProperty().get();
@@ -119,6 +113,6 @@ public class Bill {
 
     @Override
     public String toString() {
-        return title.getValue()+"\n"+description.getValue();
+        return "Title: " + title.getValue()+"\nTopic: " + topic.getValue().getName() + "\nDescription: " + description.getValue();
     }
 }
