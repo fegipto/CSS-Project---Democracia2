@@ -23,16 +23,20 @@
                     <td><a th:href="@{/bill/} + ${c.id}" th:text="${c.title}">...</a></td>
                     <td th:text="${c.status}">...</td>
                     <td th:with="userVote=${billsVotes[cStat.index]}">
-                      <div th:if="${userVote != null && userVote != 'voted'}" th:text="'Ommited vote ' + ${userVote}"></div>
                       <div th:if="${userVote != null && userVote == 'voted'}">Already voted</div>
                       <div th:if="${userVote == null || userVote != 'voted'}">
                         <!-- Display the form -->
                         <form method="POST" th:action="@{/bill/vote}" style="width: fit-content;">
                           <input type="hidden" name="billId" id="billId" th:value="${c.id}" required/>
                           <input th:if="${citizen}" type="hidden" name="citizenToken" id="citizenToken" th:value="${citizen.token}" required/>
+                          <div th:if="${userVote != null && userVote != 'voted'}">Your ommited vote</div>
+
                           <div class="vote">
-                            <button th:disabled="${(citizen == null)}" type="submit" name="vote" value="yes">Yes</button>
-                            <button th:disabled="${(citizen == null)}" type="submit" name="vote" value="no">No</button>
+                            <button th:disabled="${(citizen == null)}" type="submit"
+                            th:style="${(userVote != null && userVote == 'yes') ? 'background-color: lime' : ''}"
+                             name="vote" value="yes">Yes</button>
+                            <button th:disabled="${(citizen == null)}" type="submit" name="vote" value="no"
+                            th:style="${(userVote != null && userVote == 'no') ? 'background-color: lime' : ''}">No</button>
                           </div>
                         </form>
                       </div>

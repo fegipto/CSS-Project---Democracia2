@@ -3,6 +3,7 @@ package pt.ul.fc.css.democracia2.DTO;
 import java.time.LocalDateTime;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.BillStatus;
+import pt.ul.fc.css.democracia2.domain.Topic;
 
 /**
  * Class that represents a BillDTO
@@ -14,14 +15,14 @@ import pt.ul.fc.css.democracia2.domain.BillStatus;
 public class BillDTO {
 
   private long id;
-  private long proponentId;
+  private CitizenDTO proponent;
   private String title;
   private BillStatus status;
   private String description;
   private int supportersCount;
   private LocalDateTime validity;
 
-  private long topicId;
+  private Topic topic;
   private byte[] file;
 
   /** Constructs a new BillDTO object */
@@ -36,12 +37,12 @@ public class BillDTO {
    */
   public BillDTO(Bill bill) {
     this.id = bill.getId();
-    this.proponentId = bill.getProponent().getCC();
+    this.proponent = new CitizenDTO(bill.getProponent());
     this.title = bill.getTitle();
     this.status = bill.getStatus();
     this.description = bill.getDescription();
     this.validity = bill.getValidity();
-    this.topicId = bill.getTopic().getId();
+    this.topic = bill.getTopic();
     this.file = bill.getFile();
     this.supportersCount = bill.getSupporters().size();
   }
@@ -96,8 +97,8 @@ public class BillDTO {
    *
    * @return the topic of the corresponding BillDTO
    */
-  public long getTopicId() {
-    return topicId;
+  public Topic getTopic() {
+    return topic;
   }
 
   /**
@@ -129,20 +130,20 @@ public class BillDTO {
     this.validity = validity;
   }
 
-  public void setTopicId(long topicId) {
-    this.topicId = topicId;
+  public void setTopic(Topic topic) {
+    this.topic = topic;
   }
 
   public void setFile(byte[] file) {
     this.file = file;
   }
 
-  public long getProponentId() {
-    return proponentId;
+  public CitizenDTO getProponent() {
+    return proponent;
   }
 
-  public void setProponentId(long proponentId) {
-    this.proponentId = proponentId;
+  public void setProponent(CitizenDTO proponent) {
+    this.proponent = proponent;
   }
 
   public int getSupportersCount() {

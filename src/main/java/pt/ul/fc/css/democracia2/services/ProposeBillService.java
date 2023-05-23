@@ -1,13 +1,11 @@
 package pt.ul.fc.css.democracia2.services;
 
+import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.Delegate;
@@ -54,27 +52,33 @@ public class ProposeBillService {
    * @param billDTO bill info
    * @throws IOException
    */
-  public BillDTO presentBill(BillDTO billDTO)
-      throws IOException {
-    Optional<Delegate> delegate = delegateRepository.findByToken(billDTO.getProponentId());
+  public BillDTO presentBill(BillDTO billDTO) throws IOException {
+    Optional<Delegate> delegate = delegateRepository.findByToken(billDTO.getProponent().getToken());
 
     if (!delegate.isPresent()) {
       throw new IllegalArgumentException(
-          "Delegate with token " + billDTO.getProponentId() + " is not found.");
+          "Delegate with token " + billDTO.getProponent().getToken() + " is not found.");
     }
 
-    Optional<Topic> billTopic = topicRepository.findById(billDTO.getTopicId());
+    Optional<Topic> billTopic = topicRepository.findById(billDTO.getTopic().getId());
     if (billTopic.isEmpty()) {
       throw new IllegalArgumentException(
-          "Topic with id " + billDTO.getProponentId() + " is not found.");
+          "Topic with id " + billDTO.getTopic().getId() + " is not found.");
     }
-    Bill added = delegate.get().proposeBill(billDTO.getTitle(), billDTO.getDescription(),
-     billDTO.getFile(), billDTO.getValidity(), billTopic.get());
+    Bill added =
+        delegate
+            .get()
+            .proposeBill(
+                billDTO.getTitle(),
+                billDTO.getDescription(),
+                billDTO.getFile(),
+                billDTO.getValidity(),
+                billTopic.get());
 
     if (added != null)
       // save in bill table since it owns the fk
       billRepository.save(added);
-
+    else throw new IllegalArgumentException("Invalid validity");
     return new BillDTO(added);
   }
 

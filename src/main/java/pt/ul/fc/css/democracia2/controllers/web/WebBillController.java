@@ -21,6 +21,7 @@ import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
+import pt.ul.fc.css.democracia2.services.DelegateSelectionService;
 import pt.ul.fc.css.democracia2.services.DemoService;
 import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 import pt.ul.fc.css.democracia2.services.ProposeBillService;
@@ -37,6 +38,7 @@ public class WebBillController {
   @Autowired private SupportBillService supportBillService;
   @Autowired private VotingService votingService;
   @Autowired private DemoService demoService;
+  @Autowired private DelegateSelectionService delegateSelectionService;
   @Autowired private TopicRepository topicRepository;
 
   public WebBillController() {
@@ -100,6 +102,30 @@ public class WebBillController {
     return "bill_new";
   }
 
+  @GetMapping("/delegate/choose")
+  public String chooseDelegate(final Model model) {
+    List<Topic> topics = topicRepository.findAll();
+
+    model.addAttribute("topics", topics);
+    List<CitizenDTO> delegates = delegateSelectionService.getDelegates();
+
+    model.addAttribute("delegates", delegates);
+
+    return "choose_delegate";
+  }
+
+  @PostMapping("/delegate/choose")
+  public String chooseDelegateAction(
+      final Model model,
+      @RequestParam("citizenId") long citizenId,
+      @RequestParam("delegateId") long delegateId,
+      @RequestParam("topicId") String topicId) {
+
+    delegateSelectionService.chooseDelegate(citizenId, delegateId, topicId);
+
+    return "redirect:/bills/votable";
+  }
+
   @GetMapping("/bill/{id}")
   public String getBillById(Model model, @PathVariable Long id) {
 
@@ -114,7 +140,7 @@ public class WebBillController {
 
   @PostMapping("/bill/support")
   public String supportBill(
-      Model model, @RequestParam("billId") Long billId, @RequestParam("citizenId") Long citizenId) {
+      Model model, @RequestParam("billId") long billId, @RequestParam("citizenId") long citizenId) {
     // Call the REST endpoint
 
     supportBillService.supportBill(citizenId, billId);

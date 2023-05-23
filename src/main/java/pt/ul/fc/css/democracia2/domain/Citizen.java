@@ -55,14 +55,13 @@ public class Citizen {
    * @param name the name of the citizen
    * @param cc the cc of the citizen
    */
-  public Citizen(@NonNull String name, @NonNull long cc) {
+  public Citizen(@NonNull String name, long cc) {
     super();
     this.name = name;
     this.cc = cc;
     this.token = cc; // TODO this fase only while there is no authentication service
     this.chosenDelegates = new HashMap<>();
   }
-
 
   public void setToken(long token) {
     this.token = token;

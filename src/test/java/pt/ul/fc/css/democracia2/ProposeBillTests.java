@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
+import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
@@ -32,12 +33,12 @@ class ProposeBillServiceTests {
     Topic topic = topicRepository.findAll().get(0);
     Delegate delegate = delegateRepository.findAll().get(0);
     BillDTO bill = new BillDTO();
-    bill.setProponentId(delegate.getCC());
+    bill.setProponent(new CitizenDTO(delegate));
     bill.setTitle("Test Title");
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopicId(topic.getId());
+    bill.setTopic(topic);
     proposeBillService.presentBill(bill);
 
     Delegate updatedDelegate = delegateRepository.findById(delegate.getCC()).orElse(null);
@@ -52,12 +53,12 @@ class ProposeBillServiceTests {
     Topic topic = topicRepository.findAll().get(0);
 
     BillDTO bill = new BillDTO();
-    bill.setProponentId(9999999999L);
+    bill.setProponent(new CitizenDTO(new Delegate(null, -100)));
     bill.setTitle("Test Title");
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopicId(topic.getId());
+    bill.setTopic(topic);
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -70,12 +71,16 @@ class ProposeBillServiceTests {
     byte[] fileContent = "This is a test file".getBytes();
     LocalDateTime validity = LocalDateTime.now().plusMonths(6);
     BillDTO bill = new BillDTO();
-    bill.setProponentId(2);
+    Delegate delegate = delegateRepository.findAll().get(0);
+
+    bill.setProponent(new CitizenDTO(delegate));
     bill.setTitle("Test Title");
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopicId(-1);
+    Topic invalid = new Topic("inv", null);
+    invalid.setId((long) -1);
+    bill.setTopic(invalid);
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -88,13 +93,15 @@ class ProposeBillServiceTests {
     byte[] fileContent = "This is a test file".getBytes();
     LocalDateTime validity = LocalDateTime.now().plusYears(2);
     Topic topic = topicRepository.findAll().get(0);
+    Delegate delegate = delegateRepository.findAll().get(0);
+
     BillDTO bill = new BillDTO();
-    bill.setProponentId(2);
+    bill.setProponent(new CitizenDTO(delegate));
     bill.setTitle("Test Title");
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopicId(topic.getId());
+    bill.setTopic(topic);
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -108,12 +115,14 @@ class ProposeBillServiceTests {
     LocalDateTime validity = LocalDateTime.now().plusYears(2);
     Topic topic = topicRepository.findAll().get(0);
     BillDTO bill = new BillDTO();
-    bill.setProponentId(2);
+    Delegate delegate = delegateRepository.findAll().get(0);
+
+    bill.setProponent(new CitizenDTO(delegate));
     bill.setTitle("Test Title");
     bill.setDescription("Test Description");
     bill.setFile(fileContent);
     bill.setValidity(validity);
-    bill.setTopicId(topic.getId());
+    bill.setTopic(topic);
     assertThrows(
         IllegalArgumentException.class,
         () -> {

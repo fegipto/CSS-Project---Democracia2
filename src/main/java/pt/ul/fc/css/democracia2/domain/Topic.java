@@ -94,4 +94,16 @@ public class Topic {
   public long getId() {
     return id;
   }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setParent(Topic parent) {
+    this.parent = parent;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
