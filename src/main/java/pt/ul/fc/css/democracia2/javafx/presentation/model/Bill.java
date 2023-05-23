@@ -1,9 +1,6 @@
 package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
 import javafx.beans.property.*;
-import pt.ul.fc.css.democracia2.DTO.BillDTO;
-import pt.ul.fc.css.democracia2.domain.BillStatus;
-import pt.ul.fc.css.democracia2.domain.Topic;
 
 import java.time.LocalDateTime;
 
@@ -15,11 +12,11 @@ public class Bill {
         return this.id;
     }
 
-    public final Long getid() {
+    public final Long getId() {
         return this.idProperty().get();
     }
 
-    public final void setid(final Long id) {
+    public final void setId(final Long id) {
         this.idProperty().set(id);
     }
 
@@ -101,14 +98,15 @@ public class Bill {
         this.fileProperty().set(file);
     }
 
-    public Bill(BillDTO billDTO) {
-        setid(billDTO.getId());
-        setTitle(billDTO.getTitle());
-        setStatus(billDTO.getStatus());
-        setDescription(billDTO.getDescription());
-        setValidity(billDTO.getValidity());
-        setTopic(billDTO.getTopic().toString());
-        setFile(billDTO.getFile());
+    public Bill(long id, String title, BillStatus status, String description, LocalDateTime validity, Topic topic,
+                byte[] file) {
+        setId(id);
+        setTitle(title);
+        setStatus(status);
+        setDescription(description);
+        setValidity(validity);
+        setTopic(topic.toString());
+        setFile(file);
     }
 
     @Override
