@@ -4,8 +4,6 @@
 <body>
     <section>
         <h1>Propose a Bill</h1>
-        <p th:if="${error}" th:text="${error}"></p>
-
         <form th:if="${citizen}" action="/bills/propose" method="post" th:object="${bill}">
             <input type="hidden" th:value="${citizen.cc}" name="proponentId" />
             <div>

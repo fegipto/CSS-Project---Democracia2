@@ -41,10 +41,6 @@ public class WebBillController {
   @Autowired private DelegateSelectionService delegateSelectionService;
   @Autowired private TopicRepository topicRepository;
 
-  public WebBillController() {
-    super();
-  }
-
   @GetMapping({"/", "/bills/votable"})
   public String index(Model model, HttpSession session) {
     CitizenDTO citizen = (CitizenDTO) session.getAttribute("citizen");
@@ -73,7 +69,11 @@ public class WebBillController {
     // Create post request
     try {
       BillDTO createdBill = proposeBillService.presentBill(bill);
-
+      if (createdBill == null) {
+        model.addAttribute("bill", new BillDTO());
+        model.addAttribute("error", "Failed to add bill");
+        return "bill_new";
+      }
       logger.debug("Bill added to the database.");
       return "redirect:/bill/" + createdBill.getId();
     } catch (Exception e) {
@@ -135,7 +135,7 @@ public class WebBillController {
       model.addAttribute("bill", bill.get());
       return "bill_detail";
     }
-    return null;
+    return "redirect:/bills/open";
   }
 
   @PostMapping("/bill/support")

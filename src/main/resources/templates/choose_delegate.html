@@ -4,13 +4,12 @@
 <body>
     <section>
         <h1>Choose a delegate</h1>
-        <p th:if="${error}" th:text="${error}"></p>
 
         <form th:if="${citizen}" action="/delegate/choose" method="post">
             <input type="hidden" th:value="${citizen.cc}" name="citizenId" />
-            <div>
+            <div >
                 <label for="Delegate">Delegate:</label>
-                <select id="delegateId" name="delegateId" required>
+                <select id="delegateId" name="delegateId" required onfocus='this.size=2;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
                     <option th:each="delegate : ${delegates}" th:value="${delegate.cc}" th:text="${delegate.name}"></option>
                 </select>
             </div>
