@@ -63,9 +63,15 @@ public class WebBillController {
   @PostMapping("/bills/propose")
   public String proposeBill(
       Model model,
+      HttpSession session,
       @ModelAttribute("bill") BillDTO bill,
+      @RequestParam("topicId") long topicId,
       @RequestParam("time") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime time) {
     bill.setValidity(time);
+    Topic t = new Topic("null", null);
+    t.setId(topicId);
+    bill.setTopic(t);
+    bill.setProponent((CitizenDTO) session.getAttribute("citizen"));
     // Create post request
     try {
       BillDTO createdBill = proposeBillService.presentBill(bill);
