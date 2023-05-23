@@ -2,14 +2,17 @@ package pt.ul.fc.css.democracia2.javafx.presentation.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.SingleSelectionModel;
-import pt.ul.fc.css.democracia2.javafx.presentation.model.Bill;
+import javafx.scene.control.TextArea;
 import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 
 public class VotingController {
 
     @FXML
-    private SingleSelectionModel<Bill> singleSelectionModel;
+    private TextArea title;
+    @FXML
+    private TextArea topic;
+    @FXML
+    private TextArea description;
     @FXML
     private Button button;
     private DataModel model;
@@ -20,10 +23,25 @@ public class VotingController {
         }
 
         this.model = model;
-        singleSelectionModel.select(model.getCurrentBill());
+        model.currentBillProperty().addListener((obs, oldBill, newBill) -> {
+            if (oldBill != null) {
+                title.textProperty().unbindBidirectional(oldBill.titleProperty());
+                topic.textProperty().unbindBidirectional(oldBill.topicProperty());
+                description.textProperty().unbindBidirectional(oldBill.descriptionProperty());
+            }
+            if (newBill == null) {
+                title.setText("");
+                topic.setText("");
+                description.setText("");
+            } else {
+                title.textProperty().bindBidirectional(newBill.titleProperty());
+                topic.textProperty().bindBidirectional(newBill.topicProperty());
+                description.textProperty().bindBidirectional(newBill.descriptionProperty());
+            }
+        });
 
         button.setOnAction(e -> {
-            model.setVoteBill(singleSelectionModel.getSelectedItem());
+            model.setVoteBill();
         });
     }
 }

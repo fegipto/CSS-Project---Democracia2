@@ -9,8 +9,6 @@ import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 public class ListAvailableVotesController {
     @FXML
     private ListView<Bill> listView;
-    @FXML
-    private Button button;
     private DataModel model;
 
     public void initModel(DataModel model) {
@@ -23,10 +21,6 @@ public class ListAvailableVotesController {
 
         listView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             model.setCurrentBill(newSelection);
-        });
-
-        button.setOnAction(e -> {
-            model.viewCurrentBill();
         });
     }
 }

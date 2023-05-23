@@ -22,7 +22,7 @@ public class DataModel {
     // DATA FOR AVAILABLE VOTINGS
     private final ObservableList<Bill> availableVotesList =
             FXCollections.observableArrayList(bill ->
-                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
+                    new Observable[] {bill.titleProperty(), bill.topicProperty()});
 
     public ObservableList<Bill> getAvailableVotesList() {
         return availableVotesList;
@@ -43,17 +43,13 @@ public class DataModel {
     }
 
     //TODO
-    public final void setVoteBill(Bill bill) {
-    }
-
-    //TODO
-    public final void viewCurrentBill() {
+    public final void setVoteBill() {
     }
 
     // DATA FOR NON-EXPIRED-BILLS
     private final ObservableList<Bill> nonExpiredBillList =
             FXCollections.observableArrayList(bill ->
-                    new Observable[] {bill.titleProperty(), bill.descriptionProperty()});
+                    new Observable[] {bill.titleProperty(), bill.topicProperty()});
 
     public ObservableList<Bill> getNonExpiredBillList() {
         return availableVotesList;
@@ -72,11 +68,7 @@ public class DataModel {
     }
 
     //TODO
-    public final void setSupportBill(Bill selectedItem) {
-    }
-
-    //TODO
-    public final void viewCurrentNonExpiredBill() {
+    public final void setSupportBill() {
     }
 
     // LOAD AND SAVE DATA

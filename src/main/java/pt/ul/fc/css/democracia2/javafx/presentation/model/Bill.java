@@ -77,17 +77,17 @@ public class Bill {
         this.validityProperty().set(validity);
     }
 
-    private final ObjectProperty<Topic> topic = new SimpleObjectProperty<>();
+    private final StringProperty topic = new SimpleStringProperty();
 
-    public final ObjectProperty<Topic> topicProperty() {
+    public final StringProperty topicProperty() {
         return this.topic;
     }
 
-    public final Topic getTopic() {
+    public final String getTopic() {
         return this.topicProperty().get();
     }
 
-    public final void setTopic(final Topic topic) { this.topicProperty().set(topic); }
+    public final void setTopic(final String topic) { this.topicProperty().set(topic); }
 
     private final ObjectProperty<byte[]> file = new SimpleObjectProperty<>();
 
@@ -107,13 +107,13 @@ public class Bill {
         setStatus(billDTO.getStatus());
         setDescription(billDTO.getDescription());
         setValidity(billDTO.getValidity());
-        setTopic(billDTO.getTopic());
+        setTopic(billDTO.getTopic().toString());
         setFile(billDTO.getFile());
     }
 
     @Override
     public String toString() {
-        return "Title: " + title.getValue()+"\nTopic: " + topic.getValue().getName()
+        return "Title: " + title.getValue()+"\nTopic: " + topic.getValue()
                 + "\nDescription: " + description.getValue();
     }
 }
