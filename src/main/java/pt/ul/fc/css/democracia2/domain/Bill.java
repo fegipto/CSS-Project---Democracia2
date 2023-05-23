@@ -17,7 +17,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -213,7 +212,7 @@ public class Bill {
   public boolean isExpired() {
     if (status == BillStatus.EXPIRED) {
       return true;
-    } else if (LocalDateTime.now(ZoneId.of("Europe/Lisbon")).isAfter(validity)) {
+    } else if (LocalDateTime.now().isAfter(validity)) {
       return true;
     } else {
       return false;

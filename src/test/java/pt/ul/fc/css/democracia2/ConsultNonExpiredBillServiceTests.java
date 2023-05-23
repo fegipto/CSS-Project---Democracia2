@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,7 @@ public class ConsultNonExpiredBillServiceTests {
                   "Bill " + i,
                   "null",
                   new byte[] {},
-                  LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(3),
+                  LocalDateTime.now().plusMonths(3),
                   topic.get());
       billRepository.save(added);
     }
@@ -76,7 +75,7 @@ public class ConsultNonExpiredBillServiceTests {
                   "Bill " + i,
                   "null",
                   new byte[] {},
-                  LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusSeconds(1),
+                  LocalDateTime.now().plusSeconds(1),
                   topic.get());
       Thread.sleep(1000);
       assertTrue(added.isExpired());
@@ -99,11 +98,7 @@ public class ConsultNonExpiredBillServiceTests {
         delegate
             .get()
             .proposeBill(
-                "Bill ",
-                "null",
-                new byte[] {},
-                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(3),
-                topic.get());
+                "Bill ", "null", new byte[] {}, LocalDateTime.now().plusMonths(3), topic.get());
     assertFalse(added.isExpired());
     billRepository.save(added);
 
@@ -122,11 +117,7 @@ public class ConsultNonExpiredBillServiceTests {
         delegate
             .get()
             .proposeBill(
-                "Bill ",
-                "null",
-                new byte[] {},
-                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusSeconds(1),
-                topic.get());
+                "Bill ", "null", new byte[] {}, LocalDateTime.now().plusSeconds(1), topic.get());
     Thread.sleep(1000);
     assertTrue(added.isExpired());
     added.expire(citizenRepository);
@@ -147,11 +138,7 @@ public class ConsultNonExpiredBillServiceTests {
         delegate
             .get()
             .proposeBill(
-                "Bill ",
-                "null",
-                new byte[] {},
-                LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusSeconds(1),
-                topic.get());
+                "Bill ", "null", new byte[] {}, LocalDateTime.now().plusSeconds(1), topic.get());
     Thread.sleep(1000);
     List<Citizen> citizens = citizenRepository.findAll();
 

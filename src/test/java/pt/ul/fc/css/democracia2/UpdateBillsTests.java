@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +47,7 @@ class UpdateBillsTests {
                   "Bill Votable",
                   "null",
                   new byte[] {},
-                  LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusSeconds(2),
+                  LocalDateTime.now().plusSeconds(2),
                   topic.get());
 
       List<Citizen> citizens = citizenRepository.findAll();
@@ -71,11 +70,7 @@ class UpdateBillsTests {
           delegate1
               .get()
               .proposeBill(
-                  "Bill 2",
-                  "null",
-                  new byte[] {},
-                  LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusSeconds(2),
-                  topic.get());
+                  "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusSeconds(2), topic.get());
 
       billRepository.save(added2);
       assertEquals(BillStatus.CREATED, added2.getStatus());

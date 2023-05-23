@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ class ProposeBillServiceTests {
   @Test
   void testPresentBill() throws IOException {
     byte[] fileContent = "test".getBytes();
-    LocalDateTime validity = LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(6);
+    LocalDateTime validity = LocalDateTime.now().plusMonths(6);
     Topic topic = topicRepository.findAll().get(0);
     Delegate delegate = delegateRepository.findAll().get(0);
     BillDTO bill = new BillDTO();
@@ -49,7 +48,7 @@ class ProposeBillServiceTests {
   @Test
   void testPresentBillInvalidId() throws IOException {
     byte[] fileContent = "This is a test file".getBytes();
-    LocalDateTime validity = LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(6);
+    LocalDateTime validity = LocalDateTime.now().plusMonths(6);
     Topic topic = topicRepository.findAll().get(0);
 
     BillDTO bill = new BillDTO();
@@ -69,7 +68,7 @@ class ProposeBillServiceTests {
   @Test
   void testPresentBillInvalidTopic() throws IOException {
     byte[] fileContent = "This is a test file".getBytes();
-    LocalDateTime validity = LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusMonths(6);
+    LocalDateTime validity = LocalDateTime.now().plusMonths(6);
     BillDTO bill = new BillDTO();
     bill.setProponentId(2);
     bill.setTitle("Test Title");
@@ -87,7 +86,7 @@ class ProposeBillServiceTests {
   @Test
   void testPresentBillInvalidValidityOver2Y() throws IOException {
     byte[] fileContent = "This is a test file".getBytes();
-    LocalDateTime validity = LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusYears(2);
+    LocalDateTime validity = LocalDateTime.now().plusYears(2);
     Topic topic = topicRepository.findAll().get(0);
     BillDTO bill = new BillDTO();
     bill.setProponentId(2);
@@ -106,7 +105,7 @@ class ProposeBillServiceTests {
   @Test
   void testPresentBillInvalidValidityPast() throws IOException {
     byte[] fileContent = "This is a test file".getBytes();
-    LocalDateTime validity = LocalDateTime.now(ZoneId.of("Europe/Lisbon")).plusYears(2);
+    LocalDateTime validity = LocalDateTime.now().plusYears(2);
     Topic topic = topicRepository.findAll().get(0);
     BillDTO bill = new BillDTO();
     bill.setProponentId(2);

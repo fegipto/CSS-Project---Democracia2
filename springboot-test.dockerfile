@@ -4,4 +4,4 @@ RUN mvn dependency:go-offline
 COPY . ./
 
 FROM builder as test
-CMD [ "mvn", "clean", "test" ]
+CMD [ "mvn", "clean", "test", "-Duser.timezone=Europe/Lisbon"]
