@@ -3,6 +3,7 @@ package pt.ul.fc.css.democracia2.services;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.BillStatus;
@@ -34,9 +35,8 @@ public class UpdateBillsService {
     this.citizenRepository = citizenRepository;
   }
 
-  /**
-   * Method that expires all the bills with expired validity
-   */
+  /** Method that expires all the bills with expired validity */
+  @Scheduled(fixedRate = 5000)
   public void scheduledExpiredBills() {
     List<Bill> listBills = billRepository.getBillsNotInStatus(BillStatus.EXPIRED);
     for (Bill bill : listBills) {

@@ -7,28 +7,28 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class DemoApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
-    private final DemoDataInitializer demoDataInitializer;
+  private static final Logger log = LoggerFactory.getLogger(DemoApplication.class);
+  private final DemoDataInitializer demoDataInitializer;
 
-    @Autowired
-    public DemoApplication(DemoDataInitializer demoDataInitializer) {
-        this.demoDataInitializer = demoDataInitializer;
-    }
+  @Autowired
+  public DemoApplication(DemoDataInitializer demoDataInitializer) {
+    this.demoDataInitializer = demoDataInitializer;
+  }
 
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(DemoApplication.class, args);
+  }
 
-    @Bean
-    public CommandLineRunner demo() {
-        return (args) -> {
-            demoDataInitializer.initialize();
-        };
-    }
-    
+  @Bean
+  public CommandLineRunner demo() {
+    return (args) -> {
+      demoDataInitializer.initialize();
+    };
+  }
 }
