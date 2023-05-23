@@ -1,10 +1,10 @@
-package pt.ul.fc.css.democracia2.javafx.control;
+package pt.ul.fc.css.democracia2.javafx.presentation.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import pt.ul.fc.css.democracia2.javafx.model.Bill;
-import pt.ul.fc.css.democracia2.javafx.model.DataModel;
+import pt.ul.fc.css.democracia2.javafx.presentation.model.Bill;
+import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 
 public class ListAvailableVotesController {
     @FXML

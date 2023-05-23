@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2.javafx.model;
+package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
 import javafx.beans.property.*;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;

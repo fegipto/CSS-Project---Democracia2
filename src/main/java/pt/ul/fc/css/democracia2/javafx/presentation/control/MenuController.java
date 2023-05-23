@@ -1,9 +1,9 @@
-package pt.ul.fc.css.democracia2.javafx.control;
+package pt.ul.fc.css.democracia2.javafx.presentation.control;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
-import pt.ul.fc.css.democracia2.javafx.model.DataModel;
+import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 
 import java.io.File;
 
@@ -28,16 +28,22 @@ public class MenuController {
             try {
                 model.loadData(file);
             } catch (Exception exc) {
-                // handle exception...
+                exc.printStackTrace();
             }
         }
     }
 
     @FXML
     public void save() {
-
-        // similar to load...
-
+        FileChooser chooser = new FileChooser();
+        File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
+        if (file != null) {
+            try {
+                model.saveData(file);
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
     }
 
     @FXML

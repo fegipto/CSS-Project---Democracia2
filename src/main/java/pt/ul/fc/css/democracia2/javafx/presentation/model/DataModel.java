@@ -1,26 +1,23 @@
-package pt.ul.fc.css.democracia2.javafx.model;
+package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pt.ul.fc.css.democracia2.DTO.BillDTO;
-import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
-import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 
 import java.io.File;
 
 public class DataModel {
 
-    private final ListAvailableVotesService listAvailableVotesService;
-    private ConsultNonExpiredBillService consultNonExpiredBillService;
+    //private final ListAvailableVotesService listAvailableVotesService;
+    //private final ConsultNonExpiredBillService consultNonExpiredBillService;
 
-    public DataModel(ListAvailableVotesService listAvailableVotesService,
-                     ConsultNonExpiredBillService consultNonExpiredBillService) {
-        this.listAvailableVotesService = listAvailableVotesService;
-        this.consultNonExpiredBillService = consultNonExpiredBillService;
-    }
+    //public DataModel(ListAvailableVotesService listAvailableVotesService,
+    //                 ConsultNonExpiredBillService consultNonExpiredBillService) {
+    //    this.listAvailableVotesService = listAvailableVotesService;
+    //    this.consultNonExpiredBillService = consultNonExpiredBillService;
+    //}
 
     // DATA FOR AVAILABLE VOTINGS
     private final ObservableList<Bill> availableVotesList =
@@ -83,6 +80,7 @@ public class DataModel {
     }
 
     // LOAD AND SAVE DATA
+    //TODO
     public void loadData(File file) {
         // mock...
         //personList.setAll(
@@ -92,14 +90,14 @@ public class DataModel {
         //        new Person("Ema", "Antunes", 217122121),
         //        new Person("Paulo", "Guerra", 217500504)
         //);
-        for (BillDTO b: listAvailableVotesService.listAvailableVotes()) {
-            availableVotesList.add(new Bill(b));
-        }
-        for (BillDTO b: consultNonExpiredBillService.listNonExpired()) {
-            nonExpiredBillList.add(new Bill(b));
-        }
+        //for (BillDTO b: listAvailableVotesService.listAvailableVotes()) {
+        //    availableVotesList.add(new Bill(b));
+        //}
+        //for (BillDTO b: consultNonExpiredBillService.listNonExpired()) {
+        //    nonExpiredBillList.add(new Bill(b));
+        //}
     }
 
     //TODO
-    public void saveData() { }
+    public void saveData(File file) { }
 }
