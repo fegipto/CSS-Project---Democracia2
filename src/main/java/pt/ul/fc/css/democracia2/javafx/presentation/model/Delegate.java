@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Delegate extends Citizen {
 
-    private ListProperty<Bill> bills = new SimpleListProperty<>();
+    private final ListProperty<Bill> bills = new SimpleListProperty<>();
 
     public final ListProperty<Bill> billsProperty() {
       return this.bills;
@@ -43,11 +43,11 @@ public class Delegate extends Citizen {
 
     public final void setChosenDelegate(Delegate delegate, Topic topic) { super.setChosenDelegate(delegate, topic); }
 
-    public Delegate getChosenDelegate(Topic topic) {
+    public final Delegate getChosenDelegate(Topic topic) {
       return super.getChosenDelegate(topic);
     }
 
-    public boolean delegateExists(Topic topic) {
+    public final boolean delegateExists(Topic topic) {
       return super.delegateExists(topic);
     }
 
@@ -61,7 +61,13 @@ public class Delegate extends Citizen {
       return adding;
     }
 
-    public Delegate(String name, long cc) {
-      super(name, cc, cc, new HashMap<>());
+    public Delegate(String name, long cc, List<Bill> bills) {
+        super(name, cc, cc, new HashMap<>());
+        setBills(bills);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

@@ -1,11 +1,6 @@
 package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
-import jakarta.persistence.*;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import org.springframework.lang.NonNull;
+import javafx.beans.property.*;
 
 import java.util.Objects;
 
@@ -16,45 +11,51 @@ import java.util.Objects;
  * @author Filipe Egipto, 56272
  * @author Rafael Nisa, 56329
  */
-@Entity
 public class Topic {
-    private LongProperty id = new SimpleLongProperty();
+    private final LongProperty id = new SimpleLongProperty();
 
-    private ObjectProperty<Topic> parent = new SimpleObjectProperty<>();
-
-    public Topic getParent() {
-      return parent;
+    public final LongProperty idProperty() {
+      return this.id;
     }
 
-    private String name;
-
-    /**
-     * Method that gets the name of the Topic
-     *
-     * @return the name of the corresponding Topic
-     */
-    public String getName() {
-      return name;
+    public final Long getId() {
+      return this.idProperty().get();
     }
 
-    /**
-     * Constructs a new Topic object using a name
-     *
-     * @param name the name of the Topic
-     */
-    public Topic(@NonNull String name) {
-      this.name = name;
+    public final void setId(final Long id) {
+      this.idProperty().set(id);
     }
 
-    /**
-     * Constructs a new Topic object using a name,parent
-     *
-     * @param name the name of the Topic
-     * @param parent the parent of the Topic
-     */
-    public Topic(@NonNull String name, Topic parent) {
-      this.name = name;
-      this.parent = parent;
+    private final ObjectProperty<Topic> parent = new SimpleObjectProperty<>();
+
+    public final ObjectProperty<Topic> parentProperty() {
+      return this.parent;
+    }
+
+    public final Topic getParent() {
+      return this.parentProperty().get();
+    }
+
+    public final void setParent(final Topic parent) { this.parentProperty().set(parent); }
+
+    private final StringProperty name = new SimpleStringProperty();
+
+    public final StringProperty nameProperty() {
+      return this.name;
+    }
+
+    public final String getName() {
+      return this.nameProperty().get();
+    }
+
+    public final void setName(final String name) {
+      this.nameProperty().set(name);
+    }
+
+    public Topic(Long id, String name, Topic parent) {
+        setId(id);
+        setName(name);
+        setParent(parent);
     }
 
     @Override
@@ -68,20 +69,11 @@ public class Topic {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
       if (this == obj) return true;
       if (obj == null) return false;
       if (getClass() != obj.getClass()) return false;
       Topic other = (Topic) obj;
       return Objects.equals(name, other.name) && Objects.equals(parent, other.parent);
-    }
-
-    /**
-     * Method that gets the id of the Topic
-     *
-     * @return the id of the corresponding Topic
-     */
-    public long getId() {
-      return id;
     }
 }

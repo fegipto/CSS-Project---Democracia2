@@ -1,7 +1,8 @@
 package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
-import jakarta.persistence.*;
-import pt.ul.fc.css.democracia2.domain.Bill;
+import javafx.beans.property.*;
+import javafx.collections.ObservableMap;
+import javafx.collections.ObservableSet;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 import java.util.*;
@@ -13,121 +14,118 @@ import java.util.*;
  * @author Filipe Egipto, 56272
  * @author Rafael Nisa, 56329
  */
-@Embeddable
 public class VoteBox {
 
-  @ElementCollection
-  @MapKeyJoinColumn(name = "delegate_cc")
-  private Map<Delegate, Boolean> publicVotes;
+    private final MapProperty<Delegate, Boolean> publicVotes = new SimpleMapProperty<>();
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  private Set<Citizen> voted;
+    public final MapProperty<Delegate, Boolean> publicVotesProperty() {
+        return this.publicVotes;
+    }
 
-  private long totalInFavor; // number of citizens in favor
+    public final Map<Delegate, Boolean> getPublicVotes() {
+        return this.publicVotesProperty().get();
+    }
 
-  /** Does not count ommited votes */
-  public long getTotalInFavor() {
-    return totalInFavor;
-  }
-  /** Does not count ommited votes */
-  public long getTotalAgainst() {
-    return totalAgainst;
-  }
+    public final void setPublicVotes(final Map<Delegate, Boolean> publicVotes) {
+        this.publicVotesProperty().set((ObservableMap<Delegate, Boolean>) publicVotes);
+    }
 
-  private long totalAgainst;
+    public final Optional<Boolean> getPublicCastVote(Delegate delegate) {
+        return (publicVotes.containsKey(delegate))
+                ? Optional.of(publicVotes.get(delegate))
+                : Optional.empty();
+    }
 
-  /** Constructs a new VoteBox object for the given bill. */
-  public VoteBox() {
-    super();
-    this.publicVotes = new HashMap<>();
+    private final SetProperty<Citizen> voted = new SimpleSetProperty<>();
 
-    this.voted = new HashSet<Citizen>();
-    this.totalInFavor = 0;
-    this.totalAgainst = 0;
-  }
+    public final SetProperty<Citizen> votedProperty() {
+        return this.voted;
+    }
 
-  /**
-   * Adds a public vote for the given delegate and choice.
-   *
-   * @param delegate the delegate who cast the vote
-   * @param choice the choice for which the delegate voted
-   */
-  public boolean addPublicVote(Delegate delegate, boolean choice) {
-    if (publicVotes.containsKey(delegate) || voted.contains(delegate)) return false;
-    publicVotes.put(delegate, choice);
-    voted.add(delegate);
-    if (choice) totalInFavor++;
-    else totalAgainst++;
-    return true;
-  }
+    public final Set<Citizen> getVoted() {
+        return this.votedProperty().get();
+    }
 
-  /**
-   * Adds a private vote for the given citizen and choice.
-   *
-   * @param citizen the citizen who cast the vote
-   * @param choice the choice for which the citizen voted
-   */
-  public boolean addPrivateVote(Citizen citizen, boolean choice) {
-    if (voted.contains(citizen)) return false;
-    voted.add(citizen);
-    if (choice) totalInFavor++;
-    else totalAgainst++;
-    return true;
-  }
+    public final void setVoted(final Set<Citizen> voted) {
+        this.votedProperty().set((ObservableSet<Citizen>) voted);
+    }
 
-  /**
-   * Returns an optional verdict based on the total number of citizens who voted in favor or against
-   * the bill. If the verdict cannot be determined, returns an empty optional.
-   *
-   * @return an optional verdict
-   */
-  public Optional<Boolean> getVerdict(CitizenRepository rep, Bill correspondingBill) {
-    long yesVotes = totalInFavor;
-    long noVotes = totalAgainst;
+    public Boolean hasVoted(Citizen cit) {
+        return voted.contains(cit);
+    }
 
-    // iterate over the citizens who didn't vote
-    for (Citizen citizen : rep.findAll()) {
-      if (!hasVoted(citizen)) {
-        // find the delegate associated with the most specific topic for the bill
-        Delegate del = citizen.getChosenDelegate(correspondingBill.getTopic());
+    private final LongProperty totalInFavor = new SimpleLongProperty();
 
-        // update the total number of citizens who voted in favor or against
-        if (del != null) {
-          if (publicVotes.get(del)) yesVotes++;
-          else noVotes++;
+    public final LongProperty totalInFavorProperty() {
+        return this.totalInFavor;
+    }
+
+    public final Long getTotalInFavor() {
+        return this.totalInFavorProperty().get();
+    }
+
+    public final void setTotalInFavor(final Long totalInFavor) {
+        this.totalInFavorProperty().set(totalInFavor);
+    }
+
+    private final LongProperty totalAgainst = new SimpleLongProperty();
+
+    public final LongProperty totalAgainstProperty() {
+        return this.totalAgainst;
+    }
+
+    public final Long getTotalAgainst() {
+        return this.totalAgainstProperty().get();
+    }
+
+    public final void setTotalAgainst(final Long totalAgainst) { this.totalAgainstProperty().set(totalAgainst); }
+
+    public final boolean addPublicVote(Delegate delegate, boolean choice) {
+        if (publicVotes.containsKey(delegate) || voted.contains(delegate)) return false;
+        publicVotes.put(delegate, choice);
+        voted.add(delegate);
+        if (choice) totalInFavor.add(1);
+        else totalAgainst.add(1);
+        return true;
+    }
+
+    public final boolean addPrivateVote(Citizen citizen, boolean choice) {
+        if (voted.contains(citizen)) return false;
+        voted.add(citizen);
+        if (choice) totalInFavor.add(1);
+        else totalAgainst.add(1);
+        return true;
+    }
+
+    public final Optional<Boolean> getVerdict(List<Citizen> rep, Bill correspondingBill) {
+        long yesVotes = totalInFavor.get();
+        long noVotes = totalAgainst.get();
+
+        // iterate over the citizens who didn't vote
+        for (Citizen citizen : rep) {
+            if (!hasVoted(citizen)) {
+                // find the delegate associated with the most specific topic for the bill
+                Delegate del = citizen.getChosenDelegate(correspondingBill.getTopic());
+
+                // update the total number of citizens who voted in favor or against
+                if (del != null) {
+                    if (publicVotes.get(del)) yesVotes++;
+                    else noVotes++;
+                }
+            }
         }
-      }
+
+        if (yesVotes > noVotes) {
+            return Optional.of(true);
+        } else if (noVotes > yesVotes) {
+            return Optional.of(false);
+        } else {
+            return Optional.empty(); // Tie, verdict cannot be determined
+        }
     }
 
-    if (yesVotes > noVotes) {
-      return Optional.of(true);
-    } else if (noVotes > yesVotes) {
-      return Optional.of(false);
-    } else {
-      return Optional.empty(); // Tie, verdict cannot be determined
+    @Override
+    public String toString() {
+        return "The current result is: " + totalInFavor + " to " + totalAgainst + ".";
     }
-  }
-
-  /**
-   * Returns an optional boolean based on the cast vote of a given delegate on the bill. If he
-   * hasn't voted return an empty
-   *
-   * @param delegate the delegate who cast the vote
-   * @return an optional vote
-   */
-  public Optional<Boolean> getPublicCastVote(Delegate delegate) {
-    return (publicVotes.containsKey(delegate))
-        ? Optional.of(publicVotes.get(delegate))
-        : Optional.empty();
-  }
-
-  /**
-   * Method that check if a citizen has voted
-   *
-   * @param cit the citizen to check
-   * @return if the citizen has voted
-   */
-  public Boolean hasVoted(Citizen cit) {
-    return voted.contains(cit);
-  }
 }
