@@ -2,10 +2,10 @@ package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,47 +17,51 @@ import java.util.List;
  */
 public class Delegate extends Citizen {
 
-  private ListProperty<Bill> bills = new SimpleListProperty<>();
+    private ListProperty<Bill> bills = new SimpleListProperty<>();
 
-  public List<Bill> getBills() {
-    return bills;
-  }
+    public final ListProperty<Bill> billsProperty() {
+      return this.bills;
+    }
 
-  public String getName() {
-    return super.getName();
-  }
+    public final List<Bill> getBills() { return this.billsProperty().get(); }
 
-  public long getCC() {
-    return super.getCC();
-  }
+    public final void setBills(final List<Bill> bills) {
+      this.billsProperty().set((ObservableList<Bill>) bills);
+    }
 
-  public long getToken() {
-    return super.getToken();
-  }
+    public final String getName() {
+      return super.getName();
+    }
 
-  public void chooseDelegate(Delegate delegate, Topic topic) {
-    super.chooseDelegate(delegate, topic);
-  }
+    public final Long getCC() {
+      return super.getCC();
+    }
 
-  public Delegate getChosenDelegate(Topic topic) {
-    return super.getChosenDelegate(topic);
-  }
+    public final Long getToken() {
+      return super.getToken();
+    }
 
-  public boolean delegateExists(Topic topic) {
-    return super.delegateExists(topic);
-  }
+    public final void setChosenDelegate(Delegate delegate, Topic topic) { super.setChosenDelegate(delegate, topic); }
 
-  public Bill proposeBill(Long id, String title, String description, byte[] file, BillStatus status,
-                          LocalDateTime validity, Topic topic) {
-    LocalDateTime now = LocalDateTime.now();
-    if (!validity.isAfter(now) || validity.isAfter(now.plusYears(1))) return null;
-    Bill adding = new Bill(id, title, status, description, validity, topic, file);
+    public Delegate getChosenDelegate(Topic topic) {
+      return super.getChosenDelegate(topic);
+    }
 
-    bills.add(adding);
-    return adding;
-  }
+    public boolean delegateExists(Topic topic) {
+      return super.delegateExists(topic);
+    }
 
-  public Delegate(String name, long cc) {
-    super(name, cc, cc, new HashMap<>());
-  }
+    public Bill proposeBill(Long id, String title, String description, byte[] file, BillStatus status,
+                            LocalDateTime validity, Topic topic) {
+      LocalDateTime now = LocalDateTime.now();
+      if (!validity.isAfter(now) || validity.isAfter(now.plusYears(1))) return null;
+      Bill adding = new Bill(id, title, status, description, validity, topic, file);
+
+      bills.add(adding);
+      return adding;
+    }
+
+    public Delegate(String name, long cc) {
+      super(name, cc, cc, new HashMap<>());
+    }
 }

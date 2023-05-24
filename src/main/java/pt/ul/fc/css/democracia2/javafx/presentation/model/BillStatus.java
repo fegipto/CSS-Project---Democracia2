@@ -8,9 +8,9 @@ package pt.ul.fc.css.democracia2.javafx.presentation.model;
  * @author Rafael Nisa, 56329
  */
 public enum BillStatus {
-  CREATED,
-  VOTING,
-  ACCEPTED,
-  FAILED,
-  EXPIRED
+    CREATED,
+    VOTING,
+    ACCEPTED,
+    FAILED,
+    EXPIRED
 }

@@ -1,6 +1,10 @@
 package pt.ul.fc.css.democracia2.javafx.presentation.model;
 
 import jakarta.persistence.*;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import org.springframework.lang.NonNull;
 
 import java.util.Objects;
@@ -14,81 +18,70 @@ import java.util.Objects;
  */
 @Entity
 public class Topic {
+    private LongProperty id = new SimpleLongProperty();
 
-  @Id @GeneratedValue() private Long id;
+    private ObjectProperty<Topic> parent = new SimpleObjectProperty<>();
 
-  @ManyToOne
-  @JoinColumn(name = "parent_id")
-  private Topic parent;
+    public Topic getParent() {
+      return parent;
+    }
 
-  /** Constructs a new Topic object */
-  public Topic() {}
+    private String name;
 
-  /**
-   * Method that gets the parent of the Topic
-   *
-   * @return the parent of the corresponding Topic
-   */
-  public Topic getParent() {
-    return parent;
-  }
+    /**
+     * Method that gets the name of the Topic
+     *
+     * @return the name of the corresponding Topic
+     */
+    public String getName() {
+      return name;
+    }
 
-  private String name;
+    /**
+     * Constructs a new Topic object using a name
+     *
+     * @param name the name of the Topic
+     */
+    public Topic(@NonNull String name) {
+      this.name = name;
+    }
 
-  /**
-   * Method that gets the name of the Topic
-   *
-   * @return the name of the corresponding Topic
-   */
-  public String getName() {
-    return name;
-  }
+    /**
+     * Constructs a new Topic object using a name,parent
+     *
+     * @param name the name of the Topic
+     * @param parent the parent of the Topic
+     */
+    public Topic(@NonNull String name, Topic parent) {
+      this.name = name;
+      this.parent = parent;
+    }
 
-  /**
-   * Constructs a new Topic object using a name
-   *
-   * @param name the name of the Topic
-   */
-  public Topic(@NonNull String name) {
-    this.name = name;
-  }
+    @Override
+    public String toString() {
+      return parent + ">" + name;
+    }
 
-  /**
-   * Constructs a new Topic object using a name,parent
-   *
-   * @param name the name of the Topic
-   * @param parent the parent of the Topic
-   */
-  public Topic(@NonNull String name, Topic parent) {
-    this.name = name;
-    this.parent = parent;
-  }
+    @Override
+    public int hashCode() {
+      return Objects.hash(name, parent);
+    }
 
-  @Override
-  public String toString() {
-    return parent + ">" + name;
-  }
+    @Override
+    public boolean equals(Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (getClass() != obj.getClass()) return false;
+      Topic other = (Topic) obj;
+      return Objects.equals(name, other.name) && Objects.equals(parent, other.parent);
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, parent);
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    Topic other = (Topic) obj;
-    return Objects.equals(name, other.name) && Objects.equals(parent, other.parent);
-  }
-
-  /**
-   * Method that gets the id of the Topic
-   *
-   * @return the id of the corresponding Topic
-   */
-  public long getId() {
-    return id;
-  }
+    /**
+     * Method that gets the id of the Topic
+     *
+     * @return the id of the corresponding Topic
+     */
+    public long getId() {
+      return id;
+    }
 }
