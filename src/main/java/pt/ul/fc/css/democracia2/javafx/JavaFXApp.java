@@ -12,20 +12,51 @@ import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 
 public class JavaFXApp extends Application {
 
+    private static final String prefix = "/javafx/view/";
+    private static Stage primaryStage;
+    private static BorderPane root;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        String prefix = "/javafx/view/";
+        this.primaryStage = primaryStage;
 
-        BorderPane root = new BorderPane();
-        FXMLLoader listAvailableVotesLoader = new FXMLLoader(getClass().getResource(prefix + "listAvailableVotes.fxml"));
+        this.root = new BorderPane();
+        this.listAvailableVotes();
+    }
+
+    public static void listAvailableVotes() throws Exception {
+        FXMLLoader listAvailableVotesLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "listAvailableVotes.fxml"));
         root.setCenter(listAvailableVotesLoader.load());
         ListAvailableVotesController listAvailableVotesController = listAvailableVotesLoader.getController();
 
-        FXMLLoader votingLoader = new FXMLLoader(getClass().getResource(prefix + "voting.fxml"));
+        FXMLLoader votingLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "voting.fxml"));
         root.setRight(votingLoader.load());
         VotingController votingController = votingLoader.getController();
 
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource(prefix + "menu.fxml"));
+        FXMLLoader menuLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "menu.fxml"));
+        root.setTop(menuLoader.load());
+        MenuController menuController = menuLoader.getController();
+
+        DataModel model = new DataModel();
+        listAvailableVotesController.initModel(model);
+        votingController.initModel(model);
+        menuController.initModel(model);
+
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void consultNonExpiredBills() throws Exception {
+        FXMLLoader consultNonExpiredBillLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "consultNonExpiredBill.fxml"));
+        root.setCenter(consultNonExpiredBillLoader.load());
+        ListAvailableVotesController listAvailableVotesController = consultNonExpiredBillLoader.getController();
+
+        FXMLLoader supportBillLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "supportBill.fxml"));
+        root.setRight(supportBillLoader.load());
+        VotingController votingController = supportBillLoader.getController();
+
+        FXMLLoader menuLoader = new FXMLLoader(JavaFXApp.class.getResource(prefix + "menu.fxml"));
         root.setTop(menuLoader.load());
         MenuController menuController = menuLoader.getController();
 

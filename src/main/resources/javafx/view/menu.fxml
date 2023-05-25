@@ -11,6 +11,8 @@
 		<Menu text="File">
 			<MenuItem text="Load" onAction="#load"/>
 			<MenuItem text="Save" onAction="#save"/>
+			<MenuItem text="List available votes" onAction="#listAvailableVotes"/>
+			<MenuItem text="Consult non-expired bills" onAction="#consultNonExpiredBills"/>
 			<SeparatorMenuItem />
 			<MenuItem text="Quit" onAction="#exit"/>
 		</Menu>

@@ -3,6 +3,7 @@ package pt.ul.fc.css.democracia2.javafx.presentation.control;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
+import pt.ul.fc.css.democracia2.javafx.JavaFXApp;
 import pt.ul.fc.css.democracia2.javafx.presentation.model.DataModel;
 
 import java.io.File;
@@ -44,6 +45,16 @@ public class MenuController {
                 exc.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    public void listAvailableVotes() throws Exception {
+        JavaFXApp.listAvailableVotes();
+    }
+
+    @FXML
+    public void consultNonExpiredBills() throws Exception {
+        JavaFXApp.consultNonExpiredBills();
     }
 
     @FXML
