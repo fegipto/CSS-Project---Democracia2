@@ -2,14 +2,11 @@ package pt.ul.fc.css.democracia2.services;
 
 import jakarta.transaction.Transactional;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import pt.ul.fc.css.democracia2.DTO.TopicDTO;
+import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -52,39 +49,37 @@ public class ProposeBillService {
   /**
    * Method that allows a delegate to present a new bill
    *
-   * @param delegate_token the authentication token of the delegate that wants to present a new bill
-   * @param title the title of the bill
-   * @param desc the description of the bill
-   * @param file the file of the bill
-   * @param validity the validity of the bill
-   * @param topic_id the id of the topic of the bill
+   * @param billDTO bill info
    * @throws IOException
    */
-  public void presentBill(
-      long delegate_token,
-      String title,
-      String desc,
-      MultipartFile file,
-      LocalDateTime validity,
-      long topic_id)
-      throws IOException {
-    Optional<Delegate> delegate = delegateRepository.findByToken(delegate_token);
-    Optional<Topic> topic = topicRepository.findById(topic_id);
+  public BillDTO presentBill(BillDTO billDTO) throws IOException {
+    Optional<Delegate> delegate = delegateRepository.findByToken(billDTO.getProponent().getToken());
 
     if (!delegate.isPresent()) {
       throw new IllegalArgumentException(
-          "Delegate with token " + delegate_token + " is not found.");
+          "Delegate with token " + billDTO.getProponent().getToken() + " is not found.");
     }
 
-    if (!topic.isPresent()) {
-      throw new IllegalArgumentException("Topic with id " + topic_id + " is not found.");
+    Optional<Topic> billTopic = topicRepository.findById(billDTO.getTopic().getId());
+    if (billTopic.isEmpty()) {
+      throw new IllegalArgumentException(
+          "Topic with id " + billDTO.getTopic().getId() + " is not found.");
     }
-
-    Bill added = delegate.get().proposeBill(title, desc, file.getBytes(), validity, topic.get());
+    Bill added =
+        delegate
+            .get()
+            .proposeBill(
+                billDTO.getTitle(),
+                billDTO.getDescription(),
+                billDTO.getFile(),
+                billDTO.getValidity(),
+                billTopic.get());
 
     if (added != null)
       // save in bill table since it owns the fk
       billRepository.save(added);
+    else throw new IllegalArgumentException("Invalid validity");
+    return new BillDTO(added);
   }
 
   /**
@@ -93,7 +88,7 @@ public class ProposeBillService {
    * @return a list topics available
    */
   @Autowired
-  public List<TopicDTO> getTopics() {
-    return topicRepository.getTopics().stream().map(TopicDTO::new).collect(Collectors.toList());
+  public List<Topic> getTopics() {
+    return topicRepository.getTopics();
   }
 }

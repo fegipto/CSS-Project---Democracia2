@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -21,11 +21,10 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
-import pt.ul.fc.css.democracia2.services.ListAvailableVotesService;
 
 @SpringBootTest
 @Transactional
-public class ListAvailableVotesTest extends MockDatabaseTests {
+public class ListAvailableVotesTest {
 
   @Autowired private ListAvailableVotesService listAvailableVotesService;
 
@@ -46,24 +45,16 @@ public class ListAvailableVotesTest extends MockDatabaseTests {
         delegate1
             .get()
             .proposeBill(
-                "Bill 1",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 11, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 1", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
     Bill added2 =
         delegate1
             .get()
             .proposeBill(
-                "Bill 2",
-                "null",
-                new byte[] {},
-                LocalDateTime.of(2023, 10, 5, 0, 0, 0, 0),
-                topic.get());
+                "Bill 2", "null", new byte[] {}, LocalDateTime.now().plusMonths(4), topic.get());
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {

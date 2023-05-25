@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,11 +20,10 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
-import pt.ul.fc.css.democracia2.services.ConsultNonExpiredBillService;
 
 @SpringBootTest
 @Transactional
-public class ConsultNonExpiredBillServiceTests extends MockDatabaseTests {
+public class ConsultNonExpiredBillServiceTests {
 
   @Autowired private ConsultNonExpiredBillService consultNonExpiredBillService;
 
@@ -142,7 +141,7 @@ public class ConsultNonExpiredBillServiceTests extends MockDatabaseTests {
     Thread.sleep(1000);
     List<Citizen> citizens = citizenRepository.findAll();
 
-    int count = 0;
+    int count = added.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {

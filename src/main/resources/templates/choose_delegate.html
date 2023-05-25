@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:replace="~{layout :: layout(~{::section})}">
+
+<body>
+    <section>
+        <h1>Choose a delegate</h1>
+
+        <form th:if="${citizen}" action="/delegate/choose" method="post">
+            <input type="hidden" th:value="${citizen.cc}" name="citizenId" />
+            <div >
+                <label for="Delegate">Delegate:</label>
+                <select id="delegateId" name="delegateId" required onfocus='this.size=2;' onblur='this.size=1;' onchange='this.size=1; this.blur();'>
+                    <option th:each="delegate : ${delegates}" th:value="${delegate.cc}" th:text="${delegate.name}"></option>
+                </select>
+            </div>
+            <div>
+                <label for="topicId">Topic:</label>
+                <select id="topicId" name="topicId" required>
+                    <option th:each="topic : ${topics}" th:value="${topic.name}" th:text="${topic.name}"></option>
+                </select>
+            </div>
+            <input type="submit" value="Save">
+        </form>
+    </section>
+</body>
+
+</html>

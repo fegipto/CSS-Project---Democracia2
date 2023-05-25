@@ -15,16 +15,17 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 public class BillDTO {
 
   private long id;
+  private CitizenDTO proponent;
   private String title;
   private BillStatus status;
   private String description;
+  private int supportersCount;
   private LocalDateTime validity;
+
   private Topic topic;
   private byte[] file;
 
-  /**
-   * Constructs a new BillDTO object
-   */
+  /** Constructs a new BillDTO object */
   public BillDTO() {
     // No-argument constructor
   }
@@ -36,12 +37,14 @@ public class BillDTO {
    */
   public BillDTO(Bill bill) {
     this.id = bill.getId();
+    this.proponent = new CitizenDTO(bill.getProponent());
     this.title = bill.getTitle();
     this.status = bill.getStatus();
     this.description = bill.getDescription();
     this.validity = bill.getValidity();
     this.topic = bill.getTopic();
     this.file = bill.getFile();
+    this.supportersCount = bill.getSupporters().size();
   }
 
   /**
@@ -105,5 +108,49 @@ public class BillDTO {
    */
   public byte[] getFile() {
     return file;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setStatus(BillStatus status) {
+    this.status = status;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setValidity(LocalDateTime validity) {
+    this.validity = validity;
+  }
+
+  public void setTopic(Topic topic) {
+    this.topic = topic;
+  }
+
+  public void setFile(byte[] file) {
+    this.file = file;
+  }
+
+  public CitizenDTO getProponent() {
+    return proponent;
+  }
+
+  public void setProponent(CitizenDTO proponent) {
+    this.proponent = proponent;
+  }
+
+  public int getSupportersCount() {
+    return supportersCount;
+  }
+
+  public void setSupportersCount(int supportersCount) {
+    this.supportersCount = supportersCount;
   }
 }

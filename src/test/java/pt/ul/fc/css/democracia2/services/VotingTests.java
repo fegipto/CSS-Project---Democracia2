@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,11 +20,10 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
-import pt.ul.fc.css.democracia2.services.VotingService;
 
 @SpringBootTest
 @Transactional
-public class VotingTests extends MockDatabaseTests {
+public class VotingTests {
   @Autowired private VotingService votingService;
 
   @Autowired private CitizenRepository citizenRepository;

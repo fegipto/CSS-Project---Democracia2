@@ -2,12 +2,25 @@ package pt.ul.fc.css.democracia2.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
@@ -42,6 +55,7 @@ public class Bill {
 
   @Column(name = "BILL_VALIDITY")
   @Temporal(TemporalType.TIMESTAMP)
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private LocalDateTime validity;
 
   @ManyToOne
@@ -53,6 +67,10 @@ public class Bill {
   @ManyToOne
   @JoinColumn(name = "delegate_cc", nullable = false)
   private Delegate proponent;
+
+  public Delegate getProponent() {
+    return proponent;
+  }
 
   @ManyToMany(cascade = CascadeType.ALL)
   private List<Citizen> supporters;
@@ -74,8 +92,8 @@ public class Bill {
   public Bill(
       @NonNull String title,
       @NonNull String description,
-      @NonNull byte[] file,
-      @NonNull LocalDateTime validity,
+      byte[] file,
+      @NonNull @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime validity,
       @NonNull Topic topic,
       @NonNull Delegate proponent) {
     super();
@@ -88,6 +106,7 @@ public class Bill {
     this.status = BillStatus.CREATED;
     this.voteBox = new VoteBox();
     this.supporters = new LinkedList<Citizen>();
+    supporters.add(proponent);
   }
 
   /**
@@ -162,9 +181,7 @@ public class Bill {
     return supporters;
   }
 
-  /**
-   * Method that begins the voting process of a Bill
-   */
+  /** Method that begins the voting process of a Bill */
   public void beginVote() {
     if (supporters.size() >= 10000) {
       if (isExpired()) status = BillStatus.EXPIRED;

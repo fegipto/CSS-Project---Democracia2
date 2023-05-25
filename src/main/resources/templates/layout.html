@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html th:fragment="layout (content)" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Democracia2</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        :root {
+            --primary: beige;
+            --secondary: lightbrown;
+            --bg: lightgray;
+        }
+
+        #container {
+            margin: auto;
+            max-width: 500px;
+            background-color: beige;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="background-color: transparent;">
+    <nav aria-label="breadcrumb">
+        <div class="container-fluid">
+            <a href="#">Democracia2</a>
+
+            <div>
+                <ul>
+                    <li>
+                        <a aria-current="page" th:href="@{/bills/votable}">Home</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/bill/new}">New bill</a>
+                    </li>
+
+                    <li><a th:href="@{/bills/votable}">Votable bills</a></li>
+                    <li><a th:href="@{/bills/open}">Open bills</a></li>
+                    <li><a th:href="@{/delegate/choose}">Choose a delegate</a></li>
+
+                    <li>
+                        <a th:href="@{/test/votable/bills}">Generate Votable bills</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" th:with="citizen=${session.citizen}" style="margin-top: 100px;">
+        <!--/* Standard layout can be mixed with Layout Dialect */-->
+        <div layout:fragment="header">
+
+        </div>
+        <div>
+            <form th:unless="${citizen}" th:action="@{'/citizen'}" method="get">
+                <div>
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <button type="submit">login</button>
+            </form>
+            <div th:if="${citizen}">
+                <p th:text="'Hello ' + ${citizen.name}"></p>
+                <a href="/citizen" th:href="@{/citizen/logout}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                <form id="logout-form" th:action="@{/citizen/logout}" method="post" style="display: none;">
+                    <input type="hidden" name="_method" value="delete" />
+                </form>
+
+            </div>
+
+        </div>
+        <p th:if="${error}" th:text="${error}"></p>
+
+        <div th:replace="${content}">
+            <!-- ============================================================================ -->
+            <!-- This content is only used for static prototyping purposes (natural templates)-->
+            <!-- and is therefore entirely optional, as this markup fragment will be included -->
+            <!-- from "fragments/header.html" at runtime.                                     -->
+            <!-- ============================================================================ -->
+            <h2>Static content for prototyping purposes only</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+                Phasellus et placerat elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent scelerisque neque neque, ac elementum quam dignissim interdum.
+                Phasellus et placerat elit.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

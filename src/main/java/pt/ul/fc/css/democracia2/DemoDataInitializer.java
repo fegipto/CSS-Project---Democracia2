@@ -1,12 +1,12 @@
 package pt.ul.fc.css.democracia2;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -14,19 +14,27 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
+import pt.ul.fc.css.democracia2.services.ProposeBillService;
 
-@TestInstance(Lifecycle.PER_CLASS)
-public class MockDatabaseTests {
-  @Autowired private CitizenRepository citizenRepository;
-  @Autowired private DelegateRepository delegateRepository;
-  @Autowired private BillRepository billRepository;
-  @Autowired private TopicRepository topicRepository;
+@Component
+public class DemoDataInitializer {
 
-  @BeforeAll
-  void initializeDatabase() {
-    initTopics();
-    initCitizens();
-    initDelegates();
+  private static final Logger log = LoggerFactory.getLogger(DemoDataInitializer.class);
+
+  private final CitizenRepository citizenRepository;
+  private final DelegateRepository delegateRepository;
+  private final TopicRepository topicRepository;
+
+  @Autowired
+  public DemoDataInitializer(
+      CitizenRepository citizenRepository,
+      DelegateRepository delegateRepository,
+      BillRepository billRepository,
+      TopicRepository topicRepository,
+      ProposeBillService proposeBillService) {
+    this.citizenRepository = citizenRepository;
+    this.delegateRepository = delegateRepository;
+    this.topicRepository = topicRepository;
   }
 
   private void initDelegates() {
@@ -86,10 +94,12 @@ public class MockDatabaseTests {
     }
   }
 
-  @AfterAll
-  void clearDatabase() {
-    citizenRepository.deleteAll();
-    topicRepository.deleteAll();
-    billRepository.deleteAll();
+  public void initialize() throws IOException {
+    // Initialization logic goes here
+    // Example: populate database with initial data
+    log.info("Initializing demo data...");
+    initTopics();
+    initCitizens();
+    initDelegates();
   }
 }

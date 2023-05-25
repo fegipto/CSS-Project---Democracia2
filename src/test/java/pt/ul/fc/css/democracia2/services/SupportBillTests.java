@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2;
+package pt.ul.fc.css.democracia2.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -22,11 +22,10 @@ import pt.ul.fc.css.democracia2.repositories.BillRepository;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
-import pt.ul.fc.css.democracia2.services.SupportBillService;
 
 @SpringBootTest
 @Transactional
-class SupportBillTests extends MockDatabaseTests {
+class SupportBillTests {
 
   @Autowired private SupportBillService supportBillService;
 
@@ -57,7 +56,7 @@ class SupportBillTests extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     assertTrue(added2.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {
@@ -98,7 +97,7 @@ class SupportBillTests extends MockDatabaseTests {
     List<Citizen> citizens = citizenRepository.findAll();
     assertTrue(added2.supportBill(citizens.get(0)));
 
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {
@@ -113,7 +112,7 @@ class SupportBillTests extends MockDatabaseTests {
     billRepository.save(added1);
     billRepository.save(added2);
 
-    assertEquals(1, added2.getSupporters().size());
+    assertEquals(2, added2.getSupporters().size());
     assertTrue(added2.getStatus() == BillStatus.CREATED);
 
     assertEquals(10000, added1.getSupporters().size());
@@ -135,7 +134,7 @@ class SupportBillTests extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {
@@ -172,7 +171,7 @@ class SupportBillTests extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {
@@ -207,7 +206,7 @@ class SupportBillTests extends MockDatabaseTests {
     assertTrue(added1.getStatus() == BillStatus.CREATED);
     List<Citizen> citizens = citizenRepository.findAll();
 
-    int count = 0;
+    int count = added1.getSupporters().size();
     for (Citizen cit : citizens) {
 
       if (count == 10000) {
