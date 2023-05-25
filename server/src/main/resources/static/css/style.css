@@ -1,0 +1,12 @@
+.vote {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
+
+.vote button {
+    height: 50px;
+    width: 100px;
+    line-height: 100%;
+}
