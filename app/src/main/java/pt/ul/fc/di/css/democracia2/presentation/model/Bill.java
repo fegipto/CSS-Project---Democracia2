@@ -1,24 +1,12 @@
 package pt.ul.fc.di.css.democracia2.presentation.model;
 
 import java.time.LocalDateTime;
-import javafx.beans.property.*;
+import java.time.format.DateTimeFormatter;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
 
 public class Bill {
-
-  private final LongProperty id = new SimpleLongProperty();
-
-  public final LongProperty idProperty() {
-    return this.id;
-  }
-
-  public final Long getId() {
-    return this.idProperty().get();
-  }
-
-  public final void setId(final Long id) {
-    this.idProperty().set(id);
-  }
-
   private final StringProperty title = new SimpleStringProperty();
 
   public final StringProperty titleProperty() {
@@ -33,18 +21,18 @@ public class Bill {
     this.titleProperty().set(title);
   }
 
-  private final ObjectProperty<BillStatus> status = new SimpleObjectProperty<>();
+  private final StringProperty proponentName = new SimpleStringProperty();
 
-  public final ObjectProperty<BillStatus> statusProperty() {
-    return this.status;
+  public final StringProperty proponentNameProperty() {
+    return this.proponentName;
   }
 
-  public final BillStatus getStatus() {
-    return this.statusProperty().get();
+  public final String getProponentName() {
+    return this.proponentNameProperty().get();
   }
 
-  public final void setStatus(final BillStatus status) {
-    this.statusProperty().set(status);
+  public final void setProponentName(final String proponentName) {
+    this.proponentNameProperty().set(proponentName);
   }
 
   private final StringProperty description = new SimpleStringProperty();
@@ -61,87 +49,60 @@ public class Bill {
     this.descriptionProperty().set(description);
   }
 
-  private final ObjectProperty<LocalDateTime> validity = new SimpleObjectProperty<>();
+  private final StringProperty status = new SimpleStringProperty();
 
-  public final ObjectProperty<LocalDateTime> validityProperty() {
+  public final StringProperty statusProperty() {
+    return this.status;
+  }
+
+  public final String getStatus() {
+    return this.statusProperty().get();
+  }
+
+  public final void setStatus(final String status) {
+    this.statusProperty().set(status);
+  }
+
+  private final StringProperty topic = new SimpleStringProperty();
+
+  public final StringProperty topicProperty() {
+    return this.topic;
+  }
+
+  public final String getTopic() {
+    return this.topicProperty().get();
+  }
+
+  public final void setTopic(final String topic) {
+    this.topicProperty().set(topic);
+  }
+
+  private final StringProperty validity = new SimpleStringProperty();
+
+  public final StringProperty validityProperty() {
     return this.validity;
   }
 
-  public final LocalDateTime getValidity() {
+  public final String getValidity() {
     return this.validityProperty().get();
   }
 
   public final void setValidity(final LocalDateTime validity) {
-    this.validityProperty().set(validity);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    this.validityProperty().set(validity.format(formatter));
   }
 
-  private final ObjectProperty<Topic> topic = new SimpleObjectProperty<>();
-
-  public final ObjectProperty<Topic> topicProperty() {
-    return this.topic;
-  }
-
-  public final Topic getTopic() {
-    return this.topicProperty().get();
-  }
-
-  public final void setTopic(final Topic topic) {
-    this.topicProperty().set(topic);
-  }
-
-  private final StringProperty topicString = new SimpleStringProperty();
-
-  public final StringProperty topicStringProperty() {
-    return this.topicString;
-  }
-
-  public final String getTopicString() {
-    return this.topicStringProperty().get();
-  }
-
-  public final void setTopicString(final String topicString) {
-    this.topicStringProperty().set(topicString);
-  }
-
-  private final ObjectProperty<byte[]> file = new SimpleObjectProperty<>();
-
-  public final ObjectProperty<byte[]> fileProperty() {
-    return this.file;
-  }
-
-  public final byte[] getFile() {
-    return this.fileProperty().get();
-  }
-
-  public final void setFile(final byte[] file) {
-    this.fileProperty().set(file);
-  }
-
-  public Bill(
-      long id,
-      String title,
-      BillStatus status,
-      String description,
-      LocalDateTime validity,
-      Topic topic,
-      byte[] file) {
-    setId(id);
-    setTitle(title);
-    setStatus(status);
-    setDescription(description);
-    setValidity(validity);
-    setTopic(topic);
-    setTopicString(topic.toString());
-    setFile(file);
+  public Bill(BillDTO billDTO) {
+    setTitle(billDTO.getTitle());
+    setProponentName(billDTO.getProponent().getName());
+    setTopic(billDTO.getTopic().getName());
+    setDescription(billDTO.getDescription());
+    setStatus(billDTO.getStatus().name());
+    setValidity(billDTO.getValidity());
   }
 
   @Override
   public String toString() {
-    return "Title: "
-        + title.getValue()
-        + "\nTopic: "
-        + topic.getValue()
-        + "\nDescription: "
-        + description.getValue();
+    return title.getValue();
   }
 }

@@ -1,11 +1,16 @@
 package pt.ul.fc.di.css.democracia2.presentation.model;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
 
 public class DataModel {
 
@@ -20,8 +25,7 @@ public class DataModel {
 
   // DATA FOR AVAILABLE VOTINGS
   private final ObservableList<Bill> availableVotesList =
-      FXCollections.observableArrayList(
-          bill -> new Observable[] {bill.titleProperty(), bill.topicProperty()});
+      FXCollections.observableArrayList(bill -> new Observable[] {bill.titleProperty()});
 
   public ObservableList<Bill> getAvailableVotesList() {
     return availableVotesList;
@@ -72,23 +76,24 @@ public class DataModel {
 
   // LOAD AND SAVE DATA
   // TODO
-  public void loadData(File file) {
-    // mock...
-    // personList.setAll(
-    //        new Person("Jose", "Silva", 934445678 ),
-    //        new Person("Isabel", "Ramos",912765432),
-    //        new Person("Eloi", "Matos", 965436576),
-    //        new Person("Ema", "Antunes", 217122121),
-    //        new Person("Paulo", "Guerra", 217500504)
-    // );
-    // for (BillDTO b: listAvailableVotesService.listAvailableVotes()) {
-    //    availableVotesList.add(new Bill(b));
-    // }
-    // for (BillDTO b: consultNonExpiredBillService.listNonExpired()) {
-    //    nonExpiredBillList.add(new Bill(b));
-    // }
+  public void generateVotables() {
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<Object> responseEntity =
+        restTemplate.getForEntity("http://localhost:8080/api/test/votable/bills", null);
   }
 
   // TODO
   public void saveData(File file) {}
+
+  public void loadOpen() {
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<BillDTO[]> responseEntity =
+        restTemplate.getForEntity("http://localhost:8080/api/bills/open", BillDTO[].class);
+    BillDTO[] bills = responseEntity.getBody();
+    List<Bill> billPs = new ArrayList<>();
+    for (BillDTO bill : bills) {
+      billPs.add(new Bill(bill));
+    }
+    availableVotesList.setAll(billPs);
+  }
 }

@@ -19,29 +19,5 @@ public class VotingController {
     }
 
     this.model = model;
-    model
-        .currentBillProperty()
-        .addListener(
-            (obs, oldBill, newBill) -> {
-              if (oldBill != null) {
-                title.textProperty().unbindBidirectional(oldBill.titleProperty());
-                topic.textProperty().unbindBidirectional(oldBill.topicStringProperty());
-                description.textProperty().unbindBidirectional(oldBill.descriptionProperty());
-              }
-              if (newBill == null) {
-                title.setText("");
-                topic.setText("");
-                description.setText("");
-              } else {
-                title.textProperty().bindBidirectional(newBill.titleProperty());
-                topic.textProperty().bindBidirectional(newBill.topicStringProperty());
-                description.textProperty().bindBidirectional(newBill.descriptionProperty());
-              }
-            });
-
-    button.setOnAction(
-        e -> {
-          model.setVoteBill();
-        });
   }
 }

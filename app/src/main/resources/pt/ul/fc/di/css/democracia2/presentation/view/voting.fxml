@@ -6,25 +6,19 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
 
-<GridPane fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.VotingController" xmlns:fx="http://javafx.com/fxml/1" hgap="5" vgap="5">
-	<columnConstraints>
-		<ColumnConstraints halignment="RIGHT" hgrow="NEVER"/>
-		<ColumnConstraints halignment="LEFT" hgrow="ALWAYS"/>
-	</columnConstraints>
-
-	<Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-	<Label text="Topic:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-	<Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-
-	<TextArea fx:id="title" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-	<TextArea fx:id="topic" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-	<TextArea fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-	<Button fx:id="button" text="Vote" />
-
-	<padding>
-		<Insets  top="10" left="10" right="10" bottom="10"/>
-	</padding>
-
-</GridPane>
+<AnchorPane layoutX="376.0" layoutY="69.0" prefHeight="46.0" prefWidth="275.0"  xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.VotingController">
+                     <children>
+                        <AnchorPane layoutX="152.0" layoutY="1.0" prefHeight="45.0" prefWidth="123.0">
+                           <children>
+                              <Button layoutX="20.0" layoutY="12.0" mnemonicParsing="false" text="Yes" />
+                              <Button layoutX="62.0" layoutY="12.0" mnemonicParsing="false" text="No" />
+                           </children>
+                        </AnchorPane>
+                        <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vote:" wrappingWidth="123.0" />
+                     </children>
+                  </AnchorPane>

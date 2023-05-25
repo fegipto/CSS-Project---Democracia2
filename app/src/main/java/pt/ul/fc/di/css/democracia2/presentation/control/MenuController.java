@@ -4,7 +4,6 @@ import java.io.File;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
-import pt.ul.fc.di.css.democracia2.JavaFXApp;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
 public class MenuController {
@@ -20,16 +19,13 @@ public class MenuController {
   }
 
   @FXML
-  public void load() {
-    FileChooser chooser = new FileChooser();
-    File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
-    if (file != null) {
-      try {
-        model.loadData(file);
-      } catch (Exception exc) {
-        exc.printStackTrace();
-      }
-    }
+  public void generateVotables() {
+    model.generateVotables();
+  }
+
+  @FXML
+  public void loadOpen() {
+    model.loadOpen();
   }
 
   @FXML
@@ -43,16 +39,6 @@ public class MenuController {
         exc.printStackTrace();
       }
     }
-  }
-
-  @FXML
-  public void listAvailableVotes() throws Exception {
-    JavaFXApp.listAvailableVotes();
-  }
-
-  @FXML
-  public void consultNonExpiredBills() throws Exception {
-    JavaFXApp.consultNonExpiredBills();
   }
 
   @FXML

@@ -1,4 +1,4 @@
-package pt.ul.fc.di.css.democracia2.presentation.model;
+package pt.ul.fc.di.css.democracia2.DTO;
 
 /**
  * Enumerate that represents a Bill's status
