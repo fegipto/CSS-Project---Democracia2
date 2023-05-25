@@ -3,7 +3,6 @@ package pt.ul.fc.css.democracia2.javafx.presentation.model;
 import javafx.beans.property.*;
 import javafx.collections.ObservableMap;
 import javafx.collections.ObservableSet;
-import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 import java.util.*;
 

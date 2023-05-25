@@ -26,7 +26,7 @@ public class SupportBillController {
         model.currentNonExpiredBillProperty().addListener((obs, oldBill, newBill) -> {
             if (oldBill != null) {
                 title.textProperty().unbindBidirectional(oldBill.titleProperty());
-                topic.textProperty().unbindBidirectional(oldBill.topicProperty().getAsString());
+                topic.textProperty().unbindBidirectional(oldBill.topicStringProperty());
                 description.textProperty().unbindBidirectional(oldBill.descriptionProperty());
             }
             if (newBill == null) {
@@ -35,7 +35,7 @@ public class SupportBillController {
                 description.setText("");
             } else {
                 title.textProperty().bindBidirectional(newBill.titleProperty());
-                topic.textProperty().bindBidirectional(newBill.topicProperty().getAsString());
+                topic.textProperty().bindBidirectional(newBill.topicStringProperty());
                 description.textProperty().bindBidirectional(newBill.descriptionProperty());
             }
         });
