@@ -17,11 +17,11 @@ public class JavaFXApp extends Application {
         String prefix = "/javafx/view/";
 
         BorderPane root = new BorderPane();
-        FXMLLoader listAvailableVotesLoader = new FXMLLoader(getClass().getResource(prefix + "listAvailableVotesController.fxml"));
+        FXMLLoader listAvailableVotesLoader = new FXMLLoader(getClass().getResource(prefix + "listAvailableVotes.fxml"));
         root.setCenter(listAvailableVotesLoader.load());
         ListAvailableVotesController listAvailableVotesController = listAvailableVotesLoader.getController();
 
-        FXMLLoader votingLoader = new FXMLLoader(getClass().getResource(prefix + "votingController.fxml"));
+        FXMLLoader votingLoader = new FXMLLoader(getClass().getResource(prefix + "voting.fxml"));
         root.setRight(votingLoader.load());
         VotingController votingController = votingLoader.getController();
 
