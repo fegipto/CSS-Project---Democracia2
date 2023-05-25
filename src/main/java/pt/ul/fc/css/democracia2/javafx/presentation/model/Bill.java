@@ -86,6 +86,18 @@ public class Bill {
 
     public final void setTopic(final Topic topic) { this.topicProperty().set(topic); }
 
+    private final StringProperty topicString = new SimpleStringProperty();
+
+    public final StringProperty topicStringProperty() {
+        return this.topicString;
+    }
+
+    public final String getTopicString() {
+        return this.topicStringProperty().get();
+    }
+
+    public final void setTopicString(final String topicString) { this.topicStringProperty().set(topicString); }
+
     private final ObjectProperty<byte[]> file = new SimpleObjectProperty<>();
 
     public final ObjectProperty<byte[]> fileProperty() { return this.file; }
@@ -106,6 +118,7 @@ public class Bill {
         setDescription(description);
         setValidity(validity);
         setTopic(topic);
+        setTopicString(topic.toString());
         setFile(file);
     }
 
