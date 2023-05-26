@@ -29,6 +29,16 @@ public class MenuController {
   }
 
   @FXML
+  public void generateSupportables() {
+    model.generateSupportables();
+  }
+
+  @FXML
+  public void loadSupportable() {
+    model.loadSupportable();
+  }
+
+  @FXML
   public void save() {
     FileChooser chooser = new FileChooser();
     File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
