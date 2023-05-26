@@ -31,7 +31,6 @@ public class DetailsController {
                 status.textProperty().unbindBidirectional(oldBill.statusProperty());
                 validity.textProperty().unbindBidirectional(oldBill.validityProperty());
                 proponent.textProperty().unbindBidirectional(oldBill.proponentNameProperty());
-
                 description.textProperty().unbindBidirectional(oldBill.descriptionProperty());
               }
               if (newBill == null) {
@@ -40,7 +39,6 @@ public class DetailsController {
                 status.setText("");
                 validity.setText("");
                 proponent.setText("");
-
                 description.setText("");
               } else {
                 title.textProperty().bindBidirectional(newBill.titleProperty());
@@ -48,7 +46,6 @@ public class DetailsController {
                 status.textProperty().bindBidirectional(newBill.statusProperty());
                 validity.textProperty().bindBidirectional(newBill.validityProperty());
                 proponent.textProperty().bindBidirectional(newBill.proponentNameProperty());
-
                 description.textProperty().bindBidirectional(newBill.descriptionProperty());
               }
             });
