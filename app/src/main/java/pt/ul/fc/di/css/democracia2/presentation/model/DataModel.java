@@ -48,13 +48,15 @@ public class DataModel {
   // TODO
   public final void setVoteBill() {}
 
+  // TODO
+  public final void setVoteNoBill() {}
+
   // DATA FOR NON-EXPIRED-BILLS
   private final ObservableList<Bill> nonExpiredBillList =
-      FXCollections.observableArrayList(
-          bill -> new Observable[] {bill.titleProperty(), bill.topicProperty()});
+      FXCollections.observableArrayList(bill -> new Observable[] {bill.titleProperty()});
 
   public ObservableList<Bill> getNonExpiredBillList() {
-    return availableVotesList;
+    return nonExpiredBillList;
   }
 
   private final ObjectProperty<Bill> currentNonExpiredBill = new SimpleObjectProperty<>(null);
@@ -82,10 +84,29 @@ public class DataModel {
         restTemplate.getForEntity("http://localhost:8080/api/test/votable/bills", null);
   }
 
+  //TODO - How to get supportable!!!!
+  public void generateSupportables() {
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<Object> responseEntity =
+        restTemplate.getForEntity("http://localhost:8080/api/test/supportable/bills", null);
+  }
+
   // TODO
   public void saveData(File file) {}
 
   public void loadOpen() {
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<BillDTO[]> responseEntity =
+        restTemplate.getForEntity("http://localhost:8080/api/bills/votable", BillDTO[].class);
+    BillDTO[] bills = responseEntity.getBody();
+    List<Bill> billPs = new ArrayList<>();
+    for (BillDTO bill : bills) {
+      billPs.add(new Bill(bill));
+    }
+    availableVotesList.setAll(billPs);
+  }
+
+  public void loadSupportable() {
     RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<BillDTO[]> responseEntity =
         restTemplate.getForEntity("http://localhost:8080/api/bills/open", BillDTO[].class);
@@ -94,6 +115,6 @@ public class DataModel {
     for (BillDTO bill : bills) {
       billPs.add(new Bill(bill));
     }
-    availableVotesList.setAll(billPs);
+    nonExpiredBillList.setAll(billPs);
   }
 }
