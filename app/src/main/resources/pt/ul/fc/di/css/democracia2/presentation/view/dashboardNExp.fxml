@@ -44,7 +44,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: lighgrey;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.ListController">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: lighgrey;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.NExpListController">
   <children>
      <fx:include fx:id="menuController" source="menu.fxml" />
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
@@ -53,14 +53,14 @@
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="218.0">
               <children>
-                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Votable" textAlignment="CENTER" wrapText="false">
+                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Supportable" textAlignment="CENTER" wrapText="false">
                            <font>
                       <Font size="18.0" fx:id="x1" />
                            </font>
                            <textFill>
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
                            </textFill></Label>
-                        <ListView fx:id="listBills" layoutX="14.0" layoutY="41.0" prefHeight="483.0" prefWidth="198.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="41.0" />
+                        <ListView fx:id="listNExpBills" layoutX="14.0" layoutY="41.0" prefHeight="483.0" prefWidth="198.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="41.0" />
               </children>
             </AnchorPane>
           </content>
@@ -68,8 +68,8 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                   <fx:include fx:id="detailsController" source="details.fxml" />
-                   <fx:include fx:id="votingController" source="voting.fxml" />
+                   <fx:include fx:id="nExpDetailsController" source="nexpdetails.fxml" />
+                   <fx:include fx:id="supportingController" source="supporting.fxml" />
 
           </children>
         </AnchorPane>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane gridLinesVisible="true" layoutX="14.0" layoutY="126.0" prefHeight="385.0" prefWidth="637.0" style="-fx-border-color: blue; -fx-border-width: 1; -fx-background-color: lightblue; -fx-vgap: 0; -fx-hgap: 0; -fx-padding: 0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.NExpDetailsController">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="125.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="537.0" minWidth="10.0" prefWidth="512.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="173.0" minHeight="0.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="173.0" minHeight="0.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="258.0" minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="258.0" minHeight="9.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="322.0" minHeight="9.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="322.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+      <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;">
+         <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutY="8.0" prefWidth="99.0" text="Title" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;" GridPane.rowIndex="1">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="8.0" prefWidth="99.0" text="Topic" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;" GridPane.rowIndex="3">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="8.0" prefWidth="99.0" text="Status" />
+         </children>
+      </AnchorPane>
+                        <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;" GridPane.rowIndex="2">
+                           <children>
+                              <Label alignment="CENTER" layoutY="8.0" prefWidth="99.0" text="Proponent" />
+                           </children>
+                        </AnchorPane>
+      <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;" GridPane.rowIndex="4">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="8.0" prefWidth="99.0" text="Validity" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="49.0" prefWidth="154.0" style="-fx-background-color: lightgrey;" GridPane.rowIndex="5">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="99.0" text="Description" />
+         </children>
+      </AnchorPane>
+                        <Text fx:id="title" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.0" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="topic" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="proponent" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="validity" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+      <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="514.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin></Text>
+                     </children>
+                  </GridPane>

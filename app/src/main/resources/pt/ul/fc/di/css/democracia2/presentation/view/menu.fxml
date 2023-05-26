@@ -10,7 +10,8 @@
       <menus>
         <Menu mnemonicParsing="false" text="Bills">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#loadOpen" text="Consult Non expired Bills" />
+            <MenuItem mnemonicParsing="false" onAction="#loadOpen" text="Consult Votable Bills" />
+            <MenuItem mnemonicParsing="false" onAction="#loadSupportable" text="Consult Non Expired Bills" />
             <MenuItem mnemonicParsing="false" text="New Bill" />
             <Menu mnemonicParsing="false" text="Votable Bills" />
             <SeparatorMenuItem mnemonicParsing="false" />
@@ -21,6 +22,7 @@
             <Menu mnemonicParsing="false" text="Demo">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#generateVotables" text="Generate votable" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateSupportables" text="Generate supportable" />
                </items>
             </Menu>
       </menus>
