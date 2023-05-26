@@ -92,6 +92,20 @@ public class Bill {
     this.validityProperty().set(validity.format(formatter));
   }
 
+  private final StringProperty voteInformation = new SimpleStringProperty("Please login");
+
+  public final StringProperty voteInformationProperty() {
+    return this.voteInformation;
+  }
+
+  public final String getVoteInformation() {
+    return this.voteInformationProperty().get();
+  }
+
+  public final void setVoteInformation(final String voteInformation) {
+    this.voteInformationProperty().set(voteInformation);
+  }
+
   public Bill(BillDTO billDTO) {
     setTitle(billDTO.getTitle());
     setProponentName(billDTO.getProponent().getName());

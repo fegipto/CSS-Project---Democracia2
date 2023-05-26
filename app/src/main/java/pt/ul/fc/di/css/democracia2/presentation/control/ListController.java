@@ -27,7 +27,7 @@ public class ListController {
     }
 
     this.model = model;
-    listBills.setItems(model.getAvailableVotesList());
+    listBills.setItems(model.getBills());
 
     listBills
         .getSelectionModel()

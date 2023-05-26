@@ -6,24 +6,27 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<MenuBar VBox.vgrow="NEVER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.MenuController">
+<MenuBar VBox.vgrow="NEVER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.MenuController">
       <menus>
         <Menu mnemonicParsing="false" text="Bills">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#loadOpen" text="Consult Votable Bills" />
-            <MenuItem mnemonicParsing="false" onAction="#loadSupportable" text="Consult Non Expired Bills" />
+            <MenuItem mnemonicParsing="false" onAction="#loadVotable" text="Consult Votable Bills" />
+            <MenuItem mnemonicParsing="false" onAction="#loadOpen" text="Consult Non Expired Bills" />
             <MenuItem mnemonicParsing="false" text="New Bill" />
-            <Menu mnemonicParsing="false" text="Votable Bills" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Login" />
-            <Menu mnemonicParsing="false" text="Demo">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#generateVotables" text="Generate votable" />
-                  <MenuItem mnemonicParsing="false" onAction="#generateSupportables" text="Generate supportable" />
-               </items>
-            </Menu>
+        <Menu mnemonicParsing="false" text="Login">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#login" text="By name" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Demo">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#generateVotables" text="Generate votable" />
+              <MenuItem mnemonicParsing="false" onAction="#generateSupportables" text="Generate supportable" />
+            </items>
+        </Menu>
       </menus>
     </MenuBar>

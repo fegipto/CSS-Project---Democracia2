@@ -1,9 +1,9 @@
 package pt.ul.fc.di.css.democracia2.presentation.control;
 
-import java.io.File;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
-import javafx.stage.FileChooser;
+import javafx.scene.control.TextInputDialog;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
 public class MenuController {
@@ -29,25 +29,30 @@ public class MenuController {
   }
 
   @FXML
+  public void loadVotable() {
+    model.loadVotable();
+  }
+
+  @FXML
   public void generateSupportables() {
     model.generateSupportables();
   }
 
   @FXML
   public void loadSupportable() {
-    model.loadSupportable();
+    model.loadOpen();
   }
 
   @FXML
-  public void save() {
-    FileChooser chooser = new FileChooser();
-    File file = chooser.showOpenDialog(menuBar.getScene().getWindow());
-    if (file != null) {
-      try {
-        model.saveData(file);
-      } catch (Exception exc) {
-        exc.printStackTrace();
-      }
+  public void login() {
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.setTitle("Login");
+    dialog.setHeaderText("Enter your username:");
+    Optional<String> result = dialog.showAndWait();
+    if (result.isPresent()) {
+      String input = result.get();
+      model.login(input);
+      model.loadVotable();
     }
   }
 

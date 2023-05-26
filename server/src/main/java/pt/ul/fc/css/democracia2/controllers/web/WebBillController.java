@@ -141,7 +141,6 @@ public class WebBillController {
   @PostMapping("/bill/support")
   public String supportBill(
       Model model, @RequestParam("billId") long billId, @RequestParam("citizenId") long citizenId) {
-    // Call the REST endpoint
 
     supportBillService.supportBill(citizenId, billId);
 
@@ -164,7 +163,7 @@ public class WebBillController {
   }
 
   public String getUserVote(Long citizenId, Long billId) {
-    // Call the REST endpoint
+
     if (votingService.hasVoted(citizenId, billId)) {
       return "voted";
     }

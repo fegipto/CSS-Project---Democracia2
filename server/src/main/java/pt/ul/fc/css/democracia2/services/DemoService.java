@@ -26,9 +26,17 @@ public class DemoService {
   public void initVotableBills() {
     List<Delegate> delegates = delegateRepository.findAll();
     List<Topic> topics = topicRepository.findAll();
-    List<String> titles = Arrays.asList("Bill Title 1", "Bill Title 2", "Bill Title 3");
+    // Demo Data generated with ChatGPT
+    List<String> titles =
+        Arrays.asList(
+            "Healthy Food Access for All Act",
+            "STEM Education Enhancement Act",
+            "Climate Resilience and Adaptation Act");
     List<String> descriptions =
-        Arrays.asList("Bill Description 1", "Bill Description 2", "Bill Description 3");
+        Arrays.asList(
+            "This bill aims to improve access to healthy and affordable food in underserved communities by providing grants and incentives to grocery stores, farmers' markets, and community organizations that offer fresh and nutritious food options.",
+            "This bill aims to enhance science, technology, engineering, and mathematics (STEM) education by providing resources and training for teachers, promoting hands-on learning experiences, and increasing opportunities for underrepresented groups in STEM fields.",
+            "This bill addresses the challenges posed by climate change by enhancing the resilience of communities and infrastructure. It includes measures to improve disaster preparedness, protect natural resources, and promote sustainable land and water management practices.");
 
     int index = 0;
     for (Delegate delegate : delegates) {
@@ -55,6 +63,38 @@ public class DemoService {
 
       index++;
       if (index > 2) {
+        break;
+      }
+    }
+  }
+
+  public void initSupportableBills() {
+    List<Delegate> delegates = delegateRepository.findAll();
+    List<Topic> topics = topicRepository.findAll();
+    // Demo Data generated with ChatGPT
+    List<String> titles =
+        Arrays.asList(
+            "Mental Health Parity and Addiction Equity Act",
+            "Every Student Succeeds Act (ESSA) Reauthorization");
+    List<String> descriptions =
+        Arrays.asList(
+            "This bill seeks to strengthen mental health and addiction treatment by ensuring that health insurance plans provide equal coverage for mental health and substance abuse disorders as they do for physical health conditions.",
+            " This bill proposes to reauthorize and update the Every Student Succeeds Act, which governs K-12 education policy. It includes provisions to promote educational equity, support effective teaching practices, and expand access to high-quality early childhood education.");
+
+    int index = 0;
+    for (Delegate delegate : delegates) {
+      Topic topic = topics.get(index);
+      String title = titles.get(index);
+      String description = descriptions.get(index);
+
+      Bill bill =
+          delegate.proposeBill(
+              title, description, new byte[] {}, LocalDateTime.now().plusMonths(5), topic);
+
+      billRepository.save(bill);
+
+      index++;
+      if (index > 1) {
         break;
       }
     }

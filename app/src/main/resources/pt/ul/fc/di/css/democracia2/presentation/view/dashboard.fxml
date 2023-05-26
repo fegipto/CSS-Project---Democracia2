@@ -44,7 +44,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: lighgrey;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.ListController">
+<VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: lighgrey;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.ListController">
   <children>
      <fx:include fx:id="menu" source="menu.fxml" />
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
@@ -60,7 +60,7 @@
                            <textFill>
                       <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
                            </textFill></Label>
-                        <ListView fx:id="listBills" layoutX="14.0" layoutY="41.0" prefHeight="483.0" prefWidth="198.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="41.0" />
+                        <ListView fx:id="listBills" layoutX="-2.0" layoutY="41.0" prefHeight="483.0" prefWidth="222.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="41.0" />
               </children>
             </AnchorPane>
           </content>

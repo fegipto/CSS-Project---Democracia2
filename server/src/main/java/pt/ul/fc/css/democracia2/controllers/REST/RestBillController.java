@@ -77,8 +77,12 @@ class RestCustomerController {
   }
 
   @GetMapping("/bill/{citizenId}/voted/{billId}")
-  Optional<Boolean> getVote(@PathVariable Long citizenId, @PathVariable Long billId) {
-    return votingService.getOmmitedVote(citizenId, billId);
+  String getVote(@PathVariable long citizenId, @PathVariable long billId) {
+    if (votingService.hasVoted(citizenId, billId)) {
+      return "voted";
+    }
+    Optional<Boolean> vote = votingService.getOmmitedVote(citizenId, billId);
+    return (vote.isEmpty()) ? null : ((vote.get()) ? "yes" : "no");
   }
 
   @PostMapping("/bill/vote")
@@ -93,8 +97,14 @@ class RestCustomerController {
     }
   }
 
+  // DEMO ONLY
   @GetMapping("/test/votable/bills")
   void generateVotableBills() {
     demoService.initVotableBills();
+  }
+
+  @GetMapping("/test/supportable/bills")
+  void generateSuportableBills() {
+    demoService.initSupportableBills();
   }
 }

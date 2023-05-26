@@ -17,7 +17,7 @@ public class RestUserController {
   @Autowired private CitizenRepository citizenRepository;
 
   @GetMapping("/citizen/name/{name}")
-  ResponseEntity<CitizenDTO> getDelegateByName(@PathVariable String name) {
+  ResponseEntity<CitizenDTO> getCitizenByName(@PathVariable String name) {
     Optional<Citizen> citizenOptional = citizenRepository.findByName(name);
     if (citizenOptional.isPresent()) {
       CitizenDTO citizenDTO = new CitizenDTO(citizenOptional.get());

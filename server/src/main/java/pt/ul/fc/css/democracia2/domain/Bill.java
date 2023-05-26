@@ -51,6 +51,7 @@ public class Bill {
   private BillStatus status;
 
   @Column(name = "BILL_DESC")
+  @Lob
   private String description;
 
   @Column(name = "BILL_VALIDITY")
