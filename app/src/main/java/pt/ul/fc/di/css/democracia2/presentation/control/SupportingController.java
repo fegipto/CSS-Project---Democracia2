@@ -6,7 +6,7 @@ import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
 public class SupportingController {
 
-  @FXML private Button support;
+  @FXML private Button yes;
   private DataModel model;
 
   public void initModel(DataModel model) {
@@ -15,7 +15,7 @@ public class SupportingController {
     }
 
     this.model = model;
-    support.setOnAction(e -> {
+    yes.setOnAction(e -> {
       model.setSupportBill();
     });
   }

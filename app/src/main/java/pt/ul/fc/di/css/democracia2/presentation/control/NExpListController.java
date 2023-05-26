@@ -14,13 +14,13 @@ public class NExpListController {
 
   @FXML SupportingController supportingController;
 
-  @FXML NExpDetailsController nExpDetailsController;
+  @FXML NExpDetailsController nexpdetailsController;
 
   public void initModel(DataModel model) {
 
     menuController.initModel(model);
     supportingController.initModel(model);
-    nExpDetailsController.initModel(model);
+    nexpdetailsController.initModel(model);
 
     if (this.model != null) {
       throw new IllegalStateException("Model can only be initialized once");

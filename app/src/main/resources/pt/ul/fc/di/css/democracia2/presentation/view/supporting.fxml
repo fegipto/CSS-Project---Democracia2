@@ -17,6 +17,6 @@
                               <Button fx:id="yes" layoutX="20.0" layoutY="12.0" mnemonicParsing="false" text="Yes" />
                            </children>
                         </AnchorPane>
-                        <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Support:" wrappingWidth="123.0" />
+                        <Text layoutX="90.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Support:" wrappingWidth="123.0" />
                      </children>
                   </AnchorPane>

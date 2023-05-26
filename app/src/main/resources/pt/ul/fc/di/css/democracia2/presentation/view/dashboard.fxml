@@ -46,7 +46,7 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: lighgrey;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.ListController">
   <children>
-     <fx:include fx:id="menuController" source="menu.fxml" />
+     <fx:include fx:id="menu" source="menu.fxml" />
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
       <items>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -68,8 +68,8 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                   <fx:include fx:id="detailsController" source="details.fxml" />
-                   <fx:include fx:id="votingController" source="voting.fxml" />
+                   <fx:include fx:id="details" source="details.fxml" />
+                   <fx:include fx:id="voting" source="voting.fxml" />
 
           </children>
         </AnchorPane>
