@@ -55,7 +55,7 @@ public class RestBillController {
   }
 
   @PostMapping("/bills")
-  public ResponseEntity<?> createBill(@RequestBody BillDTO bill) {
+  ResponseEntity<?> createBill(@RequestBody BillDTO bill) {
     try {
       BillDTO c = proposeBillService.presentBill(bill);
       return ResponseEntity.ok().body(c);

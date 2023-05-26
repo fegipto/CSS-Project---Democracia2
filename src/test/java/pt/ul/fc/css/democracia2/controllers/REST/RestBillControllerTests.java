@@ -3,6 +3,7 @@ package pt.ul.fc.css.democracia2.controllers.REST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,12 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.DemoDataInitializer;
 import pt.ul.fc.css.democracia2.domain.Bill;
@@ -31,6 +35,8 @@ import pt.ul.fc.css.democracia2.services.*;
 public class RestBillControllerTests {
 
   @Autowired private MockMvc mockMvc;
+
+  @Autowired ObjectMapper mapper;
 
   @MockBean private TopicRepository topicRepository;
   @MockBean private ListAvailableVotesService billsService;
@@ -131,5 +137,22 @@ public class RestBillControllerTests {
     System.out.println(consultBillService.listNonExpired());
 
     mockMvc.perform(get("/api/bills/open")).andExpect(status().isOk()).andReturn();
+  }
+
+  @Test
+  public void testCreateBill() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Mockito.when(proposeBillService.presentBill(bill)).thenReturn(bill);
+
+    MockHttpServletRequestBuilder mockRequest =
+        MockMvcRequestBuilders.post("/api/bills")
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(this.mapper.writeValueAsString(bill));
+
+    mockMvc.perform(mockRequest).andExpect(status().isOk());
   }
 }
