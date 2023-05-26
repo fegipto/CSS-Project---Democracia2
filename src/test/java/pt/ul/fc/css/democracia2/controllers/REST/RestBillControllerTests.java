@@ -1,5 +1,6 @@
 package pt.ul.fc.css.democracia2.controllers.REST;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -154,5 +155,35 @@ public class RestBillControllerTests {
             .content(this.mapper.writeValueAsString(bill));
 
     mockMvc.perform(mockRequest).andExpect(status().isOk());
+  }
+
+  @Test
+  public void testGetVote() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Citizen citizen = new Citizen("Citizen 1", 1000L);
+
+    Mockito.when(votingService.getOmmitedVote(citizen.getToken(), bill.getId()))
+        .thenReturn(Optional.of(true));
+
+    MvcResult resultTrue =
+        mockMvc
+            .perform(get("/api/bill/{citizenId}/voted/{billId}", citizen.getToken(), bill.getId()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    Mockito.when(votingService.getOmmitedVote(citizen.getToken(), bill.getId()))
+        .thenReturn(Optional.of(false));
+
+    MvcResult resultFalse =
+        mockMvc
+            .perform(get("/api/bill/{citizenId}/voted/{billId}", citizen.getToken(), bill.getId()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    assertEquals(resultTrue.getResponse().getContentAsString(), "true");
+    assertEquals(resultFalse.getResponse().getContentAsString(), "false");
   }
 }
