@@ -63,4 +63,27 @@ public class CitizenDTO {
   public void setCc(long cc) {
     this.cc = cc;
   }
+
+  @Override
+  public int hashCode() {
+    int result = 17;
+    result = 31 * result + name.hashCode();
+    result = 31 * result + Long.hashCode(cc);
+    result = 31 * result + Long.hashCode(token);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (!(o instanceof CitizenDTO)) {
+      return false;
+    }
+
+    CitizenDTO c = (CitizenDTO) o;
+
+    return name.equals(c.getName()) && cc == c.getCc() && token == c.getToken();
+  }
 }

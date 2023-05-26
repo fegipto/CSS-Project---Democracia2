@@ -14,6 +14,11 @@ import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 
 @Controller
 public class CitizenController {
+  private final RestTemplate restTemplate;
+
+  public CitizenController(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+  }
 
   @GetMapping("/citizen")
   public String restGetCitizen(
@@ -22,7 +27,6 @@ public class CitizenController {
       @RequestHeader(value = "referer", defaultValue = "/") String referer,
       RedirectAttributes redirectAttributes,
       HttpSession session) {
-    RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<CitizenDTO> responseEntity =
         restTemplate.getForEntity(
             "http://localhost:8080/api/citizen/name/" + citizenName, CitizenDTO.class);
@@ -31,6 +35,22 @@ public class CitizenController {
     // Redirect back to the same page
     return "redirect:" + referer;
   }
+  // @GetMapping("/citizen")
+  // public String restGetCitizen(
+  //    @RequestParam("name") String citizenName,
+  //    Model model,
+  //    @RequestHeader(value = "referer", defaultValue = "/") String referer,
+  //    RedirectAttributes redirectAttributes,
+  //    HttpSession session) {
+  //  RestTemplate restTemplate = new RestTemplate();
+  //  ResponseEntity<CitizenDTO> responseEntity =
+  //      restTemplate.getForEntity(
+  //          "http://localhost:8080/api/citizen/name/" + citizenName, CitizenDTO.class);
+  //  CitizenDTO citizen = responseEntity.getBody();
+  //  session.setAttribute("citizen", citizen);
+  //  // Redirect back to the same page
+  //  return "redirect:" + referer;
+  // }
 
   @PostMapping("/citizen/logout")
   public String logouString(

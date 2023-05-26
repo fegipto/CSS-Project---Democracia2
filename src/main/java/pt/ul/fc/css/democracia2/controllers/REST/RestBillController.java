@@ -24,7 +24,7 @@ import pt.ul.fc.css.democracia2.services.VotingService;
 
 @RestController()
 @RequestMapping("api")
-class RestCustomerController {
+public class RestBillController {
 
   @Autowired private ListAvailableVotesService billsService;
 
@@ -55,7 +55,7 @@ class RestCustomerController {
   }
 
   @PostMapping("/bills")
-  ResponseEntity<?> createBill(@RequestBody BillDTO bill) {
+  public ResponseEntity<?> createBill(@RequestBody BillDTO bill) {
     try {
       BillDTO c = proposeBillService.presentBill(bill);
       return ResponseEntity.ok().body(c);
