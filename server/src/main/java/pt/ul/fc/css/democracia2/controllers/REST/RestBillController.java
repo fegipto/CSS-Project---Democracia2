@@ -69,8 +69,8 @@ class RestCustomerController {
   @PostMapping("/bill/support")
   ResponseEntity<?> supportBill(@RequestBody Pair<Long, Long> pair) {
     try {
-      supportBillService.supportBill(pair.getFirst(), pair.getSecond());
-      return ResponseEntity.ok().body(null);
+      return ResponseEntity.ok()
+          .body(supportBillService.supportBill(pair.getFirst(), pair.getSecond()));
     } catch (IllegalArgumentException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

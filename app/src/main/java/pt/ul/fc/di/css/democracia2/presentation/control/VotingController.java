@@ -22,6 +22,8 @@ public class VotingController {
           if (object == null) {
             return "Vote:";
           } else if ("voted".equals(object)) {
+            yes.setVisible(false);
+            no.setVisible(false);
             return "You have voted";
           } else if ("yes".equals(object)) {
             return "Vote: (Omitted vote yes)";
@@ -34,9 +36,11 @@ public class VotingController {
 
         @Override
         public String fromString(String string) {
+
           if ("Vote:".equals(string)) {
             return null;
           } else if ("You have voted".equals(string)) {
+
             return "voted";
           } else if ("Vote: (Omitted vote yes)".equals(string)) {
             return "yes";
@@ -74,31 +78,38 @@ public class VotingController {
                 no.setVisible(false);
                 support.setVisible(false);
               } else {
+
+                if (newBill.getStatus().equals("CREATED")) support.setVisible(true);
+                else if (newBill.getStatus().equals("VOTING")) {
+                  yes.setVisible(true);
+                  no.setVisible(true);
+                } else {
+                  yes.setVisible(false);
+                  no.setVisible(false);
+                  support.setVisible(false);
+                }
                 information
                     .textProperty()
                     .bindBidirectional(newBill.voteInformationProperty(), converter);
-                if (newBill.getVoteInformation() != null
-                    && newBill.getStatus().equals("VOTING")
-                    && newBill.getVoteInformation().equals("voted")) {
+                if (model.getLoggedCitizen() == -1) {
                   yes.setVisible(false);
                   no.setVisible(false);
-                } else if (newBill.getStatus().equals("CREATED")
-                    && model.getLoggedCitizen() != -1) {
-                  support.setVisible(true);
-                } else if (model.getLoggedCitizen() != -1) {
-                  yes.setVisible(true);
-                  no.setVisible(true);
+                  support.setVisible(false);
                 }
               }
             });
 
     yes.setOnAction(
         e -> {
-          model.setVoteBill();
+          model.setVoteBill(true);
         });
     no.setOnAction(
         e -> {
-          model.setVoteNoBill();
+          model.setVoteBill(false);
+        });
+    support.setOnAction(
+        e -> {
+          model.setSupportBill();
         });
   }
 }

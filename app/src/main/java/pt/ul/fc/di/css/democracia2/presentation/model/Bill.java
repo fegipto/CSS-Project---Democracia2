@@ -2,20 +2,25 @@ package pt.ul.fc.di.css.democracia2.presentation.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
 
 public class Bill {
-  //Needed to support and vote
-  private final Long id;
+  private final LongProperty id = new SimpleLongProperty();
 
-  public final Long getId() {
+  public final LongProperty idProperty() {
     return this.id;
   }
 
+  public final Long getId() {
+    return this.idProperty().get();
+  }
+
   public final void setId(final Long id) {
-    this.id=id;
+    this.idProperty().set(id);
   }
 
   private final StringProperty title = new SimpleStringProperty();
@@ -117,6 +122,20 @@ public class Bill {
     this.voteInformationProperty().set(voteInformation);
   }
 
+  private final StringProperty supporterCount = new SimpleStringProperty("Please login");
+
+  public final StringProperty supporterCountProperty() {
+    return this.supporterCount;
+  }
+
+  public final String getSupporterCount() {
+    return this.supporterCountProperty().get();
+  }
+
+  public final void setSupporterCount(final String supporterCount) {
+    this.supporterCountProperty().set(supporterCount);
+  }
+
   public Bill(BillDTO billDTO) {
     setId(billDTO.getId());
     setTitle(billDTO.getTitle());
@@ -125,6 +144,7 @@ public class Bill {
     setDescription(billDTO.getDescription());
     setStatus(billDTO.getStatus().name());
     setValidity(billDTO.getValidity());
+    setSupporterCount(billDTO.getSupportersCount() + "");
   }
 
   @Override

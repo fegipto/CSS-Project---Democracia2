@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
@@ -52,17 +53,32 @@ public class DataModel {
     this.loggedCitizenProperty().set(loggedCitizen);
   }
 
-  // TODO
-  public final void setVoteBill() {}
-
-  // TODO
-  public final void setVoteNoBill() {}
-
-  // TODO
-  public final void setSupportBill() {
-    Pair<Long, Long> pair = new Pair<>(this.getLoggedCitizen(), this.getCurrentBill().getId());
+  public final void setVoteBill(boolean vote) {
+    Pair<Pair<Long, Long>, Boolean> pair =
+        Pair.of(Pair.of(this.getLoggedCitizen(), this.getCurrentBill().getId()), vote);
     RestTemplate restTemplate = new RestTemplate();
-    restTemplate.postForEntity("http://localhost:8080/api/bill/support", pair, Pair.class);
+    ResponseEntity<Boolean> resp =
+        restTemplate.postForEntity("http://localhost:8080/api/bill/vote", pair, Boolean.class);
+    Boolean sucess = resp.getBody();
+    if (sucess != null && sucess) {
+      Bill b = this.getCurrentBill();
+      b.setVoteInformation("voted");
+      this.setCurrentBill(b);
+      ;
+    }
+  }
+
+  public final void setSupportBill() {
+    Pair<Long, Long> pair = Pair.of(this.getLoggedCitizen(), this.getCurrentBill().getId());
+    RestTemplate restTemplate = new RestTemplate();
+    ResponseEntity<Boolean> resp =
+        restTemplate.postForEntity("http://localhost:8080/api/bill/support", pair, Boolean.class);
+    Boolean sucess = resp.getBody();
+    if (sucess != null && sucess)
+      this.currentBillProperty()
+          .get()
+          .setSupporterCount(
+              (Integer.valueOf(this.currentBillProperty().get().getSupporterCount()) + 1) + "");
   }
 
   // LOAD AND SAVE DATA
@@ -82,16 +98,18 @@ public class DataModel {
     ResponseEntity<BillDTO[]> responseEntity =
         restTemplate.getForEntity("http://localhost:8080/api/bills/votable", BillDTO[].class);
     BillDTO[] bills = responseEntity.getBody();
-    List<Bill> billPs = new ArrayList<>();
+    if (bills != null) {
+      List<Bill> billPs = new ArrayList<>();
 
-    for (BillDTO bill : bills) {
-      Bill b = new Bill(bill);
-      if (this.getLoggedCitizen() != -1) {
-        b.setVoteInformation(getVoteInformation(bill));
+      for (BillDTO bill : bills) {
+        Bill b = new Bill(bill);
+        if (this.getLoggedCitizen() != -1) {
+          b.setVoteInformation(getVoteInformation(bill));
+        }
+        billPs.add(b);
       }
-      billPs.add(b);
+      this.bills.setAll(billPs);
     }
-    this.bills.setAll(billPs);
   }
 
   public void loadOpen() {
@@ -99,15 +117,17 @@ public class DataModel {
     ResponseEntity<BillDTO[]> responseEntity =
         restTemplate.getForEntity("http://localhost:8080/api/bills/open", BillDTO[].class);
     BillDTO[] bills = responseEntity.getBody();
-    List<Bill> billPs = new ArrayList<>();
-    for (BillDTO bill : bills) {
-      Bill b = new Bill(bill);
-      if (this.getLoggedCitizen() != -1) {
-        b.setVoteInformation(getVoteInformation(bill));
+    if (bills != null) {
+      List<Bill> billPs = new ArrayList<>();
+      for (BillDTO bill : bills) {
+        Bill b = new Bill(bill);
+        if (this.getLoggedCitizen() != -1) {
+          b.setVoteInformation(getVoteInformation(bill));
+        }
+        billPs.add(b);
       }
-      billPs.add(b);
+      this.bills.setAll(billPs);
     }
-    this.bills.setAll(billPs);
   }
 
   public void login(String input) {

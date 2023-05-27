@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<GridPane gridLinesVisible="true" layoutX="14.0" layoutY="126.0" prefHeight="385.0" prefWidth="637.0" style="-fx-border-color: blue; -fx-border-width: 1; -fx-background-color: lightblue; -fx-vgap: 0; -fx-hgap: 0; -fx-padding: 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.DetailsController">
+<GridPane gridLinesVisible="true" layoutX="14.0" layoutY="126.0" prefHeight="385.0" prefWidth="637.0" style="-fx-border-color: blue; -fx-border-width: 1; -fx-background-color: lightblue; -fx-vgap: 0; -fx-hgap: 0; -fx-padding: 0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ul.fc.di.css.democracia2.presentation.control.DetailsController">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="125.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="537.0" minWidth="10.0" prefWidth="512.0" />
@@ -64,7 +64,7 @@
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Text>
-      <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="500.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Text>
@@ -76,5 +76,15 @@
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin></Text>
+      <Text fx:id="supporterInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Supporters: " wrappingWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="134.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="supporterCount" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <GridPane.margin>
+            <Insets left="200.0" />
+         </GridPane.margin>
+      </Text>
                      </children>
                   </GridPane>

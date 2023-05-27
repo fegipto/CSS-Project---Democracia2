@@ -3,6 +3,7 @@ module pt.ul.fc.di.css.democracia2 {
   requires javafx.fxml;
   requires javafx.web;
   requires spring.web;
+  requires spring.data.commons;
 
   opens pt.ul.fc.di.css.democracia2 to
       javafx.fxml,
