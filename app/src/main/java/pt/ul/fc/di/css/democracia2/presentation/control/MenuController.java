@@ -2,13 +2,13 @@ package pt.ul.fc.di.css.democracia2.presentation.control;
 
 import java.util.Optional;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
 public class MenuController {
 
-  @FXML private MenuBar menuBar;
+  @FXML private MenuItem menuItem;
   private DataModel model;
 
   public void initModel(DataModel model) {
@@ -16,6 +16,11 @@ public class MenuController {
       throw new IllegalStateException("Model can only be initialized once");
     }
     this.model = model;
+  }
+
+  @FXML
+  public void generateSupportables() {
+    model.generateSupportables();
   }
 
   @FXML
@@ -34,16 +39,6 @@ public class MenuController {
   }
 
   @FXML
-  public void generateSupportables() {
-    model.generateSupportables();
-  }
-
-  @FXML
-  public void loadSupportable() {
-    model.loadOpen();
-  }
-
-  @FXML
   public void login() {
     TextInputDialog dialog = new TextInputDialog();
     dialog.setTitle("Login");
@@ -58,6 +53,6 @@ public class MenuController {
 
   @FXML
   public void exit() {
-    menuBar.getScene().getWindow().hide();
+    menuItem.getParentPopup().getOwnerWindow().getScene().getWindow().hide();
   }
 }

@@ -14,7 +14,7 @@
             <MenuItem mnemonicParsing="false" onAction="#loadOpen" text="Consult Non Expired Bills" />
             <MenuItem mnemonicParsing="false" text="New Bill" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="menuItem" mnemonicParsing="false" onAction="#exit" text="Quit" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Login">
