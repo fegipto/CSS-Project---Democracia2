@@ -7,6 +7,17 @@ import javafx.beans.property.StringProperty;
 import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
 
 public class Bill {
+  //Needed to support and vote
+  private final Long id;
+
+  public final Long getId() {
+    return this.id;
+  }
+
+  public final void setId(final Long id) {
+    this.id=id;
+  }
+
   private final StringProperty title = new SimpleStringProperty();
 
   public final StringProperty titleProperty() {
@@ -107,6 +118,7 @@ public class Bill {
   }
 
   public Bill(BillDTO billDTO) {
+    setId(billDTO.getId());
     setTitle(billDTO.getTitle());
     setProponentName(billDTO.getProponent().getName());
     setTopic(billDTO.getTopic().getName());

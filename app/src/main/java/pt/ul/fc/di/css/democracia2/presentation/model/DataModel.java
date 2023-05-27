@@ -59,7 +59,11 @@ public class DataModel {
   public final void setVoteNoBill() {}
 
   // TODO
-  public final void setSupportBill() {}
+  public final void setSupportBill() {
+    Pair<Long, Long> pair = new Pair<>(this.getLoggedCitizen(), this.getCurrentBill().getId());
+    RestTemplate restTemplate = new RestTemplate();
+    restTemplate.postForEntity("http://localhost:8080/api/bill/support", pair, Pair.class);
+  }
 
   // LOAD AND SAVE DATA
   // TODO
