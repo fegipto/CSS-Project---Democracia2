@@ -9,8 +9,16 @@ import javafx.stage.Stage;
 import pt.ul.fc.di.css.democracia2.presentation.control.ListController;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
+/**
+ * Class that launches the frontend app
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 public class JavaFXApp extends Application {
 
+  //fxml files location
   private static final String prefix = "/pt/ul/fc/di/css/democracia2/presentation/view/";
   private BorderPane root;
 
