@@ -36,6 +36,13 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 import pt.ul.fc.css.democracia2.services.*;
 
+/**
+ * Class that tests the RestBillController
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RestBillController.class)
 public class RestBillControllerTests {

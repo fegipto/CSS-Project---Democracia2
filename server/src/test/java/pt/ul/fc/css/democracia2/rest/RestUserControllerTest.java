@@ -17,6 +17,13 @@ import pt.ul.fc.css.democracia2.controllers.rest.RestUserController;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
+/**
+ * Class that tests the RestUserController
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(RestUserController.class)
 public class RestUserControllerTest {

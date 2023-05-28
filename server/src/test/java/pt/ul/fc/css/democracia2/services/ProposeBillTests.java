@@ -17,6 +17,13 @@ import pt.ul.fc.css.democracia2.domain.Topic;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 
+/**
+ * Class that tests the ProposeBillService
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @SpringBootTest
 @Transactional
 class ProposeBillServiceTests {
