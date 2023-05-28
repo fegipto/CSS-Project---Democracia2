@@ -110,46 +110,101 @@ public class BillDTO {
     return file;
   }
 
+  /**
+   * Method sets gets the id of the BillDTO
+   *
+   * @param id the id of the corresponding BillDTO
+   */
   public void setId(long id) {
     this.id = id;
   }
 
+  /**
+   * Method that sets the title of the BillDTO
+   *
+   * @param title the title of the corresponding BillDTO
+   */
   public void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Method that sets the status of the BillDTO
+   *
+   * @param status the status of the corresponding BillDTO
+   */
   public void setStatus(BillStatus status) {
     this.status = status;
   }
 
+  /**
+   * Method that sets the description of the BillDTO
+   *
+   * @param description the description of the corresponding BillDTO
+   */
   public void setDescription(String description) {
     this.description = description;
   }
 
+  /**
+   * Method that sets the validity of the BillDTO
+   *
+   * @param validity the validity of the corresponding BillDTO
+   */
   public void setValidity(LocalDateTime validity) {
     this.validity = validity;
   }
 
+  /**
+   * Method that sets the topic of the BillDTO
+   *
+   * @param topic the topic of the corresponding BillDTO
+   */
   public void setTopic(Topic topic) {
     this.topic = topic;
   }
 
+  /**
+   * Method that sets the file of the BillDTO
+   *
+   * @param file the file of the corresponding BillDTO
+   */
   public void setFile(byte[] file) {
     this.file = file;
   }
 
+  /**
+   * Method that gets the proponent of the BillDTO
+   *
+   * @return the proponent of the corresponding BillDTO
+   */
   public CitizenDTO getProponent() {
     return proponent;
   }
 
+  /**
+   * Method that sets the proponent of the BillDTO
+   *
+   * @param proponent the proponent of the corresponding BillDTO
+   */
   public void setProponent(CitizenDTO proponent) {
     this.proponent = proponent;
   }
 
+  /**
+   * Method that gets the supporters count of the BillDTO
+   *
+   * @return the supporters count of the corresponding BillDTO
+   */
   public int getSupportersCount() {
     return supportersCount;
   }
 
+  /**
+   * Method that sets the supporters count of the BillDTO
+   *
+   * @param supportersCount the supporters count of the corresponding BillDTO
+   */
   public void setSupportersCount(int supportersCount) {
     this.supportersCount = supportersCount;
   }
