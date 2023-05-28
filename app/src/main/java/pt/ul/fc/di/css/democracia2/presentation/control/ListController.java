@@ -5,6 +5,13 @@ import javafx.scene.control.ListView;
 import pt.ul.fc.di.css.democracia2.presentation.model.Bill;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
+/**
+ * Class that represents a ListController
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 public class ListController {
   @FXML private ListView<Bill> listBills;
 

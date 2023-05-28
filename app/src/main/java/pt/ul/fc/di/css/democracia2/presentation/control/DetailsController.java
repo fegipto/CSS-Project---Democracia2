@@ -4,6 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
+/**
+ * Class that represents a DetailsController
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 public class DetailsController {
 
   @FXML private Text title;
