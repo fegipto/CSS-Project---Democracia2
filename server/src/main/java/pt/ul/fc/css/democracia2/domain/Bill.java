@@ -69,6 +69,11 @@ public class Bill {
   @JoinColumn(name = "delegate_cc", nullable = false)
   private Delegate proponent;
 
+  /**
+   * Method that gets the proponent of the Bill
+   *
+   * @return the proponent of the corresponding Bill
+   */
   public Delegate getProponent() {
     return proponent;
   }

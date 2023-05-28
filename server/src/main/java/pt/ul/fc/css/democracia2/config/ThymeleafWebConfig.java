@@ -19,6 +19,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
  *   <li>Thymeleaf viewers and resolvers
  *   <li>Message resource bundle
  * </ul>
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
  */
 @Configuration
 public class ThymeleafWebConfig implements WebMvcConfigurer, ApplicationContextAware {
