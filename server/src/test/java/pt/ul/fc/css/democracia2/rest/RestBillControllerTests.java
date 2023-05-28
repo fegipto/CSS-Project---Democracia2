@@ -245,6 +245,29 @@ public class RestBillControllerTests {
   }
 
   @Test
+  public void testSupportBillFail() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Citizen citizen = new Citizen("Citizen 1", 1000L);
+
+    Mockito.when(supportBillService.supportBill(citizen.getToken(), bill.getId()))
+        .thenThrow(new IllegalArgumentException("Error"));
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/support")
+            .queryParam("citizen", citizen.getToken())
+            .queryParam("bill", bill.getId());
+    MockHttpServletRequestBuilder mockRequest =
+        MockMvcRequestBuilders.post(builder.toUriString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON);
+
+    mockMvc.perform(mockRequest).andExpect(status().isBadRequest());
+  }
+
+  @Test
   public void testVoteBill() throws Exception {
     BillDTO bill = new BillDTO();
     bill.setId(1);
@@ -255,7 +278,7 @@ public class RestBillControllerTests {
     Mockito.when(votingService.vote(citizen.getToken(), bill.getId(), true)).thenReturn(true);
 
     UriComponentsBuilder builder =
-        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/support")
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/vote")
             .queryParam("citizen", citizen.getToken())
             .queryParam("bill", bill.getId())
             .queryParam("vote", true);
@@ -266,5 +289,30 @@ public class RestBillControllerTests {
             .accept(MediaType.APPLICATION_JSON);
 
     mockMvc.perform(mockRequest).andExpect(status().isOk());
+  }
+
+  @Test
+  public void testVoteBillFail() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Citizen citizen = new Citizen("Citizen 1", 1000L);
+
+    Mockito.when(votingService.vote(citizen.getToken(), bill.getId(), true))
+        .thenThrow(new IllegalArgumentException("Error"));
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/vote")
+            .queryParam("citizen", citizen.getToken())
+            .queryParam("bill", bill.getId())
+            .queryParam("vote", true);
+
+    MockHttpServletRequestBuilder mockRequest =
+        MockMvcRequestBuilders.post(builder.toUriString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON);
+
+    mockMvc.perform(mockRequest).andExpect(status().isBadRequest());
   }
 }
