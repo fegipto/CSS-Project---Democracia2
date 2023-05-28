@@ -73,7 +73,7 @@ class UpdateBillsTests {
 
       billRepository.save(added2);
       assertEquals(BillStatus.CREATED, added2.getStatus());
-      Thread.sleep(2000);
+      Thread.sleep(5000);
       updateBillsService.scheduledExpiredBills();
       assertEquals(BillStatus.EXPIRED, added2.getStatus());
       Bill votable = delegate1.get().getBills().get(0);
