@@ -24,7 +24,7 @@ import pt.ul.fc.css.democracia2.services.VotingService;
 
 @RestController()
 @RequestMapping("api")
-class RestBillController {
+public class RestBillController {
 
   @Autowired private ListAvailableVotesService billsService;
 
