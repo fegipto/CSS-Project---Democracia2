@@ -11,13 +11,6 @@ import pt.ul.fc.css.democracia2.DTO.CitizenDTO;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
-/**
- * Class that represents a RestUserController
- * 
- * @author David Dantas, 56331
- * @author Filipe Egipto, 56272
- * @author Rafael Nisa, 56329
- */
 @RestController()
 @RequestMapping("api")
 public class RestUserController {

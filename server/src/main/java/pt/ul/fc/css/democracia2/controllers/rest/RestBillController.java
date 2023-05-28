@@ -22,13 +22,6 @@ import pt.ul.fc.css.democracia2.services.ProposeBillService;
 import pt.ul.fc.css.democracia2.services.SupportBillService;
 import pt.ul.fc.css.democracia2.services.VotingService;
 
-/**
- * Class that represents a RestBillController
- * 
- * @author David Dantas, 56331
- * @author Filipe Egipto, 56272
- * @author Rafael Nisa, 56329
- */
 @RestController()
 @RequestMapping("api")
 class RestBillController {
