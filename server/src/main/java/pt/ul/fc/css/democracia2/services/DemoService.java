@@ -15,6 +15,13 @@ import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 
+/**
+ * Class responsible for initiating votable and supportable Bills
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Service
 @Transactional
 public class DemoService {
@@ -23,6 +30,7 @@ public class DemoService {
   @Autowired private TopicRepository topicRepository;
   @Autowired private BillRepository billRepository;
 
+  /** Method that initiates votable Bills */
   public void initVotableBills() {
     List<Delegate> delegates = delegateRepository.findAll();
     List<Topic> topics = topicRepository.findAll();
@@ -68,6 +76,7 @@ public class DemoService {
     }
   }
 
+  /** Method that initiates supportable Bills */
   public void initSupportableBills() {
     List<Delegate> delegates = delegateRepository.findAll();
     List<Topic> topics = topicRepository.findAll();

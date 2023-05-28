@@ -44,6 +44,12 @@ public class ConsultNonExpiredBillService {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Method that gets the Bill with the given id
+   *
+   * @param id the id of the corresponding Bill
+   * @return the BillDTO of the Bill with the given id if it exists
+   */
   public Optional<BillDTO> getBill(Long id) {
     Optional<Bill> bill = billRepository.findById(id);
     return (bill.isPresent()) ? Optional.of(new BillDTO(bill.get())) : Optional.empty();
