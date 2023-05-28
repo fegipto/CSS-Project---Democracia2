@@ -24,6 +24,11 @@ public class Delegate extends Citizen {
   @OneToMany(mappedBy = "proponent")
   private List<Bill> bills;
 
+  /**
+   * Method that gets the list of Bills of the Delegate
+   *
+   * @return the list of Bills of the corresponding Delegate
+   */
   public List<Bill> getBills() {
     return bills;
   }
