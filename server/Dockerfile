@@ -4,6 +4,9 @@ RUN mvn dependency:go-offline
 COPY . ./
 RUN mvn clean package -Duser.timezone="Europe/Lisbon"
 
+FROM builder as test
+CMD [ "mvn", "clean", "test", "-Duser.timezone=Europe/Lisbon","clean"]
+
 FROM docker.io/eclipse-temurin:17
 VOLUME /tmp
 EXPOSE 8082
