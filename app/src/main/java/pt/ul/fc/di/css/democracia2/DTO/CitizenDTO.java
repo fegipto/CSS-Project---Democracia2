@@ -12,10 +12,20 @@ public class CitizenDTO {
   private long cc;
   private long token;
 
+  /**
+   * Method that gets the token of the citizenDTO
+   *
+   * @return the token of the corresponding citizenDTO
+   */
   public long getToken() {
     return token;
   }
 
+  /**
+   * Method that sets the token of the citizenDTO
+   *
+   * @param token the token of the corresponding citizenDTO
+   */
   public void setToken(long token) {
     this.token = token;
   }
@@ -35,7 +45,7 @@ public class CitizenDTO {
   }
 
   /**
-   * Method that get the cc of the citizenDTO
+   * Method that gets the cc of the citizenDTO
    *
    * @return the cc of the corresponding citizenDTO
    */
@@ -43,10 +53,20 @@ public class CitizenDTO {
     return cc;
   }
 
+  /**
+   * Method that sets the name of the citizenDTO
+   *
+   * @param name the name of the corresponding citizenDTO
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * Method that sets the cc of the citizenDTO
+   *
+   * @param cc the cc of the corresponding citizenDTO
+   */
   public void setCc(long cc) {
     this.cc = cc;
   }
