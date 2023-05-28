@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.domain.Topic;
@@ -24,7 +24,7 @@ import pt.ul.fc.css.democracia2.services.VotingService;
 
 @RestController()
 @RequestMapping("api")
-class RestCustomerController {
+class RestBillrController {
 
   @Autowired private ListAvailableVotesService billsService;
 
@@ -67,10 +67,9 @@ class RestCustomerController {
   }
 
   @PostMapping("/bill/support")
-  ResponseEntity<?> supportBill(@RequestBody Pair<Long, Long> pair) {
+  ResponseEntity<?> supportBill(@RequestParam Long citizen, @RequestParam Long bill) {
     try {
-      return ResponseEntity.ok()
-          .body(supportBillService.supportBill(pair.getFirst(), pair.getSecond()));
+      return ResponseEntity.ok().body(supportBillService.supportBill(citizen, bill));
     } catch (IllegalArgumentException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
@@ -86,12 +85,11 @@ class RestCustomerController {
   }
 
   @PostMapping("/bill/vote")
-  ResponseEntity<?> voteBill(@RequestBody Pair<Pair<Long, Long>, Boolean> info) {
+  ResponseEntity<?> voteBill(
+      @RequestParam Long citizen, @RequestParam Long bill, @RequestParam Boolean vote) {
     try {
-      boolean sucess =
-          votingService.vote(
-              info.getFirst().getFirst(), info.getFirst().getSecond(), info.getSecond());
-      return ResponseEntity.ok().body(sucess);
+      boolean success = votingService.vote(citizen, bill, vote);
+      return ResponseEntity.ok().body(success);
     } catch (IllegalArgumentException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

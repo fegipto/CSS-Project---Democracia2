@@ -9,9 +9,9 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import pt.ul.fc.di.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.di.css.democracia2.DTO.CitizenDTO;
 
@@ -54,27 +54,40 @@ public class DataModel {
   }
 
   public final void setVoteBill(boolean vote) {
-    Pair<Pair<Long, Long>, Boolean> pair =
-        Pair.of(Pair.of(this.getLoggedCitizen(), this.getCurrentBill().getId()), vote);
+    Long citizen = this.getLoggedCitizen();
+    Long bill = this.getCurrentBill().getId();
     RestTemplate restTemplate = new RestTemplate();
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/vote")
+            .queryParam("citizen", citizen)
+            .queryParam("bill", bill)
+            .queryParam("vote", vote);
+
     ResponseEntity<Boolean> resp =
-        restTemplate.postForEntity("http://localhost:8080/api/bill/vote", pair, Boolean.class);
-    Boolean sucess = resp.getBody();
-    if (sucess != null && sucess) {
+        restTemplate.postForEntity(builder.toUriString(), null, Boolean.class);
+    Boolean success = resp.getBody();
+    if (success != null && success) {
       Bill b = this.getCurrentBill();
       b.setVoteInformation("voted");
       this.setCurrentBill(b);
-      ;
     }
   }
 
   public final void setSupportBill() {
-    Pair<Long, Long> pair = Pair.of(this.getLoggedCitizen(), this.getCurrentBill().getId());
+    Long citizen = this.getLoggedCitizen();
+    Long bill = this.getCurrentBill().getId();
     RestTemplate restTemplate = new RestTemplate();
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/support")
+            .queryParam("citizen", citizen)
+            .queryParam("bill", bill);
+
     ResponseEntity<Boolean> resp =
-        restTemplate.postForEntity("http://localhost:8080/api/bill/support", pair, Boolean.class);
-    Boolean sucess = resp.getBody();
-    if (sucess != null && sucess)
+        restTemplate.postForEntity(builder.toUriString(), null, Boolean.class);
+    Boolean success = resp.getBody();
+    if (success != null && success)
       this.currentBillProperty()
           .get()
           .setSupporterCount(
