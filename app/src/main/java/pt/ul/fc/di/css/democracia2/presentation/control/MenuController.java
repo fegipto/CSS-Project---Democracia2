@@ -6,6 +6,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import pt.ul.fc.di.css.democracia2.presentation.model.DataModel;
 
+/**
+ * Class that represents a MenuController
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 public class MenuController {
 
   @FXML private MenuItem menuItem;
