@@ -1,7 +1,8 @@
-package pt.ul.fc.css.democracia2.controllers.rest;
+package pt.ul.fc.css.democracia2.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,8 +24,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.util.UriComponentsBuilder;
 import pt.ul.fc.css.democracia2.DTO.BillDTO;
 import pt.ul.fc.css.democracia2.DemoDataInitializer;
+import pt.ul.fc.css.democracia2.controllers.rest.RestBillController;
 import pt.ul.fc.css.democracia2.domain.Bill;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.domain.Delegate;
@@ -32,7 +37,7 @@ import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 import pt.ul.fc.css.democracia2.services.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(pt.ul.fc.css.democracia2.controllers.rest.RestBillController.class)
+@WebMvcTest(RestBillController.class)
 public class RestBillControllerTests {
 
   @Autowired private MockMvc mockMvc;
@@ -60,12 +65,12 @@ public class RestBillControllerTests {
       billDTOList.add(bill);
     }
 
-    System.out.println(billsService.listAvailableVotes());
     Mockito.when(billsService.listAvailableVotes()).thenReturn(billDTOList);
 
-    MvcResult result =
-        mockMvc.perform(get("/api/bills/votable")).andExpect(status().isOk()).andReturn();
-    System.out.println(result.getResponse().getContentAsString());
+    mockMvc
+        .perform(get("/api/bills/votable"))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(25)));
   }
 
   @Test
@@ -80,9 +85,10 @@ public class RestBillControllerTests {
 
     Mockito.when(proposeBillService.getTopics()).thenReturn(topics);
 
-    MvcResult result = mockMvc.perform(get("/api/topics")).andReturn();
-
-    System.out.print(result.getResponse().getContentAsString());
+    mockMvc
+        .perform(get("/api/topics"))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(5)));
   }
 
   @Test
@@ -91,6 +97,7 @@ public class RestBillControllerTests {
     List<BillDTO> billDTOList = new ArrayList<>();
     for (long i = 1; i <= 25; i++) {
       BillDTO bill = new BillDTO();
+      bill.setTitle("Bill " + i);
       bill.setId(1000000L + i);
       billDTOList.add(bill);
     }
@@ -98,7 +105,12 @@ public class RestBillControllerTests {
 
     Mockito.when(consultBillService.getBill(id)).thenReturn(Optional.of(billDTOList.get(0)));
 
-    mockMvc.perform(get("/api/bill/{id}", id)).andExpect(status().isOk());
+    mockMvc
+        .perform(get("/api/bill/{id}", id))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value((billDTOList.get(0)).getId()))
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.title").value((billDTOList.get(0)).getTitle()));
   }
 
   @Test
@@ -137,24 +149,40 @@ public class RestBillControllerTests {
     Mockito.when(consultBillService.listNonExpired()).thenReturn(billDTOList);
     System.out.println(consultBillService.listNonExpired());
 
-    mockMvc.perform(get("/api/bills/open")).andExpect(status().isOk()).andReturn();
+    mockMvc
+        .perform(get("/api/bills/open"))
+        .andExpect(status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(6)));
   }
 
   @Test
   public void testCreateBill() throws Exception {
-    BillDTO bill = new BillDTO();
-    bill.setId(1);
-    bill.setTitle("Bill 1");
+    Delegate delegate1 = new Delegate("Delegate 1", 2000000L + 1);
+
+    Topic t = new Topic();
+    t.setName("Health");
+    t.setId(1000000L + 1);
+
+    Bill added1 =
+        delegate1.proposeBill(
+            "Bill " + 6, "null", new byte[] {}, LocalDateTime.now().plusMonths(4), t);
+
+    BillDTO bill = new BillDTO(added1);
 
     Mockito.when(proposeBillService.presentBill(bill)).thenReturn(bill);
 
-    MockHttpServletRequestBuilder mockRequest =
-        MockMvcRequestBuilders.post("/api/bills")
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON)
-            .content(this.mapper.writeValueAsString(bill));
+    String billJson = this.mapper.writeValueAsString(bill);
 
-    mockMvc.perform(mockRequest).andExpect(status().isOk());
+    MvcResult result =
+        mockMvc
+            .perform(post("/api/bills").contentType(MediaType.APPLICATION_JSON).content(billJson))
+            .andExpect(status().isOk())
+            .andReturn();
+    // String responseJson = result.getResponse().getContentAsString();
+    // BillDTO responseBill = this.mapper.readValue(responseJson, BillDTO.class);
+
+    // assertEquals("Test Bill", responseBill.getTitle());
+    // assertEquals("This is a test bill", responseBill.getDescription());
   }
 
   @Test
@@ -183,7 +211,53 @@ public class RestBillControllerTests {
             .andExpect(status().isOk())
             .andReturn();
 
-    assertEquals(resultTrue.getResponse().getContentAsString(), "true");
-    assertEquals(resultFalse.getResponse().getContentAsString(), "false");
+    assertEquals(resultTrue.getResponse().getContentAsString(), "yes");
+    assertEquals(resultFalse.getResponse().getContentAsString(), "no");
+  }
+
+  @Test
+  public void testSupportBill() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Citizen citizen = new Citizen("Citizen 1", 1000L);
+
+    Mockito.when(supportBillService.supportBill(citizen.getToken(), bill.getId())).thenReturn(true);
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/support")
+            .queryParam("citizen", citizen.getToken())
+            .queryParam("bill", bill.getId());
+    MockHttpServletRequestBuilder mockRequest =
+        MockMvcRequestBuilders.post(builder.toUriString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON);
+
+    mockMvc.perform(mockRequest).andExpect(status().isOk());
+  }
+
+  @Test
+  public void testVoteBill() throws Exception {
+    BillDTO bill = new BillDTO();
+    bill.setId(1);
+    bill.setTitle("Bill 1");
+
+    Citizen citizen = new Citizen("Citizen 1", 1000L);
+
+    Mockito.when(votingService.vote(citizen.getToken(), bill.getId(), true)).thenReturn(true);
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl("http://localhost:8080/api/bill/support")
+            .queryParam("citizen", citizen.getToken())
+            .queryParam("bill", bill.getId())
+            .queryParam("vote", true);
+
+    MockHttpServletRequestBuilder mockRequest =
+        MockMvcRequestBuilders.post(builder.toUriString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON);
+
+    mockMvc.perform(mockRequest).andExpect(status().isOk());
   }
 }

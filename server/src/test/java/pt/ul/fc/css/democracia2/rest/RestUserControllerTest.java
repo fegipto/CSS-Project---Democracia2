@@ -1,4 +1,4 @@
-package pt.ul.fc.css.democracia2.controllers.rest;
+package pt.ul.fc.css.democracia2.rest;
 
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pt.ul.fc.css.democracia2.DemoDataInitializer;
+import pt.ul.fc.css.democracia2.controllers.rest.RestUserController;
 import pt.ul.fc.css.democracia2.domain.Citizen;
 import pt.ul.fc.css.democracia2.repositories.CitizenRepository;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(pt.ul.fc.css.democracia2.controllers.rest.RestUserController.class)
+@WebMvcTest(RestUserController.class)
 public class RestUserControllerTest {
 
   @Autowired private MockMvc mockMvc;
