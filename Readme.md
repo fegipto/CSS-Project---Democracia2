@@ -25,9 +25,9 @@ Rafael Nisa 56329
 
 ## Server
 
-Contains all business logic, tests, persistence, and Contollers for rest web interaction, and business interaction.
+Contains all business logic, tests, persistence, and Controllers for rest web interaction, and business interaction.
 
 
 ## App
 
-A javafx native app, to run it juwst run ./client.sh,  **maven is required**, and server should be running.(http://localhost:8080)
+A javafx native app, to run it just run ./client.sh,  **maven is required**, and server should be running.(http://localhost:8080)
