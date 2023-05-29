@@ -15,6 +15,10 @@ Rafael Nisa 56329
         * 100 delegates will be created of name: **Delegate i**  (where 1 <= i <= 100)
     * That way you can login in the native app and web by using Delegate 5 for example
 
+    * **Warning** web page regarding data not acessible until data as fully loaded
+
+
+
 2. Now that the server is running, you can either use the web interface in (http://localhost:8080), or by sending rest calls to (http://localhost:8080/api)
 
 3. If you want to use the native app just run client.sh inside the app/ folder
