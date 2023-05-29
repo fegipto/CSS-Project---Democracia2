@@ -74,6 +74,13 @@ public class VotingService {
     else return bill.get().getVoteBox().addPrivateVote(cit.get(), vote);
   }
 
+  /**
+   * Method that checks if a Citizen with the given id has voted on the Bill with the given id
+   *
+   * @param citizenId the id of the Citizen
+   * @param billId the id of the Bill
+   * @return if the citizen has voted on the Bill or not
+   */
   public boolean hasVoted(long citizenId, long billId) {
     Optional<Bill> bill = billRepository.findById(billId);
     Optional<Citizen> cit = citizenRepository.findByToken(citizenId);

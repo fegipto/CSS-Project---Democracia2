@@ -63,6 +63,11 @@ public class Citizen {
     this.chosenDelegates = new HashMap<>();
   }
 
+  /**
+   * Method that sets the token of the Citizen
+   *
+   * @param token the token of the corresponding Citizen
+   */
   public void setToken(long token) {
     this.token = token;
   }
@@ -77,7 +82,7 @@ public class Citizen {
   }
 
   /**
-   * Method that get the cc of the Citizen
+   * Method that gets the cc of the Citizen
    *
    * @return the cc of the corresponding Citizen
    */
@@ -86,7 +91,7 @@ public class Citizen {
   }
 
   /**
-   * Method that get the token of the Citizen
+   * Method that gets the token of the Citizen
    *
    * @return the token of the corresponding Citizen
    */

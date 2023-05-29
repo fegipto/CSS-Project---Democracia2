@@ -86,7 +86,7 @@ public class Topic {
     return id;
   }
 
-    /**
+  /**
    * Method that sets the id of the Topic
    *
    * @param id the id of the corresponding Topic
@@ -95,7 +95,7 @@ public class Topic {
     this.id = id;
   }
 
-    /**
+  /**
    * Method that sets the parent of the Topic
    *
    * @param parent the parent of the corresponding Topic
@@ -104,7 +104,7 @@ public class Topic {
     this.parent = parent;
   }
 
-    /**
+  /**
    * Method that sets the name of the Topic
    *
    * @param name the name of the corresponding Topic

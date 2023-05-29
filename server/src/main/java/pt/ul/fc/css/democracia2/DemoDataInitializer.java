@@ -16,6 +16,13 @@ import pt.ul.fc.css.democracia2.repositories.DelegateRepository;
 import pt.ul.fc.css.democracia2.repositories.TopicRepository;
 import pt.ul.fc.css.democracia2.services.ProposeBillService;
 
+/**
+ * Class that initializes all the demo data
+ *
+ * @author David Dantas, 56331
+ * @author Filipe Egipto, 56272
+ * @author Rafael Nisa, 56329
+ */
 @Component
 public class DemoDataInitializer {
 
@@ -37,8 +44,11 @@ public class DemoDataInitializer {
     this.topicRepository = topicRepository;
   }
 
+  /**
+   * Method that initiates 100 Delegates
+   */
   private void initDelegates() {
-    // Create 15000 citizens with unique names, CCs, and tokens
+    // Create 100 delegates with unique names, CCs, and tokens
     for (int i = 1; i <= 100; i++) {
       String name = "Delegate " + i;
       long cc = 2000000000L + i;
@@ -48,6 +58,9 @@ public class DemoDataInitializer {
     }
   }
 
+  /**
+   * Method that initiates 15000 Citizens
+   */
   private void initCitizens() {
     // Create 15000 citizens with unique names, CCs, and tokens
     for (int i = 1; i <= 15000; i++) {
@@ -59,6 +72,9 @@ public class DemoDataInitializer {
     }
   }
 
+  /**
+   * Method that initiates 5 Topics with 2 subtopics each
+   */
   private void initTopics() {
     // topic names courtesy of chatGPT
     List<Topic> topics = new LinkedList<>();
@@ -94,6 +110,9 @@ public class DemoDataInitializer {
     }
   }
 
+  /**
+   * Method that initializes all the data calling this class methods
+   */
   public void initialize() throws IOException {
     // Initialization logic goes here
     // Example: populate database with initial data
