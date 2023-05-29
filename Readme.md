@@ -11,7 +11,7 @@ Rafael Nisa 56329
 
 1. Turn on the server by running ./run.sh inside the folder server/
     * That will begin the data base as well as initializing a bunch of citizens and delegates:
-        * 15000 citizens will be created of name: **Citizen i**  (where 1 <= i <= 1500)
+        * 15000 citizens will be created of name: **Citizen i**  (where 1 <= i <= 15000)
         * 100 delegates will be created of name: **Delegate i**  (where 1 <= i <= 100)
     * That way you can login in the native app and web by using Delegate 5 for example
 
